@@ -279,6 +279,7 @@ studyMeta <- tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
                 'observation_year', 'value', '1997', paste('Method ln23:', data.lvl0.df$method[23]),
                 'sample_prep', 'method', 'oven dried at 100 C to constant weight', paste('Method ln22:', data.lvl0.df$method[22]),
                 'core_description', 'description', '30 by 30 m plots with trees at two spacings (1 by 1 m and 3 by 3 m)', paste('Method ln12:', data.lvl0.df$method[12]),
+                'stand_type', 'value', 'E. saligna', paste('Method ln3:', data.lvl0.df$method[3]),
                  'citation', 'value', format(data.lvl0.df$citation$primary), 'journal citation',
                    'doi', 'value', data.lvl0.df$citation$primary$doi, 'journal  citation')
     
@@ -300,7 +301,7 @@ Table1Primary <- data.lvl0.df$data$Table1$primary |>
       column_name == "C K† (mmol m<sup>-2</sup>)" ~ "control_potassium_stock",
       column_name == "F K† (mmol m<sup>-2</sup>)" ~ "fertilized_potassium_stock",
       column_name == "Al (mmol m<sup>-2</sup>)" ~ "soil_aluminum_stock")) |>
-    mutate(is_type = if_else(str_detect(column_name, 'Mean'), 'mean', 'value')) |>
+#  mutate(is_type = if_else(str_detect(column_name, 'Mean'), 'mean', 'value')) |>
 
 #reframe(of_type = case_when(
  #   str_detect(with_entry, '\\d+\\-\\d+') ~ c('upperbound', 'lowerbound'),
@@ -309,35 +310,50 @@ Table1Primary <- data.lvl0.df$data$Table1$primary |>
 #  ), 
  # .by=everything()) |>
 
-mutate(lowerbound = ifelse(
-  column_name == "Age (mo)" & with_entry == "Change", str_extract(with_entry, '^\\d+(?=-)'),
-  str_extract(with_entry, '-?\\d+\\.?\\d*(?=\\s*to)')),
-  upperbound = ifelse(column_name == "Age (mo)" & with_entry == "Change", 
-                      str_extract(with_entry, '(?<=\\d-)\\d+$'),
-                    #working on this string first  str_extract(with_entry, '')),
-         mean = str_extract(with_entry, '^-?\\d*\\.?\\d+(?=\\s*\\()'),
-         'standard error' = str_extract(with_entry, '(?<=\\()[0-9.]+(?=\\))'),
-         value = str_extract(with_entry, '^-?\\d+\\.?\\d+$'))|>
+mutate(
+  value = ifelse(
+    column_name == "Age (mo)",
+    ifelse(
+      str_detect(with_entry, "(?i)change"), "Change",
+      with_entry),
+NA_character_
+     ),
+  lowerbound = as.character(
+    ifelse(
+    column_name == "Age (mo)" & str_detect(with_entry, "to"),
+   (str_extract(with_entry, "^(\\d+)\\s*to")),
+    NA_real_
+)),
+  upperbound = as.character(
+    ifelse(
+    column_name == "Age (mo)" & str_detect(with_entry, "to"), 
+     (str_extract(with_entry, "(?<=to\\s*)(\\d+)")),
+      NA_real_
+    )),
+  mean = as.character(
+      str_extract(with_entry, '^-?\\d*\\.?\\d+(?=\\s*\\()')),
+  `standard error` = as.character(
+    str_extract(with_entry, '(?<=\\()[0-9.]+(?=\\))')),
+    ) |>
   select(-with_entry) |>
   
-  pivot_longer(cols = c('lowerbound', 'upperbound', 'mean', 'standard error', 'value'),
-               names_to = 'of_type',
+  pivot_longer(cols = c('lowerbound','upperbound','mean','standard error','value'),
+               names_to = 'is_type',
                values_to = 'with_entry',
                values_drop_na = TRUE) |>
 mutate(from_source = 'Table 1')
 
-#Still working on table 1
+#Still working on table 1, got all age_id's to show but missing lower- and upperbound
 
 Table1Meta <- Table1Primary |>
   select(column_name, of_variable) |>
   unique() |>
   #Grab everything between the parentheses as units and attribute the source as the column names.
   mutate(unit = str_extract(column_name, pattern = '(?<=\\().*(?=\\))'),
+         species = case_when(str_detect(column_name, 'E. saligna') ~ 'Eucalyptus saligna',                             .default = NA_character_),
          from_source = 'Table 1 column names.') |>
-  #If there aren't units then drop the row
-  filter(!is.na(unit)) |>
-  #Don't keep the column name now that you have the units, cross link via the variable
-  select(-column_name) |>
+  #If there aren't units or a species flag then drop the row
+  filter(!is.na(unit) | !is.na(species)) |>
   
   bind_rows(
   tribble(~of_variable, ~method, ~from_source,
@@ -353,18 +369,23 @@ Table1Meta <- Table1Primary |>
   'nitrogen_density', paste0(data.lvl0.df$method[29:30], collapse = ' '), 'Methods ln 29-30') ) |>
 bind_rows(
     tribble(~of_variable, ~control_vocabulary, ~from_source,
-          'soil_class', 'Kaiwiki thixotropic: USDA classification for deep, well drained soils formed from weathered volcanic ash|isothermic Typic Hydrandept: USDA taxonomic class of deep, well drained soils formed in material weathered from basic volcanic ash', 'USDA')
-    ) |>
-
-pivot_longer(cols = c(unit, method, control_vocabulary),
+          'soil_class', 'Kaiwiki thixotropic: USDA classification for deep, well drained soils formed from weathered volcanic ash|isothermic Typic Hydrandept: USDA taxonomic class of deep, well drained soils formed in material weathered from basic volcanic ash', 'USDA',
+          'stand_type', '*E. saligna*: pure stands of Eucalyptus saligna (Sm.)', 'Abstract ln3',) |>
+left_join(Table1Primary |>
+                  select(column_name, of_variable) |>
+                  unique(),
+                by = join_by(of_variable)))|>
+  pivot_longer(cols = c(unit, species, method, control_vocabulary),
                names_to = 'is_type',
                values_drop_na = TRUE,
                values_to = 'with_entry')
 
+
 #### Create level 1
 
 data.lvl1.df <- list(
-  meta = bind_rows(studyMeta, Table1Meta),
+  study = studyMeta,
+  primary_meta = dplyr::bind_rows(Table1Meta),
   primary = bind_rows(Table1Primary)|>
     mutate(age_id = with_entry[of_variable == 'plant_age'],
            is_type = 'value',
@@ -372,8 +393,6 @@ data.lvl1.df <- list(
     arrange(row_id, age_id, column_name,
             of_variable, is_type, with_entry, from_source)
   )
-View(data.lvl1.df)
-
 ```
 
 
