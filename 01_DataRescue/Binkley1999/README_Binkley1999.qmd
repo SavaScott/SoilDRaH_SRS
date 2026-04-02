@@ -311,25 +311,22 @@ Table1Primary <- data.lvl0.df$data$Table1$primary |>
  # .by=everything()) |>
 
 mutate(
-  value = ifelse(
-    column_name == "Age (mo)",
-    ifelse(
-      str_detect(with_entry, "(?i)change"), "Change",
-      with_entry),
-NA_character_
+  value = case_when(
+    column_name == "Age (mo)" & str_detect(with_entry,"(?i)change") ~ "Change",
+    column_name == "Age (mo)" ~ with_entry,
+    TRUE ~ NA_character_
      ),
-  lowerbound = as.character(
-    ifelse(
-    column_name == "Age (mo)" & str_detect(with_entry, "to"),
-   (str_extract(with_entry, "^(\\d+)\\s*to")),
-    NA_real_
-)),
-  upperbound = as.character(
-    ifelse(
-    column_name == "Age (mo)" & str_detect(with_entry, "to"), 
-     (str_extract(with_entry, "(?<=to\\s*)(\\d+)")),
-      NA_real_
-    )),
+  lowerbound = case_when(
+    str_detect(with_entry, "to") ~ str_extract(with_entry, "[-+]?\\d*\\.?\\d+(?=\\s*to)"),
+    str_detect(with_entry, '^\\d+\\s*-\\s*\\d+') ~ str_extract(with_entry, "\\d+(?=-)"),
+    TRUE ~ NA_character_
+),
+  upperbound = case_when(
+   str_detect(with_entry, "to") ~ str_extract(with_entry, "to\\s*([-+]?\\d*\\.?\\d+)") |>
+     str_remove("to\\s*"),
+   str_detect(with_entry, '^\\d+\\s*-\\s*\\d+') ~ str_extract(with_entry, "(?<=-)\\d+"),
+     TRUE ~ NA_character_
+    ),
   mean = as.character(
       str_extract(with_entry, '^-?\\d*\\.?\\d+(?=\\s*\\()')),
   `standard error` = as.character(
@@ -341,9 +338,10 @@ NA_character_
                names_to = 'is_type',
                values_to = 'with_entry',
                values_drop_na = TRUE) |>
+
 mutate(from_source = 'Table 1')
 
-#Still working on table 1, got all age_id's to show but missing lower- and upperbound
+#Still working on table 1, only one issue with the 95% CI
 
 Table1Meta <- Table1Primary |>
   select(column_name, of_variable) |>
