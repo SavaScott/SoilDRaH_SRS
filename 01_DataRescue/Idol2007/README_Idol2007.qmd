@@ -7,81 +7,115 @@ date: last-modified
 date-format: YYYY-MMMM
 bibliography:
   - Idol2007_Methods.bib
-  - Idol2007.bib
-author:
-  - name:
+  - Idol2007.bib 
+authors:
+  - id: ktoddbrown 
+    name:
       given: Katherine
       family: Todd-Brown
-      orcid: 0000-0002-3109-8130
-      note: https://github.com/ktoddbrown
-      affiliations:
-        - id: ESS UF
-          name: University of Florida
-          department: Environmental Engineering Sciences
-          city: Gainesville
-          state: FL
-          country: USA
-      role: 
-        - "Transcription"
-        - "Review"
-  - name:
+    orcid: 0000-0002-3109-8130
+    affiliation:
+      - ref: uf-ees
+    role: 
+      - transcription: review 
+      - standardization: review
+    #  - curation: lead #review
+  - id: waldera 
+    name:
       given: Ashlynn
       family: Walder
-      affiliation:
-        - id: UF
-          name: University of Florida
-          city: Gainesville
-          state: FL
-          country: USA
-      role: "Transcription"
-      note: https://github.com/waldera
-  - name:
+    affiliation:
+      - ref: uf-ees
+    role: 
+      - transcription: lead 
+  - id: SavaScott 
+    name:
       given: Savannah
       family: Scott
-      affiliation:
-        - id: UF
-          name: University of Florida
-          city: Gainesville
-          state: FL
-          country: USA
-      role: "Transcription"
-      note: https://github.com/SavaScott
+    affiliation:
+      - ref: uf-ees
+    role: 
+      - transcription: secondary 
+      - standardization: lead
+    #  - curation: lead #review
+
+affiliations:
+  - id: uf-ees
+    name: University of Florida
+    department: Environmental Engineering Sciences
+    city: Gainesville
+    state: Florida
+    country: USA
+    address: "365 Weil Hall \nP.O. Box 116580"
+    postal-code: 32611
+    url: https://essie.ufl.edu/ees/
+  - id: uf
+    name: University of Florida
+    city: Gainesville
+    state: Florida
+    country: USA
+    postal-code: 32611
+    url: https://www.ufl.edu/
+    
+timelog:
+  - activity: 
+      description: Primary Transcription
+      who: waldera
+      start: 2025-04-01
+      end: 2025-05-24
+      duration: PT3H
+  - activity: 
+      description: Secondary Transcription and PR
+      who: SavaScott
+      start: 2025-04-01
+      end: 2025-05-24
+      duration: PT5H
 ---
 
-```{r setup, include=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
-library(tidyverse)
-library(kableExtra)
-library(bibtex)
+```{r}
+#| label: setup
+#| include: true
+#| warning: false
+#| message: false
+#| echo: false
+#| eval: true
 
-methods.file <- 'Idol2007_Methods.md'
+library(tidyverse) # data processing
+library(kableExtra) # pretty tables
+library(bibtex) # reading in BibTex files to R
+
+# data files for level 0
+methods.file <- "Idol2007_Methods.md"
 table1.file <- 'Idol2007_Table1.csv'
 table2.file <- 'Idol2007_Table2.csv'
 table3.file <- 'Idol2007_Table3.csv'
+
+# Bibliography files
 primaryCitation.file <- 'Idol2007.bib'
 methodsCitation.file <- 'Idol2007_Methods.bib'
+
+# read function; you will need to create this function after you have your data
+#... rescue reviewed and before you finish your data harmonization.
+readsource.file <- '../../02_DataHarmonization/readIdol2007.R'
+if(file.exists(readsource.file)){
+  source(readsource.file)
+}
+
+#semantic files for level 1
+of_variable.file <- '../../semantics/SoilDRaHVocabulary_of_variable.csv'
+is_type.file <- '../../semantics/SoilDRaHVocabulary_is_type.csv'
+
 ```
-
-This documents the data transcription for @Idol2007.
-For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/83.
-
-> Full citation here
-Idol, T., Baker, P. J., & Meason, D. (2007). Indicators of forest ecosystem productivity and nutrient status across precipitation and temperature gradients in Hawaii. Journal of Tropical Ecology, 23, 693 - 704. https://doi.org/10.1017/s0266467407004439
-
 
 # Data Summary
 
-This paper examines how precipitation and temperature affect forest productivity, soil nutrients, and leaf nutrients in Hawaiian Acacia koa forests. It explores the relationships between climate, nutrient availability, and forest structure across independent elevation and rainfall gradients.
+> Idol, T., Baker, P. J., & Meason, D. (2007). Indicators of forest ecosystem productivity and nutrient status across precipitation and temperature gradients in Hawaii. Journal of Tropical Ecology, 23, 693 - 704. https://doi.org/10.1017/s0266467407004439
 
-## Fit for purpose: HiCSC
+For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/83.
 
-This data is identified as a data source for the Hawai'i Soil Organic Carbon Database https://osf.io/hmtv6/ as part of the HiCSC.
+@Idol2007 examines how precipitation and temperature affect forest productivity, soil nutrients, and leaf nutrients in Hawaiian *Acacia koa* forests. It explores the relationships between climate, nutrient availability, and forest structure across independent elevation and rainfall gradients.
 
-- Location: Keauhou Ranch (KR) 1600–1800 m elevation, Hawaii Volcanoes National Park (HAVO) 1200–2050 m elevation, and Honomalino (HONO) 1600 m elevation
-- Soil carbon stock: Soil carbon stock is not explicitly provided, but total soil carbon content and SOM was determined from oven-dried samples in a Carlo Erba NA 2500 elemental analyser and the results are displayed in Table 2.
-- Soil type: Andisols or as Histosols with andic properties
-- Land use: Detailed land use in the Materials and Methods section.
-
-# Tables and figures
+## Tables and figures
 
 - Table 1: Site characteristics for Acacia koa stands on the Island of Hawaii
 - Table 2: Basal area and soil and leaf nutrients across a Mean Annual Precipitation (MAP) gradient for Acacia koa stands at 1600–1650 m elevation
@@ -91,63 +125,18 @@ This data is identified as a data source for the Hawai'i Soil Organic Carbon Dat
 - Figure 2: Influence of leaf mass per area and soil C on measurements of leaf and soil N
 - Figure 3: Influence of soil P on stand basal area and soil organic matter
 
-  
-### Table 1
 
-Table 1 was modified to include the footer in the header
+## Fit for purpose: HiCSC
 
-```{r table1}
-#| code-fold: true
-#| message: false
+This data is identified as a data source for the Hawai'i Soil Organic Carbon Database https://osf.io/hmtv6/ as part of the HiCSC.
+The [Hawaiʻi Climate Smart Partnership](https://climatesmarthawaii.org/) seeks to accelerate the implementation of climate-smart practices centered on Hawaiʻi-based producers and ancestral practitioners who are supported by advocacy, incentives, technical assistance, and market development.
+As part of this project, we need to build a data base of soil carbon stocks found on different Hawaiian soil types under specific land uses and practices.
 
-filename <- table1.file
-read_csv(file = filename,
-                   skip = 1,
-                   col_types = cols(.default = col_character())) |>
-  kable(caption = read_csv(file = filename, 
-                                 n_max = 1, col_names = 'caption', 
-                                 show_col_types = FALSE)$caption)
-```
-### Table 2
 
-Table 2 was not modified during the transcription.
-
-```{r table2}
-#| code-fold: true
-#| message: false
-
-filename <- table2.file
-read_csv(file = filename,
-                   skip = 1,
-                   col_types = cols(.default = col_character())) |>
-  kable(caption = read_csv(file = filename, 
-                                 n_max = 1, col_names = 'caption', 
-                                 show_col_types = FALSE)$caption)
-```
-
-### Table 1
-
-Table 3 was modified to include +- as ±. 
-
-```{r table3}
-#| code-fold: true
-#| message: false
-
-filename <- table3.file
-read_csv(file = filename,
-                   skip = 1,
-                   col_types = cols(.default = col_character())) |>
-  kable(caption = read_csv(file = filename, 
-                                 n_max = 1, col_names = 'caption', 
-                                 show_col_types = FALSE)$caption)
-```
-{{< include Idol2007_Methods.md >}}
-
-# Transcription comparison
-
-```{bash eval=FALSE, echo=FALSE}
-diff --strip-trailing-cr --suppress-common-lines -y 'Idol2007_Methods.md' 'Idol2007_Methods_AW.md'
-```
+- Location: Keauhou Ranch (KR) 1600–1800 m elevation, Hawaii Volcanoes National Park (HAVO) 1200–2050 m elevation, and Honomalino (HONO) 1600 m elevation
+- Soil carbon stock: Soil carbon stock is not explicitly provided, but total soil carbon content and SOM was determined from oven-dried samples in a Carlo Erba NA 2500 elemental analyser and the results are displayed in Table 2.
+- Soil type: Andisols or as Histosols with andic properties
+- Land use: Detailed land use in the Materials and Methods section.
 
 # Files
 
@@ -168,23 +157,168 @@ These files are in the @Idol2007 data rescue.
 - [Idol2007_Table3.csv](Idol2007_Table3.csv)
   + table 3 from primary article with the stand productivity and soil and leaf nutrients from 1200–2050 m asl at Hawaii Volcanoes National Park (HAVO).
 
-# Working notes 
+# Data Rescue working notes
 
 ## Data Rescue Plan
 
-- [x] describe files in human readable form inside ReadMe
-- [x] description with Git issue with link
-- [x] add contribution yaml
-- [x] create excel sheet with Table 1, 2 and 3
-- [x] export excel table to csv
-- [x] copy over methods section into markdown
-- [x] pull down citations in methods section to bib file
-- [x] add in citation links to methods
-- [x] cross check with second transcriber for tables and methods
-- [ ] submit to independent review
-- [ ] archive on SoilDRaH
++ Lead
+  - [x] Read the article or data resource and the discription of the target project
+  - [x] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_Idol2007'
+  - [x] Create a copy of this template folder and rename it to Idol2007
+  - [x] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
+  - [x] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
+  - [x] Add the reviewer to the author list in the yml
++ Do
+  - [x] Create a spreadsheet with TableN and export it to csv
+  - [x] Extract points from FigureM and export it to csv
+  - [x] Transcribe or copy the method section
+  - [x] Insert references to bib entries
+  - [x] reformat equations and mathematical symbols as [LaTex](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
+  - [x] reformat text using [Markdown](https://www.markdownguide.org/cheat-sheet/)
+  - [x] Create a bib file with the citations from the methods section
+  - [x] Push to your local fork and get a second transcription pushed to your local fork by someone else on the project
++ Measure
+  - [x] cross check with second transcriber for tables and methods, and resolve any differences
+  - [x] compile or render this ReadMe with all chunks up through the Level 0 data rescue section with `eval: true`
+  - [x] push to your local fork and create a pull request to the main branch of the primary repository
+  - [x] address any revisions in your pull request review
+  - [x] celebrate!
 
 
+## Table 1
+
+Table 1 was modified to include the footer in the header
+
+```{r}
+#| label: table1Check
+
+
+read_csv(file = table1.file,
+         skip = 1, 
+        
+         col_types = cols(.default = col_character())) |>
+  kable(caption = read_csv(file = table1.file,
+                           n_max = 1, 
+                           col_names = 'caption',
+                          
+                           col_types = cols(.default = col_character()),
+                           show_col_types = FALSE
+                           )$caption 
+  )
+```
+
+And is crosschecked with the secondary transcription
+
+```{bash}
+#| label: compareTable1
+#| eval: false
+
+# You will want to repeat the line below to cross check each csv and md file in the
+#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
+
+diff --strip-trailing-cr --suppress-common-lines -y temp/Idol2007_Table1_SRS.md Idol2007_Table1.md
+```
+
+## Table 2
+
+Table 2 was not modified during the transcription.
+
+```{r}
+#| label: table2Check
+
+
+read_csv(file = table2.file,
+         skip = 1, 
+        
+         col_types = cols(.default = col_character())) |>
+  kable(caption = read_csv(file = table2.file,
+                           n_max = 1, 
+                           col_names = 'caption',
+                          
+                           col_types = cols(.default = col_character()),
+                           show_col_types = FALSE
+                           )$caption 
+  )
+```
+
+And is crosschecked with the secondary transcription
+
+```{bash}
+#| label: compareTable2
+#| eval: false
+
+# You will want to repeat the line below to cross check each csv and md file in the
+#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
+
+diff --strip-trailing-cr --suppress-common-lines -y temp/Idol2007_Table2_SRS.md Idol2007_Table2.md
+```
+
+
+## Table 3
+
+Table 3 was modified to include +- as ±. 
+
+```{r}
+#| label: table3Check
+
+
+read_csv(file = table3.file,
+         skip = 1, 
+        
+         col_types = cols(.default = col_character())) |>
+  kable(caption = read_csv(file = table3.file,
+                           n_max = 1, 
+                           col_names = 'caption',
+                          
+                           col_types = cols(.default = col_character()),
+                           show_col_types = FALSE
+                           )$caption 
+  )
+```
+
+And is crosschecked with the secondary transcription
+
+```{bash}
+#| label: compareTable3
+#| eval: false
+
+# You will want to repeat the line below to cross check each csv and md file in the
+#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
+
+diff --strip-trailing-cr --suppress-common-lines -y temp/Idol2007_Table3_SRS.md Idol2007_Table3.md
+```
+
+## Methods
+
+Any different to the cross check for the methods section will be output after this line.
+
+```{bash}
+#| label: compareMethods
+#| eval: false
+
+diff --strip-trailing-cr --suppress-common-lines -y temp/Idol2007_Methods_SRS.md Idol2007_Methods.md
+```
+
+### Methods  - Text
+
+The final text transcription from the Methods section is rendered below.
+
+```{r}
+#| label: readMethods
+#| output: asis
+#| eval: true
+
+# This revised section will append two ### to any existing headers here so that it renders nicely with the other headers in the document.
+
+methodsLines <- readLines(methods.file) |>
+  str_replace_all(pattern = '^#', replacement = '####')
+
+cat(paste0(methodsLines, collapse = '\n'))
+
+```
+
+
+<!----
 ## Citation notes from Methods
 
 Below are the citation notes from the methods section.
@@ -238,47 +372,169 @@ Some citations are missing, those are noted here and how best guess were generat
   + copy from bib
 - [x] HURLBERT, S. H. 1984. Pseudoreplication and the design of field experiments. *Ecological Monographs* 54:187-211.
   + copy from bib
-  
+---->
+
 # Level 0 data
 
 ```{r readLevel0}
 
-data.lvl0.df <- list(citation = 
-                    list(primary = 
-                           read.bib(file = primaryCitation.file), 
-                         methods = 
-                           read.bib(file = methodsCitation.file)
-                    ),
-                  method = read_lines(file = methods.file),
-                  data = list(Table1 = 
-                                list(caption = 
-                                       read_csv(file = table1.file,
-                                                col_types = cols(.default = col_character()),
-                                                n_max = 1, col_names = FALSE)$X1[1],
-                                     primary = 
-                                       read_csv(file = table1.file,
-                                                col_types = cols(.default = col_character()),
-                                                skip = 1)
-                                ),
-                              Table2 = list(
-                                caption = read_csv(file = table2.file,
-                                                col_types = cols(.default = col_character()),
-                                                n_max = 1, col_names = FALSE)$X1[1],
-                                     primary = 
-                                       read_csv(file = table2.file,
-                                                col_types = cols(.default = col_character()),
-                                                skip = 1)
-                                ),
-                               Table3 = 
-                                list(caption = 
-                                       read_csv(file = table3.file,
-                                                col_types = cols(.default = col_character()),
-                                                n_max = 1, col_names = FALSE)$X1[1],
-                                     primary = 
-                                       read_csv(file = table3.file,
-                                                col_types = cols(.default = col_character()),
-                                                skip = 1)
-                                )))
+#| label: readLevel0
+#This chunk has two purposes. 
+#...1) Check the formatting by reading in everything 
+#...2) Create a list of everything to process later in level 1
+
+data.lvl0.ls <- list(
+  citation = list(
+    primary = read.bib(file = primaryCitation.file), 
+    methods = read.bib(file = methodsCitation.file)
+  ),
+  method = read_lines(file = methods.file),
+  data = list(
+    Table1 = list(
+      caption = read_csv(file = table1.file,
+                         col_types = cols(.default = col_character()),
+                         n_max = 1, col_names = FALSE)$X1[1],
+      primary = read_csv(file = table1.file,
+                         col_types = cols(.default = col_character()),
+                         skip = 1)
+    ),
+    Table2 = list(
+      caption = read_csv(file = table2.file,
+                         col_types = cols(.default = col_character()),
+                         n_max = 1, col_names = FALSE)$X1[1],
+      primary = read_csv(file = table2.file,
+                         col_types = cols(.default = col_character()),
+                         skip = 1)
+    ),
+    Table3 = list(
+      caption = read_csv(file = table3.file,
+                         col_types = cols(.default = col_character()),
+                         n_max = 1, col_names = FALSE)$X1[1],
+      primary = read_csv(file = table3.file,
+                         col_types = cols(.default = col_character()),
+                         skip = 1)
+    )
+  )
+)
 ```
 
-# References
+The code is also in `readsource.file` and returned with the `dataLevel = 'level0'` argument.
+Below verifies that the data from the function matches what is coded above.
+
+```{r}
+#| label: checkReadFunction_lvl0
+
+if(file.exists(readsource.file)){
+  datafunction.lvl0.ls <- readAuthorYYYY(dataDir = '.',
+                                         dataLevel = 'level0')
+  
+  if(isTRUE(all.equal(datafunction.lvl0.ls, data.lvl0.ls))){
+    print('Read function matches code here.')
+  }else{
+    print('There is a mismatch in the data objects between the code here and the read function.')
+  }
+}else{
+  print('The read function does not exist.')
+}
+```
+
+# Level 1 data - CURATION HiCSC
+
+This data is identified as a data source for the HICSC.
+Broad classes of information that we are looking for include:
+
+- Location:  Keauhou Ranch (KR) 1600–1800 m elevation, Hawaii Volcanoes National Park (HAVO) 1200–2050 m elevation, and Honomalino (HONO) 1600 m elevation
+- Soil carbon stock: Soil carbon stock is not explicitly provided, but total soil carbon content and SOM was determined from oven-dried samples in a Carlo Erba NA 2500 elemental analyser and the results are displayed in Table 2.
+- Soil type: Andisols or as Histosols with andic properties
+- Land use: Detailed land use in the Materials and Methods section.
+
+Information from the methods and other sections are pulled into tables with line by line source citations.
+This information can be values, units, methods, or other useful notes and is manually extracted from the transcriptions loaded into the level 0 data above.
+
+The final format of the data frame here will include the following 
+
+  + grouping ids
+  + `of_variable`
+  + `is_type`
+  + `with_entry`
+  + `from_source`
+
+The `of_variable` being used here are:
+
+ + citation
+ + region
+ + mean_annual_precipiation
+ + land_use
+ + soil_class
+ + stand_age
+
+```{r}
+#| label: createLvl1
+#| eval: false
+
+#### Method-section only data ####
+
+studyMeta <- tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
+                   'region', 'value', 'slopes of the Mauna Loa Volcano', paste('Method ln9:', paste(data.lvl0.ls$method[9], collapse = ' ')),
+                   'land_use', 'value', 'stands that had regenerated into almost pure A. *koa* forests after livestock exclusion and ungulate removal', paste('Method ln8:', paste(data.lvl0.ls$method[8], collapse = ' ')),
+                   'soil_class', 'value','Andisols or as Histosols with andic properties reflective of the volcanic parent material',  paste('Method ln28:', paste(data.lvl0.ls$method[28], collapse = ' '),
+                   'citation', 'value', format(data.lvl0.df$citation$primary), 'journal citation',
+                   'doi', 'value', data.lvl0.df$citation$primary$doi, 'journal  citation'))
+  
+
+#### Table 1 ####
+
+Table1Primary <- data.lvl0.ls$data$Table1$primary |>
+  mutate(row_id = paste0('R', 1:n())) |>
+  pivot_longer(cols = -row_id,
+               names_to = 'column_name', values_to = 'with_entry',
+               values_drop_na = TRUE) |> 
+  mutate(of_variable = case_when(
+           column_name == 'Site' ~ 'site_name',
+           column_name == 'Elevation (m)' ~ 'elevation',
+           column_name == 'MAP(mm)' ~ 'mean_annual_precipiation',
+           column_name == 'MAT(°C)' ~ 'mean_annual_temperature',
+           column_name == 'Stand age (y)' ~ 'stand_age',
+           column_name == 'Soil age (y)' ~ 'soil_age',
+           column_name == 'Density (stems ha<sup>-1</sup>)' ~ 'stem_density'
+         )) |>
+  mutate(from_source = 'Table 1')
+
+Table1Meta <- Table1Primary |>
+  select(column_name, of_variable) |>
+ unique() |>
+  mutate(unit = str_extract(column_name, pattern = '(?<=\\().*(?=\\))'),
+         species = case_when(str_detect(column_name, 'A. koa') ~ 'Acacia koa',
+                             .default = NA_character_),
+         from_source = 'Table 1 column names.') |>
+  filter(!is.na(unit) | !is.na(species)) |>
+  
+  bind_rows(
+    tribble(~of_variable, ~method, ~from_source,
+            'site_name', paste0(data.lvl0.ls$method[c(10,12,14)], collapse = ' '), 'Methods ln10,12,14',
+            'elevation', paste0(data.lvl0.ls$method[19:21], collapse = ' '), 'Methods ln19-21',
+            'mean_annual_precipiation', paste0(data.lvl0.ls$method[c(9,30,32)], collapse = ' '), 'Methods ln9,30,32',
+            'mean_annual_temperature', paste0(data.lvl0.ls$method[c(19:20,30,35:26)], collapse = ' '), 'Methods ln19-20,30,35-36',
+            'stand_age', paste0(data.lvl0.ls$method[22], collapse = ' '), 'Methods ln22',
+            'soil_age', paste0(data.lvl0.ls$method[26:27], collapse = ' '), 'Methods ln26-27',
+            'stem_density', paste0(data.lvl0.ls$method[23:24], collapse = ' '), 'Methods ln23-24'
+            ) ) |>
+  
+  
+ bind_rows(
+    tribble(~of_variable, ~control_vocabulary, ~from_source,
+          'soil_class', 'Andisols: USDA classification for soil developing in volcanic ejecta| Histosols: USDA taxonomic class of  soils forming in organic soil materials', 'USDA',
+          'stand_type', '*A. koa*: pure stands of *Acacia koa* Gray', 'Introduction ln6',) |>
+left_join(Table1Primary |>
+                  select(column_name, of_variable) |>
+                  unique(),
+                by = join_by(of_variable)))|>
+  pivot_longer(cols = c(unit, species, method, control_vocabulary),
+               names_to = 'is_type',
+               values_drop_na = TRUE,
+               values_to = 'with_entry')
+
+
+
+```
+
