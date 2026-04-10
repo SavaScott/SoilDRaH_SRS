@@ -199,7 +199,8 @@ Table 1 was modified to include markdown formatting notation and combining subhe
 
 ```{r}
 #| label: table1Check
-
+#| code-fold: true
+#| message: false
 
 read_csv(file = table1.file, #read in the specific file
          skip = 1, #skip the first line with the caption
@@ -229,6 +230,8 @@ Table S1 was modified to include markdown formatting notation and combining subh
 
 ```{r}
 #| label: tableS1Check
+#| code-fold: true
+#| message: false
 
 
 read_csv(file = tableS1.file, #read in the specific file
@@ -257,6 +260,9 @@ diff --strip-trailing-cr --suppress-common-lines -y Gaxiola2015_TableS1.csv temp
 
 ```{r}
 #| label: figure1Check
+#| code-fold: true
+#| message: false
+
 library(ggplot2)
 library(readr)
 library(dplyr) 
@@ -266,7 +272,8 @@ fig1Caption <- read_csv(file = figure1.file,
                                  show_col_types = FALSE)$caption
 
 fig1Data <- read_csv(file = figure1.file,
-                   skip = 1)
+                   skip = 1,
+                   show_col_types = FALSE)
 
 fig1Data$`x value label` <- factor(fig1Data$`x value label`,
                                   level = c("*Proustia*", "*Porlieria*"))
@@ -296,6 +303,157 @@ ggplot(fig1Data, aes(x = `x value label`, y = `y value`, fill = `UV treatment`, 
        caption = fig1Caption)
 
 ```
+
+
+```{bash}
+#| label: compareFigure1
+#| eval: false
+
+diff --strip-trailing-cr --suppress-common-lines -y Gaxiola2015_Figure1.csv temp/Gaxiola2015_Figure1_LK.csv
+```
+
+
+
+## Figure 2
+
+```{r}
+#| label: figure2Check
+#| code-fold: true
+#| message: false
+
+library(ggplot2)
+library(readr)
+library(dplyr)
+
+fig2Caption <- read_csv(file = figure2.file, 
+                                 n_max = 1, col_names = 'caption', 
+                                 show_col_types = FALSE)$caption
+
+fig2Data <- read_csv(file = figure2.file,
+                   skip = 1,
+                   show_col_types = FALSE)
+
+fig2Data$`y value` <- as.numeric(fig2Data$`y value`)
+fig2Data$`x value` <- as.numeric(fig2Data$`x value`)
+
+fig2Data$`y value upper SE` <- as.numeric(fig2Data$`y value upper SE`)
+fig2Data <- fig2Data %>%
+  mutate(error_var = `y value upper SE` - `y value`,
+         ymin = `y value` - error_var,
+         ymax = `y value` + error_var)
+
+fig2Data$`graph label` <- factor(fig2Data$`graph label`, 
+                                 levels = c("A Proustia", "B Porlieria"))
+
+ggplot(fig2Data, aes(x = `x value`, y = `y value`, shape = `UV treatment`, fill = `UV treatment`)) + geom_point(
+  size = 1.5,
+  stroke = 1,
+  color = "black") +
+  facet_wrap(~`graph label`, nrow = 1) +
+  scale_shape_manual(
+  values = c(
+    "UV+" = 16,
+    "UV-" = 21)) +
+  scale_fill_manual(
+    values = c(
+      "UV-" = "white",
+      "UV+" = "black"
+    )
+  ) +
+  scale_x_continuous(breaks = c(0,50,100,150,200,250)) +
+  scale_y_continuous(breaks = c(20,30,40,50,60,70,80,90,100)) +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax,group = `UV treatment`), position = position_dodge(width = 0.1), width = 20) +
+labs(
+  x = "Water equivalent to annual rainfall (mm)",
+  y = "Remaining biomass (%)",
+  caption = fig2Caption
+)
+
+
+
+```
+
+
+```{bash}
+#| label: compareFigure2
+#| eval: false
+
+diff --strip-trailing-cr --suppress-common-lines -y Gaxiola2015_Figure2.csv temp/Gaxiola2015_Figure2_LK.csv
+```
+
+
+
+
+## Figure 3
+
+```{r}
+#| label: figure3Check
+#| code-fold: true
+#| message: false
+
+library(ggplot2)
+library(readr)
+library(dplyr)
+
+fig3Caption <- read_csv(file = figure3.file, 
+                                 n_max = 1, col_names = 'caption', 
+                                 show_col_types = FALSE)$caption
+
+fig3Data <- read_csv(file = figure3.file,
+                   skip = 1,
+                   show_col_types = FALSE)
+
+fig3Data$`y value` <- as.numeric(fig3Data$`y value`)
+fig3Data$`x value` <- as.numeric(fig3Data$`x value`)
+
+fig3Data$`y upper SE value` <- as.numeric(fig3Data$`y upper SE value`)
+
+fig3Data <- fig3Data %>%
+  mutate(error_var = `y upper SE value` - `y value`,
+         ymin = `y value` - error_var,
+         ymax = `y value` + error_var)
+fig3Data$`graph label` <- factor(fig3Data$`graph label`, 
+                                 levels = c("A *Proustia*", "B *Porlieria*"))
+
+
+ggplot(fig3Data, aes(x = `x value`, y = `y value`, shape = `UV treatment`, fill = `UV treatment`)) + geom_point(
+  size = 2,
+  stroke = 1,
+  color = "black") +
+  facet_wrap(~`graph label`, nrow = 1) +
+  scale_shape_manual(
+  values = c(
+    "UV+" = 16,
+    "UV-" = 21)) +
+  scale_fill_manual(
+    values = c(
+      "UV-" = "white",
+      "UV+" = "black"
+    )
+  ) +
+  scale_x_continuous(breaks = c(0,50,100,150,200,250)) +
+  scale_y_continuous(breaks = c(20,40,60,80,100)) +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax,group = `UV treatment`), position = position_dodge(width = 0.1), width = 12) +
+labs(
+  x = "Water availability (mm)",
+  y = "Biomass loss (%)",
+  caption = fig3Caption
+)
+
+
+
+
+```
+
+
+```{bash}
+#| label: compareFigure3
+#| eval: false
+
+diff --strip-trailing-cr --suppress-common-lines -y Gaxiola2015_Figure3.csv temp/Gaxiola2015_Figure3_LK.csv
+```
+
+
 
 ## Methods
 
