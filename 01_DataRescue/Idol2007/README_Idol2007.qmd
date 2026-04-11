@@ -467,6 +467,12 @@ The `of_variable` being used here are:
  + land_use
  + soil_class
  + stand_age
+ + site_name
+ + elevation
+ + mean_annual_temperature
+ + stand_age
+ + soil_age
+ + stem_density
 
 ```{r}
 #| label: createLvl1
@@ -534,6 +540,57 @@ left_join(Table1Primary |>
                values_drop_na = TRUE,
                values_to = 'with_entry')
 
+#### Table 2 ####
+
+Table2Primary <- data.lvl0.ls$data$Table2$primary |>
+  mutate(row_id = paste0('R', 1:n())) |>
+  pivot_longer(cols = -row_id,
+               names_to = 'column_name', values_to = 'with_entry',
+               values_drop_na = TRUE) |> 
+  mutate(of_variable = case_when(
+           column_name == 'Site' ~ 'site_name',
+           column_name == 'Elevation (m)' ~ 'elevation',
+           column_name == 'MAP(mm)' ~ 'mean_annual_precipiation',
+           column_name == 'MAT(°C)' ~ 'mean_annual_temperature',
+           column_name == 'Stand age (y)' ~ 'stand_age',
+           column_name == 'Soil age (y)' ~ 'soil_age',
+           column_name == 'Density (stems ha<sup>-1</sup>)' ~ 'stem_density'
+         )) |>
+  mutate(from_source = 'Table 1')
+
+Table1Meta <- Table1Primary |>
+  select(column_name, of_variable) |>
+ unique() |>
+  mutate(unit = str_extract(column_name, pattern = '(?<=\\().*(?=\\))'),
+         species = case_when(str_detect(column_name, 'A. koa') ~ 'Acacia koa',
+                             .default = NA_character_),
+         from_source = 'Table 1 column names.') |>
+  filter(!is.na(unit) | !is.na(species)) |>
+  
+  bind_rows(
+    tribble(~of_variable, ~method, ~from_source,
+            'site_name', paste0(data.lvl0.ls$method[c(10,12,14)], collapse = ' '), 'Methods ln10,12,14',
+            'elevation', paste0(data.lvl0.ls$method[19:21], collapse = ' '), 'Methods ln19-21',
+            'mean_annual_precipiation', paste0(data.lvl0.ls$method[c(9,30,32)], collapse = ' '), 'Methods ln9,30,32',
+            'mean_annual_temperature', paste0(data.lvl0.ls$method[c(19:20,30,35:26)], collapse = ' '), 'Methods ln19-20,30,35-36',
+            'stand_age', paste0(data.lvl0.ls$method[22], collapse = ' '), 'Methods ln22',
+            'soil_age', paste0(data.lvl0.ls$method[26:27], collapse = ' '), 'Methods ln26-27',
+            'stem_density', paste0(data.lvl0.ls$method[23:24], collapse = ' '), 'Methods ln23-24'
+            ) ) |>
+  
+  
+ bind_rows(
+    tribble(~of_variable, ~control_vocabulary, ~from_source,
+          'soil_class', 'Andisols: USDA classification for soil developing in volcanic ejecta| Histosols: USDA taxonomic class of  soils forming in organic soil materials', 'USDA',
+          'stand_type', '*A. koa*: pure stands of *Acacia koa* Gray', 'Introduction ln6',) |>
+left_join(Table1Primary |>
+                  select(column_name, of_variable) |>
+                  unique(),
+                by = join_by(of_variable)))|>
+  pivot_longer(cols = c(unit, species, method, control_vocabulary),
+               names_to = 'is_type',
+               values_drop_na = TRUE,
+               values_to = 'with_entry')
 
 
 ```
