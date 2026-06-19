@@ -146,7 +146,7 @@ These files are in the @Elmore2006 data rescue.
 - [Elmore2006_Methods.Rmd](Elmore2006_Methods.Rmd)
   + methods transcribed from primary article
 - [Elmore2006_Table1.csv](Elmore2006_Table1.csv)
-  + table N from primary article with  Soil data collected along gradients in grazing intensity (G) and elevation (E).
+  + table 1 from primary article with  Soil data collected along gradients in grazing intensity (G) and elevation (E).
 
 # Data Rescue working notes 
 
@@ -359,19 +359,18 @@ The `of_variable` being used here are:
  + region
  + elevation_start
  + elevation_end
- + carbon_percent
  + soil_organic_carbon
+ + soil_carbon
  + dry_bulk_density
  + delta_13_carbon
  + soil_age
  + precipitation
  + land_use
- + core_comment
+ + soil_sampling
  + sample_id
  + grazing_distance
  + elevation
- + transect_size
- + transect_distance
+ + transect
 
 ```{r}
 #| lable: constructLevel1
@@ -395,11 +394,10 @@ studyMeta <- tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
                    'land_use', 'value', 'Cattle grazing', paste('Method ln21:', paste(data.lvl0.df$method[21], collapse = ' ')),
                    'land_use', 'interval', '1900',  paste('Method ln21:', paste(data.lvl0.df$method[21], collapse = ' ')),
                    'land_use', 'interval_format', 'YYYY', NA,
-                   'transect_size', 'value', '1000',   paste('Method ln57:', paste(data.lvl0.df$method[57], collapse = ' ')),
-                                      'transect_size', 'unit', 'm',   paste('Method ln57:', paste(data.lvl0.df$method[57], collapse = ' ')),
-                   'transect_distance', 'value', '25', paste('Method ln74:', paste(data.lvl0.df$method[74], collapse = ' ')),
-                   'transect_distance', 'unit', 'm',paste('Method ln74:', paste(data.lvl0.df$method[74], collapse = ' ')),
-'core_comment', 'value', 'soil cores were collected at 25 m intervals close to the grazing center, and spaced to 50 and 100 m further from the center',  paste('Method ln74:', paste(data.lvl0.df$method[74], collapse = ' ')) )
+                   'transect', 'value', '1000',   paste('Method ln57:', paste(data.lvl0.df$method[57], collapse = ' ')),
+                                      'transect', 'unit', 'm',   paste('Method ln57:', paste(data.lvl0.df$method[57], collapse = ' ')),
+                                      'soil_sampling', 'value', 'soil cores were collected at 25 m intervals close to the grazing center, and spaced to 50 and 100 m further from the center',  paste('Method ln74:', paste(data.lvl0.df$method[74], collapse = ' ')) )
+
 #### Table 1 ####
 Table1Primary <- data.lvl0.df$data$Table1$primary |>
   mutate(row_id = paste0('R', 1:n())) |>
@@ -411,7 +409,7 @@ Table1Primary <- data.lvl0.df$data$Table1$primary |>
            column_name == "Sample #" ~ "sample_id",
            column_name == "Distance (m)" ~ "grazing_distance",
            column_name == "Elevation (m)" ~ "elevation",
-           column_name == '% C' ~ "carbon_percent",
+           column_name == '% C' ~ "soil_carbon",
            column_name == 'delta$^{13}$ C' ~ "delta_13_carbon",
            column_name == "rho (g cm$^{-3}$)" ~ "dry_bulk_density",
            column_name == "TOC (kg C m$^{-2}$)" ~ "soil_organic_carbon")) |>
@@ -420,6 +418,8 @@ Table1Meta <- Table1Primary |>
  select(column_name, of_variable) |>
   unique() |>
  mutate(unit = str_extract(column_name, pattern = '(?<=\\().*(?=\\))'),
+        unit = if_else(column_name == "% C",
+        "percent", unit),
   from_source = 'Table 1 column names.') |>
    filter(!is.na(unit)) |>
    bind_rows(
