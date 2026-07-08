@@ -1,0 +1,50 @@
+"Figure 3: Litter dissolved organic carbon (DOC) concentrations over time and the relationship between litter DOC concentration and microclimate parameters on the litter surface. (a) Effects of position treatments on litter DOC concentrations (mg g^?1) over time. Values are means +/- SE (*n* = 3). The relationship between (b) coefficient of variation (CV) of temperature and (c) CV of relative humidity (RH) with the average DOC concentration (mg g^?1) during the period shaded with light grey in (a), and (d) CV of temperature and (e) CV of RH with litter average DOC concentration (mg g^?1) during the period shaded with dark grey in (a). P, position; *T*, time.",,,,
+x value,DOC (mg g^-1),litter type,x label,graph label
+0,12.5,Surface,Time (days),a
+28,8.7,Surface,Time (days),a
+54,4.6,Surface,Time (days),a
+86,2.4,Surface,Time (days),a
+116,2.3,Surface,Time (days),a
+316,4.8,Surface,Time (days),a
+344,3.7,Surface,Time (days),a
+382,1.9,Surface,Time (days),a
+407,2,Surface,Time (days),a
+472,1.6,Surface,Time (days),a
+709,1.4,Surface,Time (days),a
+785,1.2,Surface,Time (days),a
+0,12.6,Standing,Time (days),a
+30,10.1,Standing,Time (days),a
+55,5.8,Standing,Time (days),a
+87,6.1,Standing,Time (days),a
+116,5.7,Standing,Time (days),a
+315,18.4,Standing,Time (days),a
+345,12.1,Standing,Time (days),a
+383,7.4,Standing,Time (days),a
+407,7.4,Standing,Time (days),a
+474,3.2,Standing,Time (days),a
+712,4.3,Standing,Time (days),a
+788,0.2,Standing,Time (days),a
+0.5271,1.667,Surface,CV of temperature,b
+0.5415,1.667,Surface,CV of temperature,b
+0.5544,1.563,Surface,CV of temperature,b
+0.5734,4.688,Standing,CV of temperature,b
+0.5867,4.583,Standing,CV of temperature,b
+0.5962,5.938,Standing,CV of temperature,b
+0.356,1.894,Surface,CV of RH,c
+0.446,1.765,Surface,CV of RH,c
+0.4524,1.873,Surface,CV of RH,c
+0.4866,4.789,Surface,CV of RH,c
+0.4898,6.167,Surface,CV of RH,c
+0.5071,4.893,Surface,CV of RH,c
+0.5413,1.206,Standing,CV of temperature,d
+0.5436,1.063,Standing,CV of temperature,d
+0.5504,1.026,Standing,CV of temperature,d
+0.5661,2.177,Surface,CV of temperature,d
+0.5748,1.783,Surface,CV of temperature,d
+0.5841,2.15,Surface,CV of temperature,d
+0.4924,1.018,Standing,CV of RH,e
+0.5033,1.053,Standing,CV of RH,e
+0.523,1.195,Standing,CV of RH,e
+0.551,2.164,Surface,CV of RH,e
+0.554,1.779,Surface,CV of RH,e
+0.5587,2.187,Surface,CV of RH,e
