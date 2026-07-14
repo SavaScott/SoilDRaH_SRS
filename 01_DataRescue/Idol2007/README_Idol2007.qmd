@@ -481,12 +481,34 @@ The `of_variable` being used here are:
 #### Method-section only data ####
 
 studyMeta <- tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
-                   'region', 'value', 'slopes of the Mauna Loa Volcano', paste('Method ln9:', paste(data.lvl0.ls$method[9], collapse = ' ')),
+                   'citation', 'value', format(data.lvl0.ls$citation$primary), 'journal citation',
+                   'doi', 'value', data.lvl0.ls$citation$primary$doi, 'journal citation',
+                     'region', 'value', 'slopes of the Mauna Loa Volcano', paste('Method ln9:', paste(data.lvl0.ls$method[9], collapse = ' ')),
                    'land_use', 'value', 'stands that had regenerated into almost pure A. *koa* forests after livestock exclusion and ungulate removal', paste('Method ln8:', paste(data.lvl0.ls$method[8], collapse = ' ')),
-                   'soil_class', 'value','Andisols or as Histosols with andic properties reflective of the volcanic parent material',  paste('Method ln28:', paste(data.lvl0.ls$method[28], collapse = ' '),
-                   'citation', 'value', format(data.lvl0.df$citation$primary), 'journal citation',
-                   'doi', 'value', data.lvl0.df$citation$primary$doi, 'journal  citation'))
+                   'soil_class', 'value','Andisols or as Histosols with andic properties reflective of the volcanic parent material',  paste('Method ln28:', paste(data.lvl0.ls$method[28], collapse = ' ')),                                                                'elevation', 'maximum', '1650', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')), 
+                   'elevation', 'minimum', '1600', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')),
+                    'elevation', 'unit', 'm asl', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')),
+                   'stand_type', 'value', 'Acacia koa', paste('Method ln24:', paste(data.lvl0.ls$method[24], collapse = ' ')),
+                   'stand_age', 'minimum', '25', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' ')),
+                   'stand_age', 'minimum', '30', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' ')),
+                   'stand_age', 'unit', 'years', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' '))
+)
+                   
   
+siteMeta <- tribble(~of_site, ~of_variable, ~is_type, ~with_entry, ~from_source,
+                    'HONO', 'precipitation', 'value', '1000', paste('Method ln10:', paste(data.lvl0.ls$method[10], collapse = ' ')),
+                    'HONO', 'precipitation', 'unit', 'mm per year', paste('Method ln10:', paste(data.lvl0.ls$method[10], collapse = ' ')),
+                    'HAVO', 'precipitation', 'value', '1500', paste('Method ln12:',  paste(data.lvl0.ls$method[12], collapse = ' ')),
+                    'HAVO', 'precipitation', 'unit', 'mm per year', paste('Method ln12:', paste(data.lvl0.ls$method[12], collapse = ' ')),
+                    'HAVO', 'elevation', 'minimum', '1200', paste('Method ln20:', paste(data.lvl0.ls$method[20], collapse = ' ')),
+                    'HAVO', 'elevation', 'minimum', '2050', paste('Method ln20:', paste(data.lvl0.ls$method[20], collapse = ' ')),
+                    'HAVO', 'elevation', 'unit', 'm asl', paste('Method ln20:', paste(data.lvl0.ls$method[20], collapse = ' ')),
+                     'KR', 'precipitation', 'value', '2000', paste('Method ln14:',  paste(data.lvl0.ls$method[14], collapse = ' ')),
+                     'KR', 'precipitation', 'unit', 'mm per year', paste('Method ln14:', paste(data.lvl0.ls$method[14], collapse = ' '))
+)
+                                      
+                  
+
 
 #### Table 1 ####
 
@@ -498,8 +520,8 @@ Table1Primary <- data.lvl0.ls$data$Table1$primary |>
   mutate(of_variable = case_when(
            column_name == 'Site' ~ 'site_name',
            column_name == 'Elevation (m)' ~ 'elevation',
-           column_name == 'MAP(mm)' ~ 'mean_annual_precipiation',
-           column_name == 'MAT(°C)' ~ 'mean_annual_temperature',
+           column_name == 'MAP(mm)' ~ 'precipiation',
+           column_name == 'MAT(°C)' ~ 'temperature',
            column_name == 'Stand age (y)' ~ 'stand_age',
            column_name == 'Soil age (y)' ~ 'soil_age',
            column_name == 'Density (stems ha<sup>-1</sup>)' ~ 'stem_density'
