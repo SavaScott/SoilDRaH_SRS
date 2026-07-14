@@ -1,5 +1,5 @@
 ---
-title: "Data Rescue: Author YYYY"
+title: "Data Rescue: Wang 2017"
 format:
   html:
     toc: true
@@ -7,31 +7,19 @@ format:
 date: last-modified
 date-format: YYYY-MMMM
 bibliography:
-  - AuthorYYYY_Methods.bib #contains the citations in the methods section
-  - AuthorYYYY.bib #contains citation for the data source, generally a single citation of the primary paper
+  - Wang2017_Methods.bib 
+  - Wang2017.bib 
 authors: #author scheme from https://quarto.org/docs/journals/authors.html
-  - id: ktoddbrown #use the github name as an id
+  - id: JennavieveK #use the github name as an id
     name:
-      given: Katherine
-      family: Todd-Brown
-    orcid: 0000-0002-3109-8130
+      given: Jennavieve
+      family: Keefer
     affiliation:
-      - ref: uf-ees
-    role: #TODO define these roles and add reference
-      - transcription: lead #secondary, review
-      - standardization: lead #review
-      - curation: lead #review
+      - ref: uf-abe
+    role:
+      - "Transcription"
 
 affiliations:
-  - id: uf-ees
-    name: University of Florida
-    department: Environmental Engineering Sciences
-    city: Gainesville
-    state: Florida
-    country: USA
-    address: "365 Weil Hall \nP.O. Box 116580"
-    postal-code: 32611
-    url: https://essie.ufl.edu/ees/
   - id: uf
     name: University of Florida
     city: Gainesville
@@ -42,13 +30,13 @@ affiliations:
     
 timelog:
   - activity: 
-      description: add general UF affilation
-      who: ktoddbrown #github username
+      description: add general UF affilation and filled in portion of template
+      who: JennavieveK #github username
       #when you started and ended, can be just a year or down to the minute
-      start: 2026-01-29 T1530
+      start: 2026-07-14 T1130
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
-      duration: P05M
+      duration: P60M
   - activity: 
       description: revised execute with only provided files
       who: ktoddbrown #github username
@@ -83,17 +71,17 @@ library(kableExtra) # pretty tables
 library(bibtex) # reading in BibTex files to R
 
 # data files for level 0
-methods.file <- "AuthorYYYY_Methods.md"
-tableN.file <- 'AuthorYYYY_TableN.csv'
-figureM.file <- 'AuthorYYYY_FigureM.csv'
+methods.file <- "Wang2017_Methods.md"
+figure2.file <- 'Wang2017_Figure2.csv'
+figure3.file <- 'Wang2017_Figure3.csv'
 
 # Bibliography files
-primaryCitation.file <- 'AuthorYYYY.bib'
-methodsCitation.file <- 'AuthorYYYY_Methods.bib'
+primaryCitation.file <- 'Wang2017.bib'
+methodsCitation.file <- 'Wang2017_Methods.bib'
 
 # read function; you will need to create this function after you have your data
 #... rescue reviewed and before you finish your data harmonization.
-readsource.file <- '../../02_DataHarmonization/readAuthorYYYY.R'
+readsource.file <- '../../02_DataHarmonization/readWang2017.R'
 if(file.exists(readsource.file)){
   source(readsource.file)
 }
@@ -111,25 +99,31 @@ is_type.file <- '../../semantics/SoilDRaHVocabulary_is_type.csv'
 
 > Full citation here, exact format does not matter but it should be complete enough to find the paper. Please include the doi
 
-For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/#.
+For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/251.
 
-<!--- After you read through the paper write a brief summary of what the study
-measured and what the data was used for in. This should be <250 words.--->
-
-AuthorYYYY primarily measures ... 
-They use this data to look at ...
+Wang2017 primarily measures how varying positioning treatments, abiotic factors, and microbial activities affect the mass loss of C. squarrosa litter in a Chinese semi-arid temperate steppe. 
+It demonstrates that standing litter decomposes significantly faster than ground-level litter due to higher night-time relative humidity, a trend that persists even after the litter falls to the soil surface.
+They conducted a litterbag field experiment, and then some of that litter was freeze-dried for microbial community composition analysis.
+Another portion was refrigerated for laboratory incubation of how the standing phase affects further decomposition with regards to standing vs surface litter.
 
 ## Tables and figures
 
 <!--- Write a brief discription of all the tables and figures in this source. This should include full variable names when possible. It is perfectly fine to restate the captions here or copy other text that feels complete. Please keep this to a single sentence for each table/figure.--->
 
 - Table 
-  1) Describe the data in the first table.
+  1) Effects of position treatments on temperature and relative humidity (RH) in the semi-arid ecosystem.
+  2) Soil organic carbon (SOC) formation during laboratory incubation for litter pre-treated under different position treatments.
 
 - Figure 
-  1)  Describe the data in the first figure
+  1) Temperature and precipitation at the study site and temperature and relative humidity (RH) on the surface of litter.
+  2) Effects of position treatments on litter decomposition, this is a mass loss thing. Litter mass remaining over time under different position treatments.
+  3)  Litter dissolved organic carbon over time, litter position treatment effects on litter DOC.
+  4) The relationships between the highest litter moisture, microbial respiration rate, night-time average relative humidity (RH), litter total phospholipid fatty acids (PLFAs) and litter decomposition rate.
+  5) Litter decomposition during laboratory incubation for litter pre-treated under different position treatments.
+  6) The potential mechanisms regulating decomposition and soil organic carbon (SOC) formation efficiency for soil surface litter (b) and standing litter (c) in semi-arid ecosystems.
 
-## Fit for purpose: ProjectName
+
+## Fit for purpose: DeAD
 
 <!--- Write a brief discription of the project you are processing this data source for. This could be a copy-paste from other documentation. ---->
 
@@ -145,17 +139,17 @@ The purpose of this PROJECT is...
 
 <!--- Include a brief explaination to all the files in the folder--->
 
-These files are in the AuthorYYYY data rescue.
+These files are in the Wang2017 data rescue.
 
-- [Readme](README_AUTHORYYYY.qmd)
+- [Readme](README_Wang2017.qmd)
   + This is the primary file that documents the transcriptions and decision made during data rescue.
-- [AuthorYYYY.bib](AuthorYYYY.bib)
+- [Wang2017.bib](Wang2017.bib)
   + citation for article transcribed
-- [AuthorYYYY_Methods.bib](AuthorYYYY_Methods.bib)
+- [Wang2017_Methods.bib](Wang2017_Methods.bib)
   + citations for the methods section of the article
-- [AuthorYYYY_Methods.md](AuthorYYYY_Methods.md)
+- [Wang2017_Methods.md](Wang2017_Methods.md)
   + methods transcribed from primary article
-- [AuthorYYYY_TableN.csv](AuthorYYYY_TableN.csv)
+- [Wang2017_TableN.csv](Wang2017_TableN.csv)
   + table N from primary article with ...
 - [temp/](temp/)
     + scratch folder that will not be archived on GitHub, it should include local copies of the data resource (likely a PDF article) and any spreadsheets or other tools you used for the transcriptions.
@@ -166,8 +160,8 @@ These files are in the AuthorYYYY data rescue.
 
 + Lead
   - [ ] Read the article or data resource and the discription of the target project
-  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_AuthorYYYY'
-  - [ ] Create a copy of this template folder and rename it to AuthorYYYY
+  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_Wang2017'
+  - [ ] Create a copy of this template folder and rename it to Wang2017
   - [ ] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
   - [ ] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
   - [ ] Add the reviewer to the author list in the yml
@@ -221,7 +215,7 @@ And is crosschecked with the secondary transcription
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
 
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_TableN_ABC.md AuthorYYYY_TableN.md
+diff --strip-trailing-cr --suppress-common-lines -y temp/Wang2017_TableN_ABC.md Wang2017_TableN.md
 ```
 
 ## Methods
@@ -233,7 +227,7 @@ Any different to the cross check for the methods section will be output after th
 #| eval: false
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_Methods_ABC.md AuthorYYYY_Methods.md
+diff --strip-trailing-cr --suppress-common-lines -y temp/Wang2017_Methods_ABC.md Wang2017_Methods.md
 ```
 
 ### Methods  - Text
@@ -315,7 +309,7 @@ Below verifies that the data from the function matches what is coded above.
 #| label: checkReadFunction_lvl0
 
 if(file.exists(readsource.file)){
-  datafunction.lvl0.ls <- readAuthorYYYY(dataDir = '.',
+  datafunction.lvl0.ls <- readWang2017(dataDir = '.',
                                          dataLevel = 'level0')
   
   if(isTRUE(all.equal(datafunction.lvl0.ls, data.lvl0.ls))){
@@ -507,7 +501,7 @@ Check for an exact match with the read function.
 #| label: checkReadFunction_lvl1
 
 if(file.exists(readsource.file)){
-  datafunction.lvl1.ls <- readAuthorYYYY(dataDir = '.',
+  datafunction.lvl1.ls <- readWang2017(dataDir = '.',
                                          dataLevel = 'level1')
   
   if(isTRUE(all.equal(datafunction.lvl0.ls, data.lvl0.ls))){
