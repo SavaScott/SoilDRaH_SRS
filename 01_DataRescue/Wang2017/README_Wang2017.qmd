@@ -15,7 +15,7 @@ authors: #author scheme from https://quarto.org/docs/journals/authors.html
       given: Jennavieve
       family: Keefer
     affiliation:
-      - ref: uf-abe
+      - ref: uf
     role:
       - "Transcription"
 
@@ -31,17 +31,14 @@ affiliations:
 timelog:
   - activity: 
       description: add general UF affilation and filled in portion of template
-      who: JennavieveK #github username
-      #when you started and ended, can be just a year or down to the minute
+      who: JennavieveK 
       start: 2026-07-14 T1130
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
       duration: P60M
   - activity: 
-      description: revised execute with only provided files
-      who: ktoddbrown #github username
+      description: data summary and fit for purpose
+      who: JennavieveK #github username
       #when you started and ended, can be just a year or down to the minute
-      start: 2025-01-22 T1400
+      start: 2026-07-15 T1050
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
       duration: P45M
@@ -95,20 +92,16 @@ is_type.file <- '../../semantics/SoilDRaHVocabulary_is_type.csv'
 
 # Data Summary
 
-<!---- Fill in the full citation here, generally found on the journal page and link in the issue that you started on GitHub. Though this is at the top of the document, this should be one of the last things you do because a lot of this will be a direct copy-paste into the issue template. --->
-
-> Full citation here, exact format does not matter but it should be complete enough to find the paper. Please include the doi
+Wang, J., Liu, L., Wang, X., Yang, S., Zhang, B., Li, P., ... & Liu, W. (2017). High night‐time humidity and dissolved organic carbon content support rapid decomposition of standing litter in a semi‐arid landscape. Functional Ecology, 31(8), 1659-1668.https://doi.org/10.1111/1365-2435.12854
 
 For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/251.
 
-Wang2017 primarily measures how varying positioning treatments, abiotic factors, and microbial activities affect the mass loss of C. squarrosa litter in a Chinese semi-arid temperate steppe. 
+@Wang2017 primarily measures how varying positioning treatments, abiotic factors, and microbial activities affect the mass loss of C. squarrosa litter in a Chinese semi-arid temperate steppe. 
 It demonstrates that standing litter decomposes significantly faster than ground-level litter due to higher night-time relative humidity, a trend that persists even after the litter falls to the soil surface.
 They conducted a litterbag field experiment, and then some of that litter was freeze-dried for microbial community composition analysis.
 Another portion was refrigerated for laboratory incubation of how the standing phase affects further decomposition with regards to standing vs surface litter.
 
 ## Tables and figures
-
-<!--- Write a brief discription of all the tables and figures in this source. This should include full variable names when possible. It is perfectly fine to restate the captions here or copy other text that feels complete. Please keep this to a single sentence for each table/figure.--->
 
 - Table 
   1) Effects of position treatments on temperature and relative humidity (RH) in the semi-arid ecosystem.
@@ -116,7 +109,7 @@ Another portion was refrigerated for laboratory incubation of how the standing p
 
 - Figure 
   1) Temperature and precipitation at the study site and temperature and relative humidity (RH) on the surface of litter.
-  2) Effects of position treatments on litter decomposition, this is a mass loss thing. Litter mass remaining over time under different position treatments.
+  2) Effects of position treatments on litter decomposition, litter mass remaining over time under different position treatments.
   3)  Litter dissolved organic carbon over time, litter position treatment effects on litter DOC.
   4) The relationships between the highest litter moisture, microbial respiration rate, night-time average relative humidity (RH), litter total phospholipid fatty acids (PLFAs) and litter decomposition rate.
   5) Litter decomposition during laboratory incubation for litter pre-treated under different position treatments.
@@ -125,21 +118,35 @@ Another portion was refrigerated for laboratory incubation of how the standing p
 
 ## Fit for purpose: DeAD
 
-<!--- Write a brief discription of the project you are processing this data source for. This could be a copy-paste from other documentation. ---->
-
-This data is identified as a data source for PROJECT.
-The purpose of this PROJECT is...
+This data is identified as a data source for DeAD.
+The Decomposition Across Drylands (DeAD) data collection is a new data effort targeting dryland decomposition studies.
+The purpose of this data collection is to develop better litter decay models for dryland ecosystems.
 
 <!--- Include a list of the key variables identified for the project. This is used to identify the elements for the paper for the data rescue. An example is below for a basic geo-located soil carbon stock project. --->
+## Main Variables of Interest
 
-  - Location: The geo-location is given in the site description section of the methods. Both latitude and longitude are given but not the datum/projection that was used.
+  - Location: The study was conducted in a temperate steppe located at the Duolun Restoration Ecology Research Station, Inner Mongolia, China (42°02ʹ N, 116°17ʹ E, 1324 m a.s.l.).
+  - Duration: Field experiment ran from 14 July to 15 September in 2014 and 11 May to 25 July in 2015. 
+One litterbag was collected from each frame on days 31, 57, 88, 117, 318, 346, 384, 409, 474, 711, and 787.
+Laboratory incubation ran for 192 days, with measurements taken at days 1, 2, 3, 4, 5, 7, 9, 11, 16, 25, 43, and 60.
+  - Mass loss: Mass loss identified in Figure 2 and Figure 5 under the Statistical Analysis section of Materials and Methods section.
+  - Solar exposure: Solar exposure identified in Materials and methods, under Field Experiment Design (290-390 nm).
   - Soil carbon stock: Soil carbon stock was calculated from organic carbon fraction and bulk density and is reported in table 3 across two treatments and one control. Coarse fraction was not reported and does not appear to be included.
+  
+### Other Relevant Variables
+
+  - Litter species: Primary litter species was identified as C. squarrosa (C4 grass).
+  - Microsite data: Identified in Field Experiment Design section of Materials and methods. 
+The litterbags were placed horizontally on the surface of soil or on the supporting mesh, and above-ground vegetation was periodically clipped during growing seasons to avoid shading.
+  - Litter chemical composition: The initial dissolved organic carbon (DOC) concentration, N concentration and C/N ratio of C. squarrosa litter were 12·44 mg g−1, 0·64% and 65·80, respectively.
+  - Microclimate relative humidity: Identified in Table 1.
+  - Litter bag materials and method: 1-mm × 1·5-mm nylon mesh litterbags (10 cm × 15 cm).
   
 ## Files
 
 <!--- Include a brief explaination to all the files in the folder--->
 
-These files are in the Wang2017 data rescue.
+These files are in the @Wang2017 data rescue.
 
 - [Readme](README_Wang2017.qmd)
   + This is the primary file that documents the transcriptions and decision made during data rescue.
