@@ -1,0 +1,50 @@
+﻿Figure 3: Litter dissolved organic carbon (DOC) concentrations over time and the relationship between litter DOC concentration and microclimate parameters on the litter surface.,,,,
+x position,DOC (mg g^-1),type label,x label,graph label
+0,12.476,Surface,Time (days),a
+31.1569,8.5066,Surface,Time (days),a
+57.7319,4.3667,Surface,Time (days),a
+88.8889,2.2117,Surface,Time (days),a
+119.12946,2.2117,Surface,Time (days),a
+323.4822,4.59357,Surface,Time (days),a
+351.88999,3.516,Surface,Time (days),a
+390.3779,1.758,Surface,Time (days),a
+416.0366,1.928,Surface,Time (days),a
+482.016,1.4177,Surface,Time (days),a
+723.024,1.1909,Surface,Time (days),a
+800,1.0775,Surface,Time (days),a
+0,12.476,Standing,Time (days),a
+31.1569,10.0945,Standing,Time (days),a
+57.7319,5.671,Standing,Time (days),a
+88.8889,6.011,Standing,Time (days),a
+119.129,5.614,Standing,Time (days),a
+323.4822,18.318,Standing,Time (days),a
+351.8899,12.02268,Standing,Time (days),a
+390.378,7.31569,Standing,Time (days),a
+416.0366,7.31569,Standing,Time (days),a
+482.016,3.06238,Standing,Time (days),a
+723.02,4.139888,Standing,Time (days),a
+800,0,Standing,Time (days),a
+0.5274,1.708,Surface,CV of Temperature,(b) 2014
+0.541,1.779,Surface,CV of Temperature,(b) 2014
+0.5538,1.565,Surface,CV of Temperature,(b) 2014
+0.5728,4.769,Standing,CV of Temperature,(b) 2014
+0.5856,4.697,Standing,CV of Temperature,(b) 2014
+0.595,6.0498,Standing,CV of Temperature,(b) 2014
+0.356,1.779,Surface,CV of RH,(c) 2014
+0.446,1.5658,Surface,CV of RH,(c) 2014
+0.45,1.708,Surface,CV of RH,(c) 2014
+0.4856,4.6975,Standing,CV of RH,(c) 2014
+0.4887,6.0498,Standing,CV of RH,(c) 2014
+0.5055,4.76,Standing,CV of RH,(c) 2014
+0.5415,1.2147,Surface,CV of Temperature,(d) 2015
+0.5438,1.06357,Surface,CV of Temperature,(d) 2015
+0.5505,1.036,Surface,CV of Temperature,(d) 2015
+0.5667,2.204,Standing,CV of Temperature,(d) 2015
+0.5754,1.8058,Standing,CV of Temperature,(d) 2015
+0.5846,2.1838,Standing,CV of Temperature,(d) 2015
+0.492,1.036,Surface,CV of RH,(e) 2015
+0.5033,1.0635,Surface,CV of RH,(e) 2015
+0.522,1.21478,Surface,CV of RH,(e) 2015
+0.55,2.177,Standing,CV of RH,(e) 2015
+0.5528,1.80584,Standing,CV of RH,(e) 2015
+0.5559,2.204467,Standing,CV of RH,(e) 2015
