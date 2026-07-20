@@ -233,7 +233,7 @@ ggplot(data = plot.df,
 And is crosschecked with the secondary transcription (expected to be empty)
 
 ```{bash}
-#| label: compareTableN
+#| label: compareFigure2
 
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
@@ -279,7 +279,7 @@ ggplot(data = plot.df,
 And is crosschecked with the secondary transcription (expected to be empty)
 
 ```{bash}
-#| label: compareTableN
+#| label: compareFigure3
 
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
