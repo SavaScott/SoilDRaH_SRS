@@ -58,14 +58,6 @@ timelog:
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
       duration: P50M
-  - activity: 
-      description: Revise based on feedback
-      who: ktoddbrown #github username
-      #when you started and ended, can be just a year or down to the minute
-      end: 2025-11-26
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: P30M
 version: 'vs202512' #template version, remove before use
 ---
 
@@ -85,8 +77,8 @@ library(bibtex) # reading in BibTex files to R
 
 # data files for level 0
 methods.file <- "Wang2017_Methods.md"
-figure2.file <- 'Wang2017_Figure2.csv'
-figure3.file <- 'Wang2017_Figure3.csv'
+figure2.file <- 'Wang2017_Figure2_al.csv'
+figure3.file <- 'Wang2017_Figure3_al.csv'
 
 # Bibliography files
 primaryCitation.file <- 'Wang2017.bib'
@@ -172,8 +164,10 @@ These files are in the @Wang2017 data rescue.
   + citations for the methods section of the article
 - [Wang2017_Methods.md](Wang2017_Methods.md)
   + methods transcribed from primary article
-- [Wang2017_TableN.csv](Wang2017_TableN.csv)
-  + table N from primary article with ...
+- [Wang2017_Figure2_al.csv](Wang2017_Figure2_al.csv)
+  + Figure 2 from primary article
+- [Wang2017_Figure3_al.csv](Wang2017_Figure3_al.csv)
+  + Figure 3 from primary article
 - [temp/](temp/)
     + scratch folder that will not be archived on GitHub, it should include local copies of the data resource (likely a PDF article) and any spreadsheets or other tools you used for the transcriptions.
 
