@@ -296,10 +296,10 @@ Any different to the cross check for the methods section will be output after th
 
 ```{bash}
 #| label: compareMethods
-#| eval: false
+#| eval: true
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
-diff --strip-trailing-cr --suppress-common-lines -y temp/Wang2017_Methods_ABC.md Wang2017_Methods.md
+diff --strip-trailing-cr --suppress-common-lines -y temp/Wang2017_Methods_JK.md Wang2017_Methods.md
 ```
 
 ### Methods  - Text
@@ -309,7 +309,7 @@ The final text transcription from the Methods section is rendered below.
 ```{r}
 #| label: readMethods
 #| output: asis
-#| eval: true
+#| eval: false
 
 # This revised section will append two ### to any existing headers here so that it renders nicely with the other headers in the document.
 

@@ -27,7 +27,8 @@ Each treatment included three replications, resulting in six steel frames in tot
 Temperature and RH on the surface of the standing litter and soil surface litter for each treatment were recorded every 30 min during the growing season (from 14 July to 15 September in 2014 and 11 May to 25 July in 2015) using DS 1923 iButtons (Maxim Integrated, San Jose, CA, USA).
 The sensors were deployed on the surface of litterbags with sensing area facing down to avoid direct exposure to sunlight and precipitation.
 
-One litterbag was collected from each frame at days 31, 57, 88, 117, 318, 346, 384, 409, 474, 711 and 787. The 12th collection of litter sample was not included because the remaining litter mass was too low to measure litter chemistry.
+One litterbag was collected from each frame at days 31, 57, 88, 117, 318, 346, 384, 409, 474, 711 and 787. 
+The 12th collection of litter sample was not included because the remaining litter mass was too low to measure litter chemistry.
 Subsamples of the litter were oven-dried at 60 °C for 48 h after sampling and then weighed to get the moisture content.
 A fraction of the oven-dried subsample was further combusted overnight in a muffle furnace at 500 °C to determine the ash content.
 The rest of the fresh litter were divided into two subsamples. One was freeze-dried for analysis of microbial community composition.
