@@ -251,21 +251,20 @@ Figure 3 was modified ....
 #| label: figure3Check
 
 
-plot.df <- read_csv(file = figure3.file, #read in the specific file
+figure3.df <- read_csv(file = figure3.file, #read in the specific file
          skip = 1, #skip the first line with the caption
          #read everything as a character, don't worry about formatting yet
          col_types = cols(.default = col_character())) |>
-  mutate(across(c(`Depth [cm]`, `Soil organic carbon density [g cm$-1$]`),
+  mutate(across(c(`x value`,`DOC (mg g^-1)`),
                 as.numeric)) #make things numbers
          
-ggplot(data = plot.df, 
-       mapping = aes(x = `Depth [cm]`, y = `Soil organic carbon density [g cm$-1$]`, color=Site)) +
+ggplot(data = figure3.df |>
+         filter(`graph label` == "a"), 
+       mapping = aes(x = `x value`, y = `DOC (mg g^-1)`, group = `litter type`, color = `litter type`)) +
   geom_line() +
   geom_point() +
-  #depth below surface is often plotted flipped and downward positive
-  scale_x_reverse() +
-  coord_flip() +
-  labs(caption = read_csv(file = figure3.file, #read in that file again but...
+    labs(x = "Time (days)",
+      caption = read_csv(file = figure3.file, #read in that file again but...
                            n_max = 1, #only read the first line
                            col_names = 'caption', #call it the caption
                            #read everything as a character
@@ -273,6 +272,24 @@ ggplot(data = plot.df,
                            show_col_types = FALSE #do not return messages
                            )$caption #and take it out of the table
   )
+
+
+ggplot(data = figure3.df |>
+         filter(`graph label` != "a"), 
+       mapping = aes(x = `x value`, y = `DOC (mg g^-1)`, color = `litter type`)) +
+  geom_point() +
+    labs(caption = read_csv(file = figure3.file, #read in that file again but...
+                           n_max = 1, #only read the first line
+                           col_names = 'caption', #call it the caption
+                           #read everything as a character
+                           col_types = cols(.default = col_character()),
+                           show_col_types = FALSE #do not return messages
+                           )$caption #and take it out of the table 
+    ) +
+  facet_wrap(~`graph label`,
+             scales = "free")
+
+
 ```
 
 And is crosschecked with the secondary transcription (expected to be empty)
