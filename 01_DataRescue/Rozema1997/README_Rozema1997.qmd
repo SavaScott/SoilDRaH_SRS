@@ -1,27 +1,44 @@
 ---
-title: "Data Rescue: Author YYYY"
+title: "Data Rescue: Rozema 1997"
 format:
   html:
     toc: true
-    eval: true #if you want to not evaluate the chunks and just check the rendering, switch this to false
+    eval: true 
 date: last-modified
-date-format: YYYY-MMMM
+date-format: YYYY-MM
 bibliography:
-  - AuthorYYYY_Methods.bib #contains the citations in the methods section
-  - AuthorYYYY.bib #contains citation for the data source, generally a single citation of the primary paper
+  - Rozema1997_Methods.bib #contains the citations in the methods section
+  - Rozema1997.bib #contains citation for the data source, generally a single citation of the primary paper
 authors: #author scheme from https://quarto.org/docs/journals/authors.html
-  #remove ktoddbrown if they did not work on the rescue directly
-  - id: ktoddbrown #use the github name as an id
+  - id: ashbonner310 #use the github name as an id
     name:
-      given: Katherine
-      family: Todd-Brown
-    orcid: 0000-0002-3109-8130
+      given: Ashley
+      family: Bonner
+    orcid: 0000-0001-7882-6353
     affiliation:
       - ref: uf-ees
-    role: #TODO define these roles and add reference
-      - transcription: lead #secondary, review
-      - standardization: lead #review
-      - curation: lead #review
+    role: 
+      - transcription: lead (methods bib, Figure 1)
+      - transcription: secondary (Table 1, Table 2)
+
+  - id: anegondia #use the github name as an id
+    name:
+      given: Arunima
+      family: Anegondi
+    affiliation:
+      - ref: uf
+    role: 
+      - transcription: lead (Table 1, methods)
+      
+  - id: Misheph #use the github name as an id
+    name:
+      given: Mirah
+      family: Blanchard
+    affiliation:
+      - ref: uf
+    role: 
+      - transcription: lead (Table 1)
+      - transcription: secondary (Figure 1, methods)
       
 affiliations:
   - id: uf-ees
@@ -40,50 +57,33 @@ affiliations:
     country: USA
     postal-code: 32611
     url: https://www.ufl.edu/
-  - id: uf-mae
-    name: University of Florida
-    department: Mechanical and Aerospace Engineering
-    city: Gainesville
-    state: Florida
-    county: USA
-    address: "P.O Box 116250"
-    postal-code: 32611
-    url: https://mae.ufl.edu/
     
 timelog:
-  #remove activites below and add activites for the data rescue. Include one activity for developing the data rescue plan, each data element (table, figures, methods, bibliography), readme write-up, and anything else related to the data rescue.
-  - activity:
-      description: revise based on feedback, see https://github.com/ktoddbrown/SoilDRaH/issues/262. Changes include more details in the commented guidence, additional table and figure examples.
-      who: ktoddbrown
-      start: 2026-06-18 T1430
-      duration: PT45M
   - activity: 
-      description: add general UF affilation
-      who: ktoddbrown #github username
-      #when you started and ended, can be just a year or down to the minute
-      start: 2026-01-29 T1530
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: PT05M
-  - activity: 
-      description: revised execute with only provided files
-      who: ktoddbrown #github username
-      #when you started and ended, can be just a year or down to the minute
-      start: 2025-01-22 T1400
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: PT45M
-  - activity: #Suggested that you log each day's activity here
-      description: Revise based on feedback
-      who: ktoddbrown #github username
-      #Over what days did you work on this? Use
-      #... https://en.wikipedia.org/wiki/ISO_8601#Dates format.
-      start: 2025-11-21
-      end: 2025-11-26
-      #Estimate how long this took you, below is an example of 30 minutes. Use
-      #... https://en.wikipedia.org/wiki/ISO_8601#Durations
+      description: updated methods citation notes and author contributions
+      who: ashbonner310 
+      start: 2026-04-13 T1515
       duration: PT30M
-version: 'vs20270801' #template version, remove before use
+  - activity:
+      description: transcriptions (Table 1, Figure 1, methods)
+      who: Misheph
+      start: 2026-05-01
+      duration: PT3H30M    
+  - activity:
+      description: transcriptions (Table 1, methods)
+      who: anegondia
+      start: 2026-04-01
+      duration: PT1H
+  - activity: 
+      description: coding in file names, updating rescue plan and rescue info, cross checking tables and figure 
+      who: ashbonner310
+      start: 2026-05-14 T18:45
+      duration: PT2H45M
+  - activity: 
+      description: finish methods cross check and final edits 
+      who: ashbonner310
+      start: 2026-05-15 T17:00
+      duration: PT2H30M
 ---
 
 
@@ -101,13 +101,14 @@ library(kableExtra) # pretty tables
 library(bibtex) # reading in BibTex files to R
 
 # data files for level 0
-methods.file <- "AuthorYYYY_Methods.md"
-tableN.file <- 'AuthorYYYY_TableN.csv'
-figureM.file <- 'AuthorYYYY_FigureM.csv'
+methods.file <- "Rozema1997_Methods.md"
+table1.file <- 'Rozema1997_Table1.csv'
+table2.file <- 'Rozema1997_Table2.csv'
+figure1.file <- 'Rozema1997_Figure1.csv'
 
 # Bibliography files
-primaryCitation.file <- 'AuthorYYYY.bib'
-methodsCitation.file <- 'AuthorYYYY_Methods.bib'
+primaryCitation.file <- 'Rozema1997.bib'
+methodsCitation.file <- 'Rozema1997_Methods.bib'
 
 # read function; you will need to create this function after you have your data
 #... rescue reviewed and before you finish your data harmonization.
@@ -125,148 +126,111 @@ is_type.file <- '../../semantics/SoilDRaHVocabulary_is_type.csv'
 
 # Data Summary
 
-<!---- Fill in the full citation here, generally found on the journal page and link in the issue that you started on GitHub. Though this is at the top of the document, this should be one of the last things you do because a lot of this will be a direct copy-paste into the issue template. --->
+> Rozema, J., Tosserams, M., Nelissen, H.J.M. et al. *Stratospheric ozone reduction and ecosystem processes: enhanced UV-B radiation affects chemical quality and decomposition of leaves of the dune grassland species Calamagrostis epigeios*. Plant Ecology 128, 285–294 (1997). https://doi.org/10.1023/A:1009723210062
 
-> Full citation here, exact format does not matter but it should be complete enough to find the paper. Please include the doi
+For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/#221.
 
-For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/#.
-
-<!--- After you read through the paper write a brief summary of what the study
-measured and what the data was used for in. This should be <250 words.--->
-
-AuthorYYYY primarily measures ... 
-They use this data to look at ...
+In this study conducted in the Netherlands, the researchers wanted to know whether enhanced UV-B radiation would affect the chemical composition of dune grassland plants, as well as the decomposition rate of plant material. 
+They studied this by growing *Calamagrostis epigeios* grass under either ambient or enhanced UV-B in a controlled, experimental field and analyzing its chemical composition. 
+They examined decomposition using mesh litter bags over a 50-60 day period in either the experimental field or a dune grassland site. 
+The study found that UV-B causes plant tissues to grow significantly more lignin, which slows decomposition, but also directly speeds up the breakdown of plant matter at the same time.
 
 ## Tables and figures
 
-<!--- Write a brief discription of all the tables and figures in this source. This should include full variable names when possible. It is perfectly fine to restate the captions here or copy other text that feels complete. Please keep this to a single sentence for each table/figure.--->
-
 - Table 
-  1) Describe the data in the first table.
+  1) Percentage of of various organic compounds (\% Dry Weight) in litter grown under ambient vs enhanced UV-B, before and after decomposition under each lighting condition.
+  2) Total carbon and nitrogen (\% Dry Weight) and C/N ratio of material in leaf grown under ambient vs enhanced UV-B, before and after decomposing under each lighting condition
 
 - Figure 
-  1)  Describe the data in the first figure
+  1)  Mass loss (\% Dry Weight) in leaf litter grown under ambient vs enhanced UV-B, before and after decomposition under each lighting condition, after: a) over 60 days in dune grassland in 1994 b) over 50 days in dune grassland in 1995 c) over 60 days on the experimental field.
 
-## Fit for purpose: ProjectName
+## Fit for purpose: DeAD
 
-<!--- Write a brief discription of the project you are processing this data source for. This could be a copy-paste from other documentation. ---->
+This data was identified as a data source for the the **De**composition **A**cross **D**rylands (DeAD) data collection.
+This is a new data effort targeting dryland decomposition studies. 
+The purpose of this data collection is to develop better litter decay models for dryland ecosystems..
 
-This data is identified as a data source for PROJECT.
-The purpose of this PROJECT is...
+###Main Variables of Interest:
 
-<!--- Include a list of the key variables identified for the project. This is used to identify the elements for the paper for the data rescue. An example is below for a basic geo-located soil carbon stock project. --->
+**Location**: Latitude/longitude explicitly stated for dune grassland site (52°30'N, 4°40'E) and Vrije Universiteit Amsterdam campus named in the Methods section.
 
-  - Location: The geo-location is given in the site description section of the methods. Both latitude and longitude are given but not the datum/projection that was used.
-  - Soil carbon stock: Soil carbon stock was calculated from organic carbon fraction and bulk density and is reported in table 3 across two treatments and one control. Coarse fraction was not reported and does not appear to be included.
+**Duration**: Start and end time of exposure to the day resolution if possible, month is acceptable Exact dates and number of days for both decomposition experiment periods stated in Methods section under Decomposition Experiments: August 18, 1994 - October 17, 1994 (60 days) and September 9, 1995 - October 25, 1995 (50 days).
+
+**Mass loss**: Results reported in Figure 1 as percentage dry weight loss.
+
+**Solar exposure**: Litter was exposed to “ambient” UV-B radiation at around 5 kJ per m^2 per day or “enhanced” UV-B radiation at 7.5 kJ per m^2 per day.
+ Lamps provided increased radiation, the “enhanced” radiation was filtered such that radiation less than 290 nm was blocked, “ambient” had foil filters to block radiation below 313 nm (to control for UV-A radiation)
+ 
+###Other Variables of Interest:
+
+*Litter species*: Calamagrostis epigejos/epigeios, a dune grass (common name bushgrass).
+*Microsite data*: canopy vs bare soil distinction noted in Methods under Decomposition Experiments, but no quantitative data given.
+*Litter chemical composition*: reported in table 1, C:N reported in table 2
+*Litterbags*: 8.5 x 8.5 cm bags with 1 mm on the lower side, 3 mm on the upper side, 2g of dried material
+*Treatments*: UV-B lamps, ambient control lamps, and cellulose acetate filters
   
 ## Files
 
-<!--- Include a brief explaination to all the files in the folder--->
+These files are in the Rozema1997 data rescue.
 
-These files are in the AuthorYYYY data rescue.
-
-- [Readme](README_AUTHORYYYY.qmd)
+- [Readme](README_Rozema1997.qmd)
   + This is the primary file that documents the transcriptions and decision made during data rescue.
-- [AuthorYYYY.bib](AuthorYYYY.bib)
+- [Rozema1997.bib](Rozema1997.bib)
   + citation for article transcribed
-- [AuthorYYYY_Methods.bib](AuthorYYYY_Methods.bib)
+- [Rozema1997_Methods.bib](Rozema1997_Methods.bib)
   + citations for the methods section of the article
-- [AuthorYYYY_Methods.md](AuthorYYYY_Methods.md)
+- [Rozema1997_Methods.md](Rozema1997_Methods.md)
   + methods transcribed from primary article
-- [AuthorYYYY_TableN.csv](AuthorYYYY_TableN.csv)
-  + table N from primary article with ...
+- [Rozema1997_Table1.csv](Rozema1997_Table1.csv)
+  + table 1 from primary article, with statistical significance values included as columns.
+- [Rozema1997_Table2.csv](Rozema1997_Table2.csv)
+  + table 2 from primary article,  with statistical significance values included as columns.
+- [Rozema1997_Figure1.csv](Rozema1997_Figure1.csv)
+  + a plot digitization of Figure 1 from primary article, with values resported to the tenths place (one degree of precision more than axis labels)
 - [temp/](temp/)
-    + scratch folder that will not be archived on GitHub, it should include local copies of the data resource (likely a PDF article) and any spreadsheets or other tools you used for the transcriptions.
+    + scratch folder including second transcirptions that will be archived on GitHub and any files that will not be archived on GitHub, including local copies of the data resource (likely a PDF article) and any spreadsheets or other tools you used for the transcriptions.
 
 # Data Rescue working notes 
 
 ## Data Rescue Plan
 
 + Lead
-  - [ ] Read the article or data resource and the discription of the target project
-  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_AuthorYYYY'
-  - [ ] Create a copy of this template folder and rename it to AuthorYYYY
-  - [ ] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
-  - [ ] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
-  - [ ] Add the reviewer to the author list in the yml
+  - [X] Read the article or data resource and the discription of the target project
+  - [X] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main
+  - [X] Create a copy of this template folder and rename it to Rozema1997
+  - [X] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
+  - [X] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
+  - [X] Add the reviewer to the author list in the yml
 + Do
-  - [ ] Create a spreadsheet with TableN and export it to csv
-  - [ ] Extract points from FigureM and export it to csv
-  - [ ] Transcribe or copy the method section
-  - [ ] Insert references to bib entries
-  - [ ] reformat equations and mathematical symbols as [LaTex](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
-  - [ ] reformat text using [Markdown](https://www.markdownguide.org/cheat-sheet/)
-  - [ ] Create a bib file with the citations from the methods section
-  - [ ] Push to your local fork and get a second transcription pushed to your local fork by someone else on the project
+  - [X] Create a spreadsheet with Table1 and export it to csv
+  - [X] Create a spreadsheet with Table2 and export it to csv
+  - [X] Extract points from Figure1 and export it to csv
+  - [X] Transcribe or copy the method section
+  - [X] Insert references to bib entries
+  - [X] Create a bib file with the citations from the methods section
+  - [X] Push to your local fork and get a second transcription pushed to your local fork by someone else on the project
 + Measure
-  - [ ] cross check with second transcriber for tables and methods, and resolve any differences
-  - [ ] compile or render this ReadMe with all chunks up through the Level 0 data rescue section with `eval: true`
-  - [ ] push to your local fork and create a pull request to the main branch of the primary repository
-  - [ ] address any revisions in your pull request review
-  - [ ] celebrate!
+  - [X] cross check with second transcriber for tables and methods, and resolve any differences
+  - [X] compile or render this ReadMe with all chunks up through the Level 0 data rescue section with `eval: true`
+  - [X] push to your local fork and create a pull request to the main branch of the primary repository
+  - [X] address any revisions in your pull request review
+  - [X] celebrate!
 
-## Figure M
+## Table 1
 
-<!--- Create a plot to make the figure easy to compare to the table. You don't have to be exactly the same but it should be obvious, at a glance, if the transcript matches.---->
-
-Figure M was modified ....
-
-```{r}
-#| label: figureMCheck
-
-
-plot.df <- read_csv(file = figureM.file, #read in the specific file
-         skip = 1, #skip the first line with the caption
-         #read everything as a character, don't worry about formatting yet
-         col_types = cols(.default = col_character())) |>
-  mutate(across(c(`Depth [cm]`, `Soil organic carbon density [g cm$-1$]`),
-                as.numeric)) #make things numbers
-         
-ggplot(data = plot.df, 
-       mapping = aes(x = `Depth [cm]`, y = `Soil organic carbon density [g cm$-1$]`, color=Site)) +
-  geom_line() +
-  geom_point() +
-  #depth below surface is often plotted flipped and downward positive
-  scale_x_reverse() +
-  coord_flip() +
-  labs(caption = read_csv(file = tableN.file, #read in that file again but...
-                           n_max = 1, #only read the first line
-                           col_names = 'caption', #call it the caption
-                           #read everything as a character
-                           col_types = cols(.default = col_character()),
-                           show_col_types = FALSE #do not return messages
-                           )$caption #and take it out of the table
-  )
-```
-
-And is crosschecked with the secondary transcription (expected to be empty)
-
-```{bash}
-#| label: compareTableN
-
-# You will want to repeat the line below to cross check each csv and md file in the
-#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
-#... Note that the template should not have a conflict here.
-
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_FigureM_AC.csv AuthorYYYY_FigureM.csv
-```
-
-
-## Table N
-
-<!--- Common table modifications include: inserting an extra column to pivot sub-headers, filling in NA to identify blanks, and adding Latex or Markdown to denote formatting.---->
-
-Table N was modified by dropping the sub-table as a leading column into the transcribed table.
+The second half of Table 1 uses a number of asterisks (*) to relay information about the statistical significance of different qualities (Litter Quality, Decomposition, Photodegradation) on the results.
+The translation of the asterisks is included in the table caption.
+These are saved in three extra columns on the CSV, corresponding to the organic compounds which are listed as rows (Soluble Carbohydrates, Starch, α-Cellulose, Hemicellulose, Tannins, Lignin).
 
 ```{r}
 #| label: table1Check
+#| eval: true
 
-
-read_csv(file = tableN.file, #read in the specific file
+read_csv(file = table1.file, #read in the specific file
          skip = 1, #skip the first line with the caption
          #read everything as a character, don't worry about formatting yet
          col_types = cols(.default = col_character())) |>
-  kable(caption = read_csv(file = tableN.file, #read in that file again but...
+  kable(caption = read_csv(file = table1.file, #read in that file again but...
                            n_max = 1, #only read the first line
                            col_names = 'caption', #call it the caption
                            #read everything as a character
@@ -276,17 +240,113 @@ read_csv(file = tableN.file, #read in the specific file
   )
 ```
 
-And is crosschecked with the secondary transcription (expected to be empty)
+And is crosschecked with the secondary transcription
 
 ```{bash}
-#| label: compareTableN
+#| label: compareTable1
+#| eval: true
 
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
-#... Note that the template has an example of an unresolved conflict.
 
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_TableN_AC.csv AuthorYYYY_TableN.csv
+diff --strip-trailing-cr --suppress-common-lines -y temp/Rozema1997_Table1_AB.csv Rozema1997_Table1.csv
 ```
+
+## Table 2
+
+Table 2 was recorded as-is.
+The caption includes details for interpreting the rows on statistical significance of litter quality, decomposition, and UV-B radiation.
+
+```{r}
+#| label: table2Check
+#| eval: true
+
+
+read_csv(file = table2.file, #read in the specific file
+         skip = 1, #skip the first line with the caption
+         #read everything as a character, don't worry about formatting yet
+         col_types = cols(.default = col_character())) |>
+  kable(caption = read_csv(file = table2.file, #read in that file again but...
+                           n_max = 1, #only read the first line
+                           col_names = 'caption', #call it the caption
+                           #read everything as a character
+                           col_types = cols(.default = col_character()),
+                           show_col_types = FALSE #do not return messages
+                           )$caption #and take it out of the table
+  )
+```
+
+And is crosschecked with the secondary transcription
+
+```{bash}
+#| label: compareTable2
+#| eval: true
+
+# You will want to repeat the line below to cross check each csv and md file in the
+#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
+
+diff --strip-trailing-cr --suppress-common-lines -y temp/Rozema1997_Table2_AB.csv Rozema1997_Table2.csv
+```
+
+## Figure 1
+
+Figure 1 was captured with plot digitizer and formatted into a single csv.
+
+```{r}
+#| label: Figure1Check
+#| eval: true
+
+read_csv(file = figure1.file, #read in the specific file
+         skip = 1, #skip the first line with the caption
+         #read everything as a character, don't worry about formatting yet
+         col_types = cols(.default = col_character())) |>
+  kable(caption = read_csv(file = figure1.file, #read in that file again but...
+                           n_max = 1, #only read the first line
+                           col_names = 'caption', #call it the caption
+                           #read everything as a character
+                           col_types = cols(.default = col_character()),
+                           show_col_types = FALSE #do not return messages
+                           )$caption #and take it out of the table
+  )
+
+Figure1.df <- read_csv(file = figure1.file,
+                   skip = 1,
+                   show_col_types = FALSE) %>%
+  mutate(Duration = str_c(`Duration (days)`, " days")) %>%
+  unite(col = "Subgraphs",
+        c("Site", "Year", "Duration"),
+        sep = ", ") %>%
+  select(!`Duration (days)`) %>%
+  unite(col = "Treatments",
+        c("Litter Quality", "Radiation"),
+        sep = " ")
+
+ggplot(data = Figure1.df) + 
+  geom_col(aes(x = `Treatments`,
+               y = `Mass loss (% DW)`),
+           width = 0.5) + 
+  geom_errorbar(aes(x = `Treatments`,
+                    ymin = `Mass loss (% DW)`,
+                    ymax = `Error Bar Height`),
+                width = 0.2) + 
+  facet_wrap(~Subgraphs,
+             ncol = 1,
+             scales = 'free_x')
+
+```
+
+And is crosschecked with the secondary transcription
+
+```{bash}
+#| label: compareFigure1
+#| eval: true
+
+# You will want to repeat the line below to cross check each csv and md file in the
+#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
+
+diff --strip-trailing-cr --suppress-common-lines -y temp/Rozema1997_Figure1_MB.csv Rozema1997_Figure1.csv
+```
+
 
 ## Methods
 
@@ -294,12 +354,9 @@ Any different to the cross check for the methods section will be output after th
 
 ```{bash}
 #| label: compareMethods
-#| eval: false
-# You will want to repeat the line below to cross check each csv and md file in the
-#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
-#... Note the template example does NOT have a conflict.
-
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_Methods_AC.md AuthorYYYY_Methods.md
+#| eval: true
+#| 
+diff --strip-trailing-cr --suppress-common-lines -y temp/Rozema1997_Methods_MB.md Rozema1997_Methods.md
 ```
 
 ### Methods  - Text
@@ -309,6 +366,7 @@ The final text transcription from the Methods section is rendered below.
 ```{r}
 #| label: readMethods
 #| output: asis
+#| eval: true
 
 # This revised section will append two ### to any existing headers here so that it renders nicely with the other headers in the document.
 
@@ -327,9 +385,39 @@ This generally doesn't read well in the final report so commenting it out here b
 Some citations are missing, those are noted here and how best guess were generated.
 Think of this as a lab notebook documenting how you found each citation.
 
-- [ ] short citation
+- [X] Tosserams et al. 1995
   + copy from bib
-  + manually entered or direct export
+  + direct export
+  + Source mentions "Tosserams et al. 1997" but that citation doesn't exist in references
+  + Investigation into this citation matches the reference made in the methods section, the methods markdown file changes the erroneous reference to this one
+  
+- [X] Tosserams et al. 1996
+  + direct export
+  
+- [X] Allen 1989
+  + book, manually entered 
+  
+- [X] Green et al. 1980
+  +  manually entered 
+
+- [X] Kuiters 1990
+  +  direct export
+
+- [X] Rozema et al. 1995
+  +  manually entered 
+  +  chapter/article within a book within a series. 
+  +  added details about series book appears in
+
+- [X] Sokal & Rohlf 1981
+  + book, manually entered 
+  
+- [X] Tolsma 1989
+  + doctorate thesis
+  + manually entered
+
+- [X] Van Beckhoven 1995
+  + doctorate thesis
+  + manually entered
 ---->
 
 # Level 0 Data rescue
@@ -338,6 +426,7 @@ This level 0 data read parses the transcribed files with minimal cleaning or tra
 
 ```{r}
 #| label: readLevel0
+#| eval: true
 #This chunk has two purposes. 
 #...1) Check the formatting by reading in everything 
 #...2) Create a list of everything to process later in level 1
@@ -355,31 +444,42 @@ data.lvl0.ls <- list(
   #Read in the results as tables or figure transcriptions. This includes
   #...the caption as well as the tables themselves
   data = list(
-    TableN = list(
+    Table1 = list(
       #Read the caption as a text string. Captions are the first cell on 
       #...the first row.
-      caption = read_csv(file = tableN.file,
+      caption = read_csv(file = table1.file,
                          col_types = cols(.default = col_character()),
                          n_max = 1, col_names = FALSE)$X1[1],
       #Read in all the data, skipping the first row with the caption and read
       #...in the table as character. This element is a tibble (data.frame).
-      primary = read_csv(file = tableN.file,
+      primary = read_csv(file = table1.file,
                          col_types = cols(.default = col_character()),
                          skip = 1)
     ), #End 'Table1' element
-    FigureM = list(
+  Table2 = list(
       #Read the caption as a text string. Captions are the first cell on 
       #...the first row.
-      caption = read_csv(file = figureM.file,
+      caption = read_csv(file = table2.file,
                          col_types = cols(.default = col_character()),
                          n_max = 1, col_names = FALSE)$X1[1],
       #Read in all the data, skipping the first row with the caption and read
       #...in the table as character. This element is a tibble (data.frame).
-      primary = read_csv(file = figureM.file,
+      primary = read_csv(file = table2.file,
                          col_types = cols(.default = col_character()),
                          skip = 1)
-    ) #End 'Table1' element
-    #Repeat for all tables and figures...
+    ), #End 'Table2' element  
+  Figure1 = list(
+      #Read the caption as a text string. Captions are the first cell on 
+      #...the first row.
+      caption = read_csv(file = figure1.file,
+                         col_types = cols(.default = col_character()),
+                         n_max = 1, col_names = FALSE)$X1[1],
+      #Read in all the data, skipping the first row with the caption and read
+      #...in the table as character. This element is a tibble (data.frame).
+      primary = read_csv(file = figure1.file,
+                         col_types = cols(.default = col_character()),
+                         skip = 1)
+    ) #End 'Figure1' element  
    ) #end 'data' element
 )
 
@@ -390,6 +490,7 @@ Below verifies that the data from the function matches what is coded above.
 
 ```{r}
 #| label: checkReadFunction_lvl0
+#| eval: false
 
 if(file.exists(readsource.file)){
   datafunction.lvl0.ls <- readAuthorYYYY(dataDir = '.',
@@ -509,6 +610,7 @@ data.lvl1.ls <- list(
 
 ```{r}
 #| label: check_of_variable
+#| eval: false
 
 #Read in the list of current 'of_variable' entries
 SoilDRaH_variable_list <- read_csv(file =of_variable.file,
@@ -536,6 +638,7 @@ if(length(new_variables) == 0){
 
 ```{r}
 #| label: check_is_type
+#| eval: false
 
 #read in the current types and what variable they are associated with
 SoilDRaH_type_list <- read_csv(file = is_type.file,
@@ -582,6 +685,7 @@ Check for an exact match with the read function.
 
 ```{r}
 #| label: checkReadFunction_lvl1
+#| eval: false
 
 if(file.exists(readsource.file)){
   datafunction.lvl1.ls <- readAuthorYYYY(dataDir = '.',
