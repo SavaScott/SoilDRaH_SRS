@@ -51,6 +51,12 @@ timelog:
       end: 2025-11-27T11:38
       #alternatively duration can be combined with a start or end
       #duration: P1H15M
+  - activity: 
+      description: working ISCN3 level 2 (incomplete time record)
+      who: ktoddbrown #github username
+      #when you started and ended, can be just a year or down to the minute
+      start: 2026-08-04
+      duration: PT45M
 ---
 
 
@@ -327,13 +333,16 @@ ggplot(CPEAT_site.df) +
 layer_ISCN3.df <- ISCN3.ls$layer |>
   pivot_wider(names_from = c(of_variable, is_type), names_sep = '::',
               values_from = with_entry) |> #114 446 obs
-  #check that we have the needed bulk density and carbon fraction values
+  #check that we have the needed bulk density and carbon fraction values needed
+  #...to calculate the soil carbon density
   filter_out(all(is.na(`bulk_density::value`)),
              .by = c(geolocation_id, temporal_id, layer_id)) |> #107 704 obs
   filter_out(all(is.na(`carbon_fraction::value`)) &
                all(is.na(`organic_fraction::value`)),
              .by = c(geolocation_id, temporal_id, layer_id)) |> #103 634 obs
   mutate(
+    #attache the sample ID and dataset names to the values so we can 
+    #...reprocess the dataset to be grouped by location-time-depth
     #sample_id
     `bulk_density::sample_id` = if_else(is.na(`bulk_density::value`), NA, sample_id),
     `carbon_fraction::sample_id` = if_else(is.na(`carbon_fraction::value`), NA, sample_id),
@@ -365,7 +374,38 @@ layer_ISCN3.df <- ISCN3.ls$layer |>
             case_when(str_detect(`coarse_fraction::method`, 'measured') ~ 1,
                       str_detect(`coarse_fraction::method`, 'estimated') ~ 2,
                       .default = NA)
-          ) |>
+          )
+
+ISCN3_bulkdensity.df <- layer_ISCN3.df |>
+  filter(case_when(
+    #Stock bulk density is fine earth mass by whole soil volume with 
+    #....no coarse fraction correction needed.
+    any(`bulk_density::soc_priority` == 1) ~  #3 483 obs.
+     `bulk_density::soc_priority` == 1,
+    #We have coarse fraction, then prioritize the whole soil measurements
+    any(is.finite(`coarse_fraction::soc_priority`)) &
+      any(`bulk_density::soc_priority` == 2) ~
+      `bulk_density::soc_priority` == 2, #9 obs.
+        #  `bulk_density::soc_priority` == 1,
+    # #We have coarse fraction, then fall back to fine earth measurements
+    any(is.finite(`coarse_fraction::soc_priority`)) &
+      any(`bulk_density::soc_priority` == 3) ~
+      `bulk_density::soc_priority` == 3, #9 590 obs.
+    # #We have coarse fraction, then fall back to unspecified measurements
+    any(is.finite(`coarse_fraction::soc_priority`)) &
+      any(`bulk_density::soc_priority` == 4) ~
+      `bulk_density::soc_priority` == 4, #2 013 obs
+    # cumulative we have 14 959 with the combined conditions above
+    #other wise just take the minimum
+    any(is.finite(`bulk_density::soc_priority`)) ~
+      `bulk_density::soc_priority` == min(`bulk_density::soc_priority`, na.rm=TRUE),
+    #and now we have 37 203 values
+                   .default = FALSE),
+         .by = c(geolocation_id, temporal_id, layer_id)) |>
+  select(geolocation_id, temporal_id, layer_id, starts_with('bulk_density')) |>
+  reframe(count = n(),
+          .by = c(geolocation_id, temporal_id, layer_id))
+  
   reframe(bulk_density = 
             mean(as.numeric(
               `bulk_density::value`[
