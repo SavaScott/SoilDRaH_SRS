@@ -67,12 +67,17 @@ affiliations:
     postal-code: 32611
     url: https://mae.ufl.edu/
   - activity: 
-      description: Lev1 standardization
+      description: Lev1 standardization started
       who: SavaScott
       start: 2026-01-24
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: PT2H 
+      end: 2026-04-30
+      duration: PT7H25M #lost track of the time along the semester, this is an estimate and it may have been higher
+  - activity: 
+      description: Lev1 standardization reworked
+      who: SavaScott
+      start: 2026-07-07
+      end: 2026-08-05
+      duration: PT4H
 ---
 
 
@@ -93,14 +98,13 @@ methodsCitation.file <- 'Binkley1999_Methods.bib'
 
 # read function; you will need to create this function after you have your data
 #... rescue reviewed and before you finish your data harmonization.
-readsource.file <- '../../../R/readBinkley1999.R'
-if(file.exists(readsource.file)){
-  source(readsource.file)
-}
+readsource.file <- '../../02_DataHarmonization/readBinkley1999.R'
+source(readsource.file)
+
 
 #semantic files for level 1
-of_variable.file <- '../../02_DataHarmonization/of_variable.csv'
-is_type.file <- '../../02_DataHarmonization/is_type.csv'
+#of_variable.file <- '../../02_DataHarmonization/of_variable.csv'
+#is_type.file <- '../../02_DataHarmonization/is_type.csv'
 
 ```
 
@@ -115,7 +119,7 @@ For the discussion of this data rescue see the Github issue: https://github.com/
 
 This paper documents changes in Hawaiian soil after 32 months of development of a eucalyptus plantation.
 Soil C was found to not change significantly, suggesting that expectations of C accumulation due to afforestation may need to be reduced.
-Rapid changes in soil are examined here as: (1) Soil fertility may affect tree growth rate, and (2) Changes in soil C must be accounted for to predict root production following an efflux in CO2.
+Rapid changes in soil are examined here as: (1) Soil fertility may affect tree growth rate, and (2) Changes in soil C must be accounted for to predict root production following an efflux in CO$_2$.
 
 ## Fit for purpose: HiCSC
 
@@ -219,7 +223,7 @@ In the future this draft will be echoed from the R scripts.
 
 ```{r readLevel0}
 
-data.lvl0.df <- list(citation = 
+data.lvl0.ls <- list(citation = 
                     list(primary = 
                            read.bib(file = primaryCitation.file), 
                          methods = 
@@ -255,17 +259,25 @@ The `of_variable` being used here are:
 + citation
 + doi
 + region
-+ latitude
-+ longitude
-+ mean_air_temperature
-+ mean_rainfall
-+ elevation 
++ geolocation
++ air_temperature
++ rainfall
++ elevation
 + soil_class
-+ initial_planting
-+ observation_year
-+ core_description
++ inital_planting
++ observation_time
++ soil_sample_prep
++ soil_sampling
++ stand_type
++ layer
++ soil_aluminum
++ soil_calcium
++ soil_magensium
++ soil_nitrogen
++ soil_organic_carbon
 + soil_ph
-+ sample_prep
++ soil_potassium
++ stand_age
 
 ```{r}
 #| label: constructLevel1
@@ -273,29 +285,29 @@ The `of_variable` being used here are:
 #### Method section only ####
 
 studyMeta <- tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
-                     'region', 'site', '13 km NNE of downtown Hilo', paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                     'region', 'state', 'HI', paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                'geolocation', 'latitude', as.character(19 + 50/60 + 28.1/3600), paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                 'geolocation', 'longitude', as.character(-1*(155 + 7/60 + 28.3/3600)), paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-               'air_temperature', 'value', '21',paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                'air_temperature', 'unit', '°C',paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-               'rainfall', 'min', '300', paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                'rainfall', 'max', '400', paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                'rainfall', 'unit', 'mm mo<sup>-1</sup>', paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                'elevation', 'value', '350', paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                'elevation', 'unit', 'm', paste('Method ln3:', paste(data.lvl0.df$method[3], collapse = ' ')),
-                'soil_class', 'value', 'Kaiwiki thixotropic, isothermic Typic Hydrandepts', paste('Method ln4:',paste(data.lvl0.df$method[4], collapse = ' ')),
-                'initial_planting', 'value', '1994', paste('Method ln11:', data.lvl0.df$method[11]),
-              'observation_time', 'value', '1997', paste('Method ln23:', data.lvl0.df$method[23]),
-                'soil_sample_prep', 'method', 'oven dried at 100 C to constant weight', paste('Method ln22:', data.lvl0.df$method[22]),
-                'soil_sampling', 'description', '30 by 30 m plots with trees at two spacings (1 by 1 m and 3 by 3 m)', paste('Method ln12:', data.lvl0.df$method[12]),
-                'stand_type', 'value', 'E. saligna', paste('Method ln3:', data.lvl0.df$method[3]),
-                 'citation', 'value', format(data.lvl0.df$citation$primary), 
-                'journal_citation', 'doi', 'value', data.lvl0.df$citation$primary$doi, 'journal citation')
+                     'region', 'site', '13 km NNE of downtown Hilo', paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                     'region', 'state', 'HI', paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                'geolocation', 'latitude', as.character(19 + 50/60 + 28.1/3600), paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                 'geolocation', 'longitude', as.character(-1*(155 + 7/60 + 28.3/3600)), paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+               'air_temperature', 'value', '21',paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                'air_temperature', 'unit', '°C',paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+               'rainfall', 'min', '300', paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                'rainfall', 'max', '400', paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                'rainfall', 'unit', 'mm mo<sup>-1</sup>', paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                'elevation', 'value', '350', paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                'elevation', 'unit', 'm', paste('Method ln3:', paste(data.lvl0.ls$method[3], collapse = ' ')),
+                'soil_class', 'value', 'Kaiwiki thixotropic, isothermic Typic Hydrandepts', paste('Method ln4:',paste(data.lvl0.ls$method[4], collapse = ' ')),
+                'initial_planting', 'value', '1994', paste('Method ln11:', data.lvl0.ls$method[11]),
+              'observation_time', 'value', '1997', paste('Method ln23:', data.lvl0.ls$method[23]),
+                'soil_sample_prep', 'method', 'oven dried at 100 C to constant weight', paste('Method ln22:', data.lvl0.ls$method[22]),
+                'soil_sampling', 'description', '30 by 30 m plots with trees at two spacings (1 by 1 m and 3 by 3 m)', paste('Method ln12:', data.lvl0.ls$method[12]),
+                'stand_type', 'value', 'E. saligna', paste('Method ln3:', data.lvl0.ls$method[3]),
+                 'citation', 'value', format(data.lvl0.ls$citation$primary), 
+                'journal_citation', 'doi', 'value', data.lvl0.ls$citation$primary$doi, 'journal citation')
     
 #### Table 1 ####
                 
-Table1Primary <- data.lvl0.df$data$Table1$primary |>
+Table1Primary <- data.lvl0.ls$data$Table1$primary |>
    mutate(row_id = paste0('R', 1:n())) |>
    pivot_longer(cols = -row_id,
                names_to = 'column_name', values_to = 'with_entry',
@@ -311,14 +323,6 @@ Table1Primary <- data.lvl0.df$data$Table1$primary |>
       column_name == "C K† (mmol m<sup>-2</sup>)" ~ "soil_potassium",
       column_name == "F K† (mmol m<sup>-2</sup>)" ~ "soil_potassium",
       column_name == "Al (mmol m<sup>-2</sup>)" ~ "soil_aluminum")) |>
-#  mutate(is_type = if_else(str_detect(column_name, 'Mean'), 'mean', 'value')) |>
-
-#reframe(of_type = case_when(
- #   str_detect(with_entry, '\\d+\\-\\d+') ~ c('upperbound', 'lowerbound'),
-  #  str_detect(with_entry, '.+ \\(.+\\)') ~ c('mean', 'standard error'),
-   # .default = 'value'
-#  ), 
- # .by=everything()) |>
 
 mutate(
   value = case_when(
@@ -361,16 +365,16 @@ Table1Meta <- Table1Primary |>
   
   bind_rows(
   tribble(~of_variable, ~method, ~from_source,
-          'soil_ph', paste0(data.lvl0.df$method[25:26], collapse = ' '), 'Methods ln25-26',
-          'soil_calcium', paste0(data.lvl0.df$method[27], collapse = ' '), 'Methods ln27',
-          'soil_magensium', paste0(data.lvl0.df$method[27], collapse = ' '), 'Methods ln27',
-          'soil_aluminum', paste0(data.lvl0.df$method[27], collapse = ' '), 'Methods ln27',
-          'soil_potassium', paste0(data.lvl0.df$method[c(14:15,27)], collapse = ' '), 'Methods ln14-15;27',
-  'soil_potassium', paste0(data.lvl0.df$method[c(16:17,27)], collapse = ' '), 'Methods ln16-17;27',
-  'stand_age', paste0(data.lvl0.df$method[11], collapse = ' '), 'Methods ln11',
-  'layer', paste0(data.lvl0.df$method[c(19:20,23:24)], collapse = ' '), 'Methods ln 19-20;23-24',
-  'soil_organic_carbon', paste0(data.lvl0.df$method[29:30], collapse = ' '), 'Methods ln 29-30',
-  'soil_nitrogen', paste0(data.lvl0.df$method[29:30], collapse = ' '), 'Methods ln 29-30') ) |>
+          'soil_ph', paste0(data.lvl0.ls$method[25:26], collapse = ' '), 'Methods ln25-26',
+          'soil_calcium', paste0(data.lvl0.ls$method[27], collapse = ' '), 'Methods ln27',
+          'soil_magensium', paste0(data.lvl0.ls$method[27], collapse = ' '), 'Methods ln27',
+          'soil_aluminum', paste0(data.lvl0.ls$method[27], collapse = ' '), 'Methods ln27',
+          'soil_potassium', paste0(data.lvl0.ls$method[c(14:15,27)], collapse = ' '), 'Methods ln14-15;27',
+  'soil_potassium', paste0(data.lvl0.ls$method[c(16:17,27)], collapse = ' '), 'Methods ln16-17;27',
+  'stand_age', paste0(data.lvl0.ls$method[11], collapse = ' '), 'Methods ln11',
+  'layer', paste0(data.lvl0.ls$method[c(19:20,23:24)], collapse = ' '), 'Methods ln 19-20;23-24',
+  'soil_organic_carbon', paste0(data.lvl0.ls$method[29:30], collapse = ' '), 'Methods ln 29-30',
+  'soil_nitrogen', paste0(data.lvl0.ls$method[29:30], collapse = ' '), 'Methods ln 29-30') ) |>
 bind_rows(
     tribble(~of_variable, ~control_vocabulary, ~from_source,
           'soil_class', 'Kaiwiki thixotropic: USDA classification for deep, well drained soils formed from weathered volcanic ash|isothermic Typic Hydrandept: USDA taxonomic class of deep, well drained soils formed in material weathered from basic volcanic ash', 'USDA',
@@ -387,7 +391,7 @@ left_join(Table1Primary |>
 
 #### Create level 1
 
-data.lvl1.df <- list(
+data.lvl1.ls <- list(
   study = studyMeta,
   primary_meta = dplyr::bind_rows(Table1Meta),
   primary = bind_rows(Table1Primary)|>
@@ -398,4 +402,87 @@ data.lvl1.df <- list(
             of_variable, is_type, with_entry, from_source)
   )
 ```
+
+## Check for new variables and types
+
+`of_variable` and `is_type` in the data files should be defined in the draft vocabulary.
+Update this after 3-6 datasets have been joined together in the initial curation.
+
+```{r}
+#| label: check_of_variable
+
+temp <- data.lvl1.ls$study |>
+  select(of_variable, is_type) |>
+  bind_rows(data.lvl1.ls$primary_meta) |>
+              select(of_variable, is_type) |>
+  bind_rows(data.lvl1.ls$primary |>
+              select(of_variable, is_type)
+            ) |>
+  unique() |>
+  mutate(study_id = 'Binkley1999')
+
+#write_csv(temp, file = '../../03_DataCuration/HiCSC/vocabulary_draft.csv')
+ref_draft <- read_csv('../../03_DataCuration/HICSC/vocabulary_draft.csv',
+                      show_col_types = FALSE)
+
+newVariables <- anti_join(temp, ref_draft,
+                          by = join_by(of_variable, is_type, study_id))
+
+if(nrow(newVariables) == 0){
+  print('All variables in draft document')
+}else{
+  #add the missing rows to the draft
+  write_csv(temp, file = '../../03_DataCuration/HICSC/vocabulary_draft.csv',
+            append = TRUE, col_names = FALSE)
+}
+
+ #Read in the list of current 'of_variable' entries
+# SoilDRaH_variable_list <- read_csv(file = '..//../02_DataHarmonization/of_variable.csv',
+ #                                   show_col_types = FALSE)
+ 
+ #compare the variables in the level 1 tables to the SoilDRaH variables
+# new_variables <- lapply(data.lvl1.ls, function(xx){
+ #  setdiff(unique(xx$of_variable), 
+  #         unique(SoilDRaH_variable_list$of_variable))
+# }) |>
+ #  unlist()
+ 
+# #Check that there are no new variables
+# if(length(new_variables) == 0){
+ #  print('All of_variables are in the SoilDRaH variable list. No additions required')
+ #}else{
+  # cat(paste('Please start a issue for new variables [',
+   #             new_variables, ']', sep = '', collapse = '\n'))
+# }
+```
+
+
+
+## Check function match
+
+Check for an exact match with the read function.
+
+```{r}
+#| label: checkReadFunction_lvl1
+
+if(file.exists(readsource.file)){
+  datafunction.lvl1.ls <- readBinkley1999(dataDir = '.',
+                                         dataLevel = 'level1')
+  
+  if(isTRUE(all.equal(datafunction.lvl1.ls, data.lvl1.ls))){
+    print('Read function output matches ReadMe code for level 1.')
+  }else{
+    print('There is a mismatch in the level 1 data objects between the code here and the read function.')
+  }
+}else{
+  print('The read function does not exist.')
+}
+
+```
+
+
+# References
+
+<!---- This space will be filled with the citations when rendered. Leave this blank. ---->
+
 
