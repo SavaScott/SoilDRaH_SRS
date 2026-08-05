@@ -1,1 +1,37 @@
-test
+of_variable,is_type,study_id
+region, site, Binkley1999
+region, state, Binkley1999
+geolocation, latitude, Binkley1999
+geolocation, longitude, Binkley1999
+air_temperature, value, Binkley1999
+air_temperature, unit, Binkley1999
+rainfall, max, Binkley1999
+rainfall, min, Binkley1999
+rainfall, unit, Binkley1999
+elevation, value, Binkley1999
+elevation, unit, Binkley1999
+soil_class, value, Binkley1999
+inital_planting, value, Binkley1999
+observation_time, value, Binkley1999
+soil_sample_prep, method, Binkley1999
+soil_sampling, description, Binkley1999
+stand_type, value, Binkley1999
+citation, value, Binkley1999
+journal_citation, doi, Binkley1999
+layer, lowerbound, Binkley1999
+layer, upperbound, Binkley1999
+soil_aluminum, mean, Binkley1999
+soil_aluminum, standard error, Binkley1999
+soil_calcium, mean, Binkley1999
+soil_calcium, standard error, Binkley1999
+soil_magensium, mean, Binkley1999
+soil_magensium, standard error, Binkley1999
+soil_nitrogen, mean, Binkley1999
+soil_nitrogen, standard error, Binkley1999
+soil_organic_carbon, mean, Binkley1999
+soil_organic_carbon, standard error, Binkley1999
+soil_ph, mean, Binkley1999
+soil_ph, standard error, Binkley1999
+soil_potassium, mean, Binkley1999
+soil_potassium, standard error, Binkley1999
+stand_age, value, Binkley1999
