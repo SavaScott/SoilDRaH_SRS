@@ -58,6 +58,14 @@ timelog:
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
       duration: P50M
+  - activity: 
+      description: cross-checked figure 2
+      who: JennavieveK 
+      #when you started and ended, can be just a year or down to the minute
+      start: 2026-08-06 T1115
+      #start: YYYY-MM-DD THH:MM
+      #alternatively duration can be combined with a being/end
+      duration: P60M
 version: 'vs202512' #template version, remove before use
 ---
 
@@ -130,7 +138,6 @@ This data is identified as a data source for DeAD.
 The Decomposition Across Drylands (DeAD) data collection is a new data effort targeting dryland decomposition studies.
 The purpose of this data collection is to develop better litter decay models for dryland ecosystems.
 
-<!--- Include a list of the key variables identified for the project. This is used to identify the elements for the paper for the data rescue. An example is below for a basic geo-located soil carbon stock project. --->
 ## Main Variables of Interest
 
   - Location: The study was conducted in a temperate steppe located at the Duolun Restoration Ecology Research Station, Inner Mongolia, China (42°02ʹ N, 116°17ʹ E, 1324 m a.s.l.).
@@ -139,7 +146,6 @@ One litterbag was collected from each frame on days 31, 57, 88, 117, 318, 346, 3
 Laboratory incubation ran for 192 days, with measurements taken at days 1, 2, 3, 4, 5, 7, 9, 11, 16, 25, 43, and 60.
   - Mass loss: Mass loss identified in Figure 2 and Figure 5 under the Statistical Analysis section of Materials and Methods section.
   - Solar exposure: Solar exposure identified in Materials and methods, under Field Experiment Design (290-390 nm).
-  - Soil carbon stock: Soil carbon stock was calculated from organic carbon fraction and bulk density and is reported in table 3 across two treatments and one control. Coarse fraction was not reported and does not appear to be included.
   
 ### Other Relevant Variables
 
@@ -176,17 +182,17 @@ These files are in the @Wang2017 data rescue.
 ## Data Rescue Plan
 
 + Lead
-  - [ ] Read the article or data resource and the discription of the target project
-  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_Wang2017'
-  - [ ] Create a copy of this template folder and rename it to Wang2017
-  - [ ] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
+  - [x] Read the article or data resource and the discription of the target project
+  - [x] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_Wang2017'
+  - [x] Create a copy of this template folder and rename it to Wang2017
+  - [x] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
   - [ ] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
   - [ ] Add the reviewer to the author list in the yml
 + Do
-  - [ ] Extract points from Figure2 and export it to csv
-  - [ ] Extract points from Figure3 and export it to csv
-  - [ ] Transcribe or copy the method section
-  - [ ] Insert references to bib entries
+  - [x] Extract points from Figure2 and export it to csv
+  - [x] Extract points from Figure3 and export it to csv
+  - [x] Transcribe or copy the method section
+  - [x] Insert references to bib entries
   - [ ] reformat equations and mathematical symbols as [LaTex](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
   - [ ] reformat text using [Markdown](https://www.markdownguide.org/cheat-sheet/)
   - [ ] Create a bib file with the citations from the methods section
