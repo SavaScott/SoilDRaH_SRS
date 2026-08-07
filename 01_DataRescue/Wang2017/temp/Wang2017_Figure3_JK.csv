@@ -1,50 +1,50 @@
-"Figure 3: Litter dissolved organic carbon (DOC) concentrations over time and the relationship between litter DOC concentration and microclimate parameters on the litter surface. (a) Effects of position treatments on litter DOC concentrations (mg g^?1) over time. Values are means +/- SE (*n* = 3). The relationship between (b) coefficient of variation (CV) of temperature and (c) CV of relative humidity (RH) with the average DOC concentration (mg g^?1) during the period shaded with light grey in (a), and (d) CV of temperature and (e) CV of RH with litter average DOC concentration (mg g^?1) during the period shaded with dark grey in (a). P, position; *T*, time.",,,,
+"Figure 3: Litter dissolved organic carbon (DOC) concentrations over time and the relationship between litter DOC concentration and microclimate parameters on the litter surface. (a) Effects of position treatments on litter DOC concentrations (mg g^-1) over time. Values are means +/- SE (*n* = 3). The relationship between (b) coefficient of variation (CV) of temperature and (c) CV of relative humidity (RH) with the average DOC concentration (mg g^-1) during the period shaded with light grey in (a), and (d) CV of temperature and (e) CV of RH with litter average DOC concentration (mg g^-1) during the period shaded with dark grey in (a). P, position; *T*, time.",,,,
 x value,DOC (mg g^-1),litter type,x label,graph label
 0,12.48,Surface,Time (days),a
-28,8.7,Surface,Time (days),a
-54,4.6,Surface,Time (days),a
-86,2.4,Surface,Time (days),a
-116,2.3,Surface,Time (days),a
-316,4.8,Surface,Time (days),a
-344,3.7,Surface,Time (days),a
-382,1.9,Surface,Time (days),a
-407,2,Surface,Time (days),a
-472,1.6,Surface,Time (days),a
-709,1.4,Surface,Time (days),a
-785,1.2,Surface,Time (days),a
-0,12.6,Standing,Time (days),a
-30,10.1,Standing,Time (days),a
-55,5.8,Standing,Time (days),a
-87,6.1,Standing,Time (days),a
-116,5.7,Standing,Time (days),a
-315,18.4,Standing,Time (days),a
-345,12.1,Standing,Time (days),a
-383,7.4,Standing,Time (days),a
-407,7.4,Standing,Time (days),a
-474,3.2,Standing,Time (days),a
-712,4.3,Standing,Time (days),a
-788,0.2,Standing,Time (days),a
-0.5271,1.667,Surface,CV of temperature,b
-0.5415,1.667,Surface,CV of temperature,b
-0.5544,1.563,Surface,CV of temperature,b
-0.5734,4.688,Standing,CV of temperature,b
-0.5867,4.583,Standing,CV of temperature,b
-0.5962,5.938,Standing,CV of temperature,b
-0.356,1.894,Surface,CV of RH,c
-0.446,1.765,Surface,CV of RH,c
-0.4524,1.873,Surface,CV of RH,c
-0.4866,4.789,Surface,CV of RH,c
-0.4898,6.167,Surface,CV of RH,c
-0.5071,4.893,Surface,CV of RH,c
-0.5413,1.206,Standing,CV of temperature,d
-0.5436,1.063,Standing,CV of temperature,d
-0.5504,1.026,Standing,CV of temperature,d
-0.5661,2.177,Surface,CV of temperature,d
-0.5748,1.783,Surface,CV of temperature,d
-0.5841,2.15,Surface,CV of temperature,d
-0.4924,1.018,Standing,CV of RH,e
-0.5033,1.053,Standing,CV of RH,e
-0.523,1.195,Standing,CV of RH,e
-0.551,2.164,Surface,CV of RH,e
-0.554,1.779,Surface,CV of RH,e
-0.5587,2.187,Surface,CV of RH,e
+29.58,8.6,Surface,Time (days),a
+55.87,4.48,Surface,Time (days),a
+87.44,2.21,Surface,Time (days),a
+117.56,2.26,Surface,Time (days),a
+319.74,4.69,Surface,Time (days),a
+347.94,3.61,Surface,Time (days),a
+386.19,1.83,Surface,Time (days),a
+411.51,1.93,Surface,Time (days),a
+477.01,1.51,Surface,Time (days),a
+716.01,1.3,Surface,Time (days),a
+792.5,1.14,Surface,Time (days),a
+0,12.54,Standing,Time (days),a
+30.58,10.1,Standing,Time (days),a
+56.37,5.74,Standing,Time (days),a
+87.94,6.06,Standing,Time (days),a
+117.56,5.66,Standing,Time (days),a
+319.24,18.36,Standing,Time (days),a
+348.44,12.06,Standing,Time (days),a
+386.69,7.36,Standing,Time (days),a
+411.52,7.32,Standing,Time (days),a
+478.01,3.13,Standing,Time (days),a
+717.51,4.22,Standing,Time (days),a
+794,0.1,Standing,Time (days),a
+0.527,1.69,Surface,CV of temperature,(b) 2014
+0.542,1.72,Surface,CV of temperature,(b) 2014
+0.554,1.56,Surface,CV of temperature,(b) 2014
+0.573,4.73,Standing,CV of temperature,(b) 2014
+0.586,4.64,Standing,CV of temperature,(b) 2014
+0.596,5.99,Standing,CV of temperature,(b) 2014
+0.356,1.84,Surface,CV of RH,(c) 2014
+0.446,1.67,Surface,CV of RH,(c) 2014
+0.452,1.79,Surface,CV of RH,(c) 2014
+0.486,4.74,Standing,CV of RH,(c) 2014
+0.489,6.11,Standing,CV of RH,(c) 2014
+0.506,4.83,Standing,CV of RH,(c) 2014
+0.541,1.21,Surface,CV of temperature,(d) 2015
+0.544,1.06,Surface,CV of temperature,(d) 2015
+0.551,1.03,Surface,CV of temperature,(d) 2015
+0.566,2.19,Standing,CV of temperature,(d) 2015
+0.575,1.79,Standing,CV of temperature,(d) 2015
+0.584,2.17,Standing,CV of temperature,(d) 2015
+0.492,1.03,Surface,CV of RH,(e) 2015
+0.503,1.06,Surface,CV of RH,(e) 2015
+0.523,1.21,Surface,CV of RH,(e) 2015
+0.551,2.17,Standing,CV of RH,(e) 2015
+0.553,1.79,Standing,CV of RH,(e) 2015
+0.557,2.19,Standing,CV of RH,(e) 2015

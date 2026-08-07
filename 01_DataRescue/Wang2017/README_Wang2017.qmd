@@ -66,6 +66,14 @@ timelog:
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
       duration: P60M
+- activity: 
+      description: cross-checked figure 3
+      who: JennavieveK 
+      #when you started and ended, can be just a year or down to the minute
+      start: 2026-08-07 T1440
+      #start: YYYY-MM-DD THH:MM
+      #alternatively duration can be combined with a being/end
+      duration: P70M
 version: 'vs202512' #template version, remove before use
 ---
 
