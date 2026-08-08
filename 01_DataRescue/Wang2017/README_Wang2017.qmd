@@ -74,6 +74,14 @@ timelog:
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
       duration: P70M
+- activity: 
+      description: cross-checked methods section
+      who: JennavieveK 
+      #when you started and ended, can be just a year or down to the minute
+      start: 2026-08-08 T1620
+      #start: YYYY-MM-DD THH:MM
+      #alternatively duration can be combined with a being/end
+      duration: P120M
 version: 'vs202512' #template version, remove before use
 ---
 
