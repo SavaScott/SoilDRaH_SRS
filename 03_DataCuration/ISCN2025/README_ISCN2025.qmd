@@ -329,17 +329,42 @@ ggplot(CPEAT_site.df) +
 
 ```{r}
 #| label: ISCN3_level2
-# 
+
+ISCN3.ls <- readISCN3(dataDir = '../../01_DataRescue/ISCN3_2015',
+                      dataLevel = 'level1')
+
+reporting_groups <- ISCN3.ls$layer |>
+  #slice_head(n=10) |>
+  pivot_wider(names_from = c(of_variable, is_type), names_sep = '::',
+              values_from = with_entry) |> #114 446 obs
+  select(ends_with('id'), dataset_name) |>
+  #Recover the original identifiers
+  separate_longer_delim(cols = sample_id,
+                          delim = regex(';?dataset:')) |> #251 897 obs
+  separate_wider_regex(cols = sample_id,
+                       patterns = c(dataset = '^.*', 
+                                    ',site:', site = '.*', 
+                                    ',profile:', profile = '.*',
+                                    ',layer:', layer = '.*',
+                                    ',row:', row = '.*',
+                                    ',column_name:', column = '.*$'),
+                       too_few = "align_start", cols_remove = FALSE) |>
+  #add layer id because some of the 'layer' names have been mangled by excel
+  #49495 unique site-profile-layer groupings; 56579 site-profile-layer_id groupings
+  select(sample_id, site, profile, layer_id)
+
 layer_ISCN3.df <- ISCN3.ls$layer |>
   pivot_wider(names_from = c(of_variable, is_type), names_sep = '::',
               values_from = with_entry) |> #114 446 obs
+  #Calculate SOC from site-layer_id paired measurements
+  
   #check that we have the needed bulk density and carbon fraction values needed
   #...to calculate the soil carbon density
   filter_out(all(is.na(`bulk_density::value`)),
              .by = c(geolocation_id, temporal_id, layer_id)) |> #107 704 obs
   filter_out(all(is.na(`carbon_fraction::value`)) &
                all(is.na(`organic_fraction::value`)),
-             .by = c(geolocation_id, temporal_id, layer_id)) |> #103 634 obs
+             .by = c(geolocation_id, temporal_id, layer_id)) #103 634 obs
   mutate(
     #attache the sample ID and dataset names to the values so we can 
     #...reprocess the dataset to be grouped by location-time-depth
@@ -748,6 +773,161 @@ ggplot(ISCN_layer.df |>
 ```{r}
 #Data viz checks
 ```
+
+## Geolocation and temporal clusters
+
+1) Several locations appear to be repeated with both the lat/long reported extremely closely and shared values of bulk density or soil carbon elements reported.
+  - *To resolve* this complete the degree distance between all lat/lon and applied a `{r} precisions.ls$geolocationCluster_resolution` cluster height to define geolocation groups.
+  - *Assume*: this ignores datum corrections, if exact location matters (<100m) you may need to reprocess the data from level 0.
+2) Observation dates with minor disagreements are likely duplicate entries.
+  - *To resolve*, similar to geolocations, a distance matrix was calculated and clusters within `{r} precisions.ls$observationYear_resolution` were assigned unique identifies.
+3) Layer observations appear to be duplicated for different SOC calculations and duplication listed under multiple datasets.
+  - *To resolve* add in the clusters developed in the site processing above so that we can better identify duplicate entries of variables when processing each variable type later in the code. Collapse the entry if the values match at the same geolocation-time-depth.
+
+
+```{r}
+
+#Define the location clusters if there are finite latitude/longitude reported using clusters on eucludian distances
+site_geocluster <- site_org.df |>
+  select("dataset_name_sub", #ID
+         "site_name",  #ID
+         "lat (dec. deg)", "long (dec. deg)", 'datum (datum)') |>
+  #there is one site in the 'World soil carbon and nitrogen data' that has two
+  #... lat-long locations specified. Kick it out.
+  unique() |> filter(n() == 1, .by = c(dataset_name_sub, site_name)) |>
+  #remove any location that is missing lat/lon, don't assign a geocluster
+  filter(is.finite(`lat (dec. deg)` + `long (dec. deg)`)) |>
+  #Create a distance matrix based on the latitude and longitude,
+  #...cluster the sites, and cut out similar groups. 
+  #...Looking at the tree heights and the spread of the lat/lon, 
+  #...it looks like the height corresponds to the degree separation of the 
+  #...points. Degrees 0.001 will correspond to 100m and is one order of 
+  #...magnitude greater then the enforced precision.
+  mutate(geolocation_id = sprintf('geocluster_%05d_%s',
+           dist(matrix(c(`lat (dec. deg)`, `long (dec. deg)`), ncol = 2)) |>
+           hclust() |>
+           cutree(h = precisions.ls$geolocationCluster_resolution),
+         `datum (datum)`)) #|> #Using euclidean distance
+  #filter(n() > 1, .by = geolocation_id) #take a look at the clustered locations
+
+#What happens if we change the tolerance
+# temp <-  dist(matrix(c(site_geocluster$`lat (dec. deg)`,
+#              site_geocluster$`long (dec. deg)`), ncol = 2)) |>
+#           hclust()
+#summary(temp$height > 0.0001) #5443 unique clusters
+#summary(temp$height > 0.001) #5117 unique clusters
+#summary(temp$height > 0.01) #4205 unique clusters
+
+#Define time clusters similarlly to the spatial clusters
+site_temporalCluster <- site_org.df |>
+  select("dataset_name_sub", #ID
+         "site_name",  #ID
+         observation_date) |>
+  #only define a cluster if we have an observation date
+  filter(is.finite(observation_date)) |> unique() |>
+  #create the temporal cluster
+  mutate(date_year = year(observation_date),
+         temporal_id = sprintf(
+           'timecluster_%02d',
+           dist(matrix(decimal_date(observation_date), ncol = 1)) |> 
+             hclust() |>
+             cutree(h = precisions.ls$observationYear_resolution))) #max height here corresponds to year span, consider two years to be effectively the same observation time
+
+#temp <-  dist(matrix(decimal_date(site_temporalCluster$observation_date), ncol = 1)) |>
+#           hclust()
+#range(temp$height) # 0.00000 94.60383
+#summary(temp$height > 1) #75 clusters
+#summary(temp$height > 2) #43 clusters
+#summary(temp$height > 5) #21 clusters
+#summary(temp$height > 10) #11 clusters
+
+```
+
+## Space-time processing: resolution and replication
+
+Given the geo-location and temporal clusters:
+
+1) Calculate the associated lat/lon, and observation times with each cluster as a `mean` and record the range of values as a `resolution.` 
+2) Collapse the state/country for each geolocation cluster.
+
+```{r}
+#| label: ISCN3_spaceTime
+
+geolocation.df <- layer.df |>
+  select(geolocation_id, `lat (dec. deg)`, `long (dec. deg)`, datum = `datum (datum)`) |>
+  filter(!is.na(geolocation_id)) |>
+  unique() |> #5405
+  #Deal with duplicate values
+  reframe(latitude = mean(`lat (dec. deg)`),
+          longitude = mean(`long (dec. deg)`),
+          resolution = mean(c(diff(range(`lat (dec. deg)`)),
+                              diff(range(`long (dec. deg)`)))),
+          observation_count = n(),
+          .by = c(geolocation_id, datum)) |> #5131
+  mutate(unit = 'decimal degrees',
+         of_variable = 'geolocation',
+         #TODO set precision
+         across(c(latitude, longitude, resolution, observation_count, datum), as.character)) |>
+  pivot_longer(cols = c(latitude, longitude, unit, resolution, observation_count, datum),
+               names_to = 'is_type', values_to = 'with_entry',
+               values_drop_na = TRUE)
+
+region.df <- layer.df |>
+  select(geolocation_id, country = `country (country)`, state = `state (state_province)`) |>
+  pivot_longer(c(country, state),
+               names_to = 'is_type', values_to = 'with_entry',
+                values_drop_na = TRUE) |>
+  filter(with_entry != 'Unknown', !is.na(geolocation_id)) |>
+  unique() |> #7767
+  #Deal with duplicate values
+  reframe(with_entry = paste(sort(unique(with_entry)), collapse = ';'),
+          .by = c(geolocation_id, is_type)) |>
+  #pivot_wider(names_from = is_type, values_from = with_entry) |> #5131
+  mutate(of_variable = 'region') 
+
+temporal.df <- layer.df |> 
+  select(temporal_id, observation_date, `observation_date (YYYY-MM-DD)`, observation_date_formula) |>
+  filter(!is.na(temporal_id)) |>
+  unique() |> #664 obs
+  #Deal with duplicate values
+  reframe(date = mean(decimal_date(observation_date)) |>
+            round(digits = 2),
+          resolution = round(as.numeric(difftime(max(observation_date), min(observation_date), 
+                                           units = 'days'))/365, digits = 2),
+          observation_count = n(),
+         .by = c(temporal_id)) |>
+  mutate(unit = 'decimal year (CE)',
+         of_variable = 'observation_year') |> #44 obs
+  mutate(across(.cols = c(date, resolution, observation_count, unit), as.character)) |>
+  pivot_longer(cols = c(date, resolution, observation_count, unit),
+               names_to = 'is_type', values_to = 'with_entry',
+                 values_drop_na = TRUE)
+
+
+#Deal with duplicate values
+  reframe(sample_id = ifelse(n() == 1,
+                            unique(sample_id), 
+                            paste0('[MultiSourced]',
+                                   paste(sort(unique(sample_id)), 
+                                         collapse = ';'))),
+         .by = c(geolocation_id, temporal_id, layer_id, 
+                 dataset_name, #track for citation
+                 value)) |> #553 obs
+  select(geolocation_id, temporal_id, layer_id, sample_id,
+         value, dataset_name) |>
+    
+    #Deal with duplicate values
+  reframe(sample_id = ifelse(n() == 1 | length(unique(sample_id)) == 1,
+                            unique(sample_id), 
+                            paste0('[MultiSourced]', paste(unique(sample_id), collapse = ';'))),
+         method = paste(unique(method[!is.na(method)]), collapse = ';'),
+         #there are a small ammount of layers that share OC, C and/or CaCO3 values
+         #... which is possible, so group on this as well.
+         #observation_count = n(),
+         dataset_name = paste(sort(unique(dataset_name)), sep = ';'),
+         .by = c(geolocation_id, temporal_id, layer_id, of_variable, value)) |> #44 902 obs
+```
+
 
 # References
 
