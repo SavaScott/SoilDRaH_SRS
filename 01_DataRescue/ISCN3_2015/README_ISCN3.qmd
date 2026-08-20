@@ -124,15 +124,10 @@ if(file.exists(readsource.file)){
 }
 
 #semantic files for level 1
-of_variable.file <- '../../02_DataHarmonization/SoilDRaHVocabulary_of_variable.csv'
-is_type.file <- '../../02_DataHarmonization/SoilDRaHVocabulary_is_type.csv'
+proposedSemantics.filename <- '../../03_DataCuration/ISCN2025/proposedSemantics.csv'
 
-level1_controlVocabulary <- list(soc = 'carbon',
-                                 bd = 'bulk_density',
-                                 cf = 'coarse_fraction',
-                                 layer = 'layer',
-                                 geolocation = 'geolocation',
-                                 om = 'organic_fraction')
+#of_variable.file <- '../../02_DataHarmonization/SoilDRaHVocabulary_of_variable.csv'
+#is_type.file <- '../../02_DataHarmonization/SoilDRaHVocabulary_is_type.csv'
 
 ```
 
@@ -468,7 +463,7 @@ collection.df <-
          "contact_name", "contact_email", 
          "dataset_description"
   ) |>
-  mutate(source_from = 'Table Dataset') |>
+  mutate(from_source = 'Table Dataset') |>
   #expand the Permafrost RCN datasets so we can pull in that citation
   reframe(dataset_name_citation = c('Permafrost_RCN', dataset_name)[c(str_detect(dataset_name, '^Permafrost RCN_'), TRUE)],
           .by = everything()) |>
@@ -479,19 +474,17 @@ collection.df <-
              "reference", 
              "citation", "citation_usage", 
              "acknowledgement", "acknowledgement_usage") |>
-      mutate(source_from = 'Table Citation'),
+      mutate(from_source = 'Table Citation'),
     relationship = "many-to-many",
     by = join_by(dataset_name_citation)) |>
   #### Trim NRCS, remove 2 collection. Work with the current NRCS data download instead
   filter(!str_detect(dataset_name, 'NRCS')) |>
   #merge multiple citations for each dataset name (for example if it was a permafrost RCN study this will have both the RCN citation and original source)
-  reframe(value = paste(sort(unique(citation)), collapse = ';'),
-          from_source = paste(sort(unique(c(source_from.x, source_from.y))), collapse = ';'),
+  reframe(with_entry = paste(sort(unique(citation)), collapse = ';'),
+          from_source = paste(sort(unique(c(from_source.x, from_source.y))), collapse = ';'),
           .by = dataset_name) |>
-  pivot_longer(cols = c('value', 'from_source'),
-               names_to = 'is_type', values_to = 'with_entry',
-               values_drop_na = TRUE) |>
-  mutate(of_variable = 'bibkey')
+  mutate(of_variable = 'bibkey',
+         is_type = 'value')
   
 ```
 
@@ -522,7 +515,7 @@ site_org.df <- data.lvl0.ls$data$TableProfile$primary |>
          "lat (dec. deg)", "long (dec. deg)", "datum (datum)", #geolocation
          "state (state_province)", "country (country)", #region
          "observation_date (YYYY-MM-DD)", #observation_date
-         "profile_zero_ref (profile_zero_ref)")  |>
+         "profile_zero_ref (profile_zero_ref)")  |> #pull for use in layer.df
   #remove 75 651 profiles. Work with the current NRCS data download instead
   filter(!str_detect(dataset_name_sub, 'NRCS')) |>
   #correct the observation, some are entered in as years an others 
@@ -549,11 +542,12 @@ site_org.df <- data.lvl0.ls$data$TableProfile$primary |>
   #....introduced during initial processing (excel/access exports?)
   mutate(across(c(`lat (dec. deg)`, `long (dec. deg)`), 
                 .fns = ~ round(.x, digits = precisions.ls$latLong_digits))) |>
-  mutate(across(everything(), as.character))
+  mutate(across(everything(), as.character)) |>
+  mutate(from_source = 'Table Profile')
 
 site_location.df <- site_org.df |>
   select(dataset_name = dataset_name_sub,
-         site_name, profile_name, 
+         site_name, profile_name, from_source,
          latitude = `lat (dec. deg)`, longitude = `long (dec. deg)`,
          datum = `datum (datum)`) |>
   mutate(unit = 'decimal degrees') |>
@@ -564,9 +558,20 @@ site_location.df <- site_org.df |>
 
 site_time.df <- site_org.df |>
   select(dataset_name = dataset_name_sub,
-         site_name, profile_name,
-         value = observation_date) |>
-  mutate(of_variable = 'observation')
+         site_name, profile_name, from_source,
+         with_entry = observation_date) |>
+  mutate(of_variable = 'observation_date',
+         is_type = 'date')
+
+site_region.df <- site_org.df |>
+  select(dataset_name = dataset_name_sub,
+         site_name, profile_name, from_source,
+         state = `state (state_province)`, country = `country (country)`) |>
+  pivot_longer(cols = c(state, country),
+               names_to = 'is_type', values_to = 'with_entry',
+               values_drop_na = TRUE) |>
+  mutate(of_variable = 'georegion')
+  
 
 ```
 
@@ -621,7 +626,7 @@ layer.df <- data.lvl0.ls$data$TableLayer$primary |>
   mutate(across(c(`layer_top (cm)`, `layer_bot (cm)`), 
                 .fns= ~ as.numeric(.x, digits = precisions.ls$depth_digits) )) |>
   #Pull in the zero reference from the site table
-  left_join(site.df |>
+  left_join(site_org.df |>
               select(dataset_name_sub, site_name, profile_name,
                      `profile_zero_ref (profile_zero_ref)`) |>
               unique(),
@@ -647,7 +652,8 @@ layer.df <- data.lvl0.ls$data$TableLayer$primary |>
     )) |> 
   #create a row number, organic carbon causes the sample ids to duplicate with 
   #... multiple methods for the same variable. Group these with a row number.
-  mutate(row_id = paste('R', 1:n()))
+  mutate(row_id = paste('R', 1:n()),
+         from_source = 'Table Layer')
 ```
 
 
@@ -658,7 +664,7 @@ Most of the layer identifiers for upper and lower bounds were dealt with in the 
 ```{r}
 #| label: ISCN3_depth
 depth.df <- layer.df  |>
-  select(layer_id, 
+  select(layer_id, from_source,
          upper = `layer_top (cm)`, lower = `layer_bot (cm)`,
          zero_ref = `profile_zero_ref (profile_zero_ref)`) |> #72 503 obs
   filter(!is.na(upper + lower)) |> #59 895 obs
@@ -667,7 +673,10 @@ depth.df <- layer.df  |>
          across(.cols = c(upper, lower), .fns = as.character)) |>
     pivot_longer(cols = c(upper, lower, zero_ref, unit),
                  names_to = 'is_type', values_to = 'with_entry',
-                 values_drop_na = TRUE)
+                 values_drop_na = TRUE) |>
+  #correct for the zero reference being pulled form the profile table
+  mutate(from_source = if_else(is_type == 'zero_ref',
+                               'Table Profile', from_source))
 ```
 
 
@@ -680,10 +689,11 @@ The organic fraction corresponds to a soil fraction that is made up of organic m
 
 ```{r}
 #| label: ISCN3_organicFraction
-#| 
+
 organic_fraction.df <- layer.df  |>
   select(dataset_name = dataset_name_sub,
-         site_name, profile_name, layer_id, row_id,
+         site_name, profile_name, layer_name,
+         layer_id, row_id, from_source,
          `loi (percent)`)  |>
   filter(!is.na(`loi (percent)`)) |>  #938 obs
   #remove excel export errors
@@ -790,10 +800,12 @@ carbonFraction_map <- tribble(~column_id, ~c_method, ~what, ~how,
 #### Process carbon fraction data####
 
 carbon_fraction.df <- layer.df  |>
-  select(c(ends_with('_id'), dataset_name = dataset_name_sub,
+  select(dataset_name = dataset_name_sub,
+         site_name, profile_name, layer_name,
+         layer_id, row_id, from_source,
            `oc (percent)`, `c_tot (percent)`, `caco3 (percent)`,
            #cNRCS_prep_code, #empty after the removal of NRCS data
-           c_method))  |>
+           c_method)  |>
   pivot_longer(cols = contains('percent'),
                names_to = 'column_id', values_to = 'value', 
                values_drop_na = TRUE) |>
@@ -863,7 +875,8 @@ bulkDensity_methodMap <- tribble(~column_id, ~bd_method, ~bdNRCS_prep_code, ~wha
 # Process the data frame
 bulkdensity.df <- layer.df  |>  #72 503 obs
   select(dataset_name = dataset_name_sub,
-         site_name, profile_name, layer_name, layer_id, row_id,
+         site_name, profile_name, layer_name,
+         layer_id, row_id, from_source,
          "bd_samp (g cm-3)", "bd_tot (g cm-3)", "bd_whole (g cm-3)",
          "bd_other (g cm-3)",
          "bdNRCS_prep_code", "bd_method") |> #dataset_name keep for citation development
@@ -885,7 +898,9 @@ bulkdensity.df <- layer.df  |>  #72 503 obs
                           paste(str_remove(what, pattern = '^\\w+-'), 
                                 how, sep = '-'))) |> #59 455 obs
   mutate(unit = 'g cm-3') |>
-  select(dataset_name, site_name, profile_name, layer_name, layer_id, row_id, column_id, of_variable, value, method, unit) |>
+  select(dataset_name, site_name, profile_name, layer_name,
+         layer_id, row_id, column_id, 
+         from_source, of_variable, value, method, unit) |>
   pivot_longer(cols = c(value, method, unit), 
                names_to = 'is_type', values_to = 'with_entry',
                values_drop_na = TRUE) #|>
@@ -907,7 +922,8 @@ Processing coarse fraction considerations:
 
 coarse_fraction.df <- layer.df  |>
   select(dataset_name = dataset_name_sub,
-         site_name, profile_name, layer_name, layer_id, row_id,
+         site_name, profile_name, layer_name,
+         layer_id, row_id, from_source,
            value = `wpg2 (percent)`, `wpg2_method`) |>
   filter(!is.na(value)) |> #16 509 obs
   # # apply precision
@@ -927,7 +943,7 @@ coarse_fraction.df <- layer.df  |>
   mutate(unit = 'mass-percent') |>
   select(dataset_name, site_name, profile_name, layer_name, #provided ids
          layer_id, row_id, #constructed ids
-         of_variable, value, unit, method) |>
+         from_source, of_variable, value, unit, method) |>
   pivot_longer(cols = c(unit, value, method),
                names_to = 'is_type', values_to = 'with_entry',
                values_drop_na = TRUE) #|>
@@ -941,11 +957,12 @@ coarse_fraction.df <- layer.df  |>
 Processing soil organic carbon stocks calculations. Stocks are mass per area and ment to be paired with depth intervals to inform reporting. However, stock values reported below that are not derived by other data collections do not have a depth interval associated with them. The code below is left in for completeness but not included in the final data product.
   
 ```{r}
-#| lable: ISCN_soc
+#| label: ISCN_soc
 
 soc.df <- layer.df  |>
   select(dataset_name = dataset_name_sub,
-         site_name, profile_name, layer_name, layer_id, row_id,
+         site_name, profile_name, layer_name, 
+         layer_id, row_id, from_source,
            value = `soc (g cm-2)`, 
          dataset_name_soc, `soc_carbon_flag`, `soc_method`) |>
   filter(!is.na(value), #46 343 obs.
@@ -954,7 +971,7 @@ soc.df <- layer.df  |>
   mutate(value = sprintf(paste0('%.', precisions.ls$carbonStock_digits, 'f'),
                           as.numeric(value))) 
 
-soc.df$layer_id |> unique() |> print()
+#soc.df$layer_id |> unique() |> print()
 ```
 
 ## Create level 1
@@ -962,10 +979,14 @@ soc.df$layer_id |> unique() |> print()
 Create the level 1 data frame using the id combinations that have soil observations recorded and bind the long data tuples into a colleciton, site, and layer tables with a bib list.
 
 ```{r}
+#| label: buildLvl1List
 
 data.lvl1.ls <- list(
-  site = site.df,
-  layer = bulkdensity.df |>
+  site = site_location.df |>
+    bind_rows(site_region.df) |>
+    bind_rows(site_time.df),
+  layer = depth.df |>
+    bind_rows(bulkdensity.df) |>
     bind_rows(coarse_fraction.df) |>
     bind_rows(carbon_fraction.df) |>
     #bind_rows(soc.df) |> #leave out due to no depth reporting with stock-area values
@@ -981,31 +1002,29 @@ data.lvl1.ls <- list(
 ```{r}
 #| label: ISCN4SemanticProposal
 
-proposedSemantics.filename <- '../../03_DataCuration/ISCN2025/proposedSemantics.csv'
-
-semantics.df <- data.lvl1.ls$site |>
-  select(of_variable, is_type) |>
-  unique() |>
-  bind_rows(
-    data.lvl1.ls$layer |>
-      select(of_variable, is_type) |>
-      unique()
-  ) |>
-  bind_rows(
-    data.lvl1.ls$collection |>
-      select(of_variable, is_type) |>
-      unique()
-  ) |>
+semantics.df <- plyr::ldply(data.lvl1.ls, 
+                            .id = 'table',
+                            .fun = function(xx){
+  if(is.data.frame(xx)){
+  ans <- xx |>
+    select(of_variable, is_type) |>
+    unique()
+  }else{
+    return(NULL)
+  }
+  return(ans)
+}) |>
   mutate(study_id = 'ISCN3_2015') |>
-  arrange(of_variable) 
+  select(study_id, table, of_variable, is_type)
 
 #Write things the first time and then just check
 #write_csv(semantics.df, file = proposedSemantics.filename)
 
-ISCN4Semantics <- read_csv(proposedSemantics.filename)
+ISCN4Semantics <- read_csv(proposedSemantics.filename,
+                           show_col_types = FALSE)
 
 newSematnics <- anti_join(semantics.df, ISCN4Semantics,
-             by = join_by(of_variable, is_type, study_id)) 
+             by = join_by(of_variable, is_type, study_id, table)) 
 
 if(nrow(newSematnics) > 0){
   stop('new variables')
@@ -1016,53 +1035,6 @@ if(nrow(newSematnics) > 0){
   print('Proposed semantics are included.')
 }
 
-```
-
-```{r}
-#| label: buildSemanticYAML
-
-library(yaml)
-
-variable_type.df <- plyr::ldply(data.lvl1.ls, function(xx){
-  if(!is.data.frame(xx)){
-    return(NULL)
-  }else{
-  ans <- xx |>
-    select(of_variable, is_type) |>
-      unique()
-  
-  return(ans)
-  }
-}) 
-
-variable_type.ls <- variable_type.df |>
-  select(of_variable, is_type) |>
-  #filter(n() > 1, .by = everything()) #citation-value is repeated and ok
-  unique() |>
-  arrange(of_variable, is_type) |>
-  plyr::dlply(.variables = 'of_variable', .fun = function(xx){
-    return(list(is_type = xx$is_type))
-  }) 
-
-
-#use this to construct the opening list at the top of the level 1 section
-# as.yaml(variable_type.ls) |> cat()
-
-#TODO change this when the variable/type is moved over to a yaml
-ref.ls <- variable_type.ls
-
-check.df <- variable_type.df |>
-  mutate(has_variable = of_variable %in% names(ref.ls)) |>
-  mutate(has_type = is_type %in% ref.ls[[unique(of_variable)]]$is_type,
-         .by = of_variable)
-
-if(!all(check.df$has_variable)){
-  stop('There are variables that needed to be added to the semantics')
-}
-
-if(!all(check.df$has_type)){
-  stop('There are types that need to be added to the semantics')
-}
 ```
 
 ## Check function match
