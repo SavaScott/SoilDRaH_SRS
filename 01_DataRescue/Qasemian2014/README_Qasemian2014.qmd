@@ -1,5 +1,5 @@
 ---
-title: "Data Rescue: Author YYYY"
+title: "Data Rescue: Qasemian 2014"
 format:
   html:
     toc: true
@@ -7,8 +7,8 @@ format:
 date: last-modified
 date-format: YYYY-MMMM
 bibliography:
-  - AuthorYYYY_Methods.bib #contains the citations in the methods section
-  - AuthorYYYY.bib #contains citation for the data source, generally a single citation of the primary paper
+  - Qasemian2014_Methods.bib #contains the citations in the methods section
+  - Qasemian2014.bib #contains citation for the data source, generally a single citation of the primary paper
 authors: #author scheme from https://quarto.org/docs/journals/authors.html
   #remove ktoddbrown if they did not work on the rescue directly
   - id: ktoddbrown #use the github name as an id
@@ -19,9 +19,19 @@ authors: #author scheme from https://quarto.org/docs/journals/authors.html
     affiliation:
       - ref: uf-ees
     role: #TODO define these roles and add reference
-      - transcription: lead #secondary, review
-      - standardization: lead #review
-      - curation: lead #review
+      - transcription: review
+    #  - standardization: lead #review
+     # - curation: lead #review
+  - id: ktoddbrown #use the github name as an id
+    name:
+      given: Savannah
+      family: Scott
+    affiliation:
+      - ref: uf-ees
+    role:
+      - transcription: lead
+    #  - standardization: lead #review
+     # - curation: lead #review
       
 affiliations:
   - id: uf-ees
@@ -42,37 +52,20 @@ affiliations:
     url: https://www.ufl.edu/
     
 timelog:
-  #remove activites below and add activites for the data rescue. Include one activity for developing the data rescue plan, each data element (table, figures, methods, bibliography), readme write-up, and anything else related to the data rescue.
-  - activity:
-      description: revise based on feedback, see https://github.com/ktoddbrown/SoilDRaH/issues/262. Changes include more details in the commented guidence, additional table and figure examples.
-      who: ktoddbrown
-      start: 2026-06-18 T1430
-      duration: P45M
   - activity: 
-      description: add general UF affilation
-      who: ktoddbrown #github username
+      description: First Transcription
+      who: SavaScott #github username
       #when you started and ended, can be just a year or down to the minute
-      start: 2026-01-29 T1530
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: P05M
+      end: 2026-08-21
+      start: 2026-07-16
+      duration: PT3H
   - activity: 
-      description: revised execute with only provided files
-      who: ktoddbrown #github username
+      description: ReadMe Update and Bib files
+      who: SavaScott #github username
       #when you started and ended, can be just a year or down to the minute
-      start: 2025-01-22 T1400
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: P45M
-  - activity: 
-      description: Revise based on feedback
-      who: ktoddbrown #github username
-      #when you started and ended, can be just a year or down to the minute
-      end: 2025-11-26
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: P30M
-version: 'vs202512' #template version, remove before use
+      end: 2026-08-22
+      start: 2026-8-21
+      duration: PT1H
 ---
 
 
@@ -90,17 +83,17 @@ library(kableExtra) # pretty tables
 library(bibtex) # reading in BibTex files to R
 
 # data files for level 0
-methods.file <- "AuthorYYYY_Methods.md"
-tableN.file <- 'AuthorYYYY_TableN.csv'
-figureM.file <- 'AuthorYYYY_FigureM.csv'
+methods.file <- "Qasemian2014_Methods.md"
+table1.file <- 'Qasemian2014_Table1.csv'
+figure2.file <- 'Qasemian2014_Figure2.csv'
+figure3.file <- 'Qasemian2014_Figure3.csv'
+figure4.file <- 'Qasemian2014_Figure4.csv'
 
 # Bibliography files
-primaryCitation.file <- 'AuthorYYYY.bib'
-methodsCitation.file <- 'AuthorYYYY_Methods.bib'
+primaryCitation.file <- 'Qasemian2014.bib'
+methodsCitation.file <- 'Qasemian2014_Methods.bib'
 
-# read function; you will need to create this function after you have your data
-#... rescue reviewed and before you finish your data harmonization.
-readsource.file <- '../../02_DataHarmonization/readAuthorYYYY.R'
+readsource.file <- '../../02_DataHarmonization/readQasemian2014.R'
 if(file.exists(readsource.file)){
   source(readsource.file)
 }
@@ -114,56 +107,73 @@ is_type.file <- '../../semantics/SoilDRaHVocabulary_is_type.csv'
 
 # Data Summary
 
-<!---- Fill in the full citation here, generally found on the journal page and link in the issue that you started on GitHub. Though this is at the top of the document, this should be one of the last things you do because a lot of this will be a direct copy-paste into the issue template. --->
+> Qasemian, L., Guiral, D., & Farnet, A. M. (2014). How do microlocal environmental variations affect microbial activities of a Pinus halepensis litter in a Mediterranean coastal area?. Science of the Total Environment, 496, 198-205. https://doi.org/10.1016/j.scitotenv.2014.07.054
 
-> Full citation here, exact format does not matter but it should be complete enough to find the paper. Please include the doi
 
-For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/#.
 
-<!--- After you read through the paper write a brief summary of what the study
-measured and what the data was used for in. This should be <250 words.--->
+For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/280.
 
-AuthorYYYY primarily measures ... 
-They use this data to look at ...
+@Qasemian2014 primarily measures microbial activities that occurred in a *Pinus halepensis* litter collected from two areas on the French Mediterranean coast.
+They use this data to look at how the microbial indicators changed due to proximity to the sea, finding that they intensified when they were moved closer to the coast.
 
 ## Tables and figures
 
-<!--- Write a brief discription of all the tables and figures in this source. This should include full variable names when possible. It is perfectly fine to restate the captions here or copy other text that feels complete. Please keep this to a single sentence for each table/figure.--->
+- Tables 
+  1) Minimum and maximum of the environmental parameters monitored in litters over a one-year period in C10 (10 m from the sea shore) and C300 (300 m from the sea shore) areas
+  2) Three-way ANOVA test on enzyme activities
 
-- Table 
-  1) Describe the data in the first table.
+- Figures 
+  1) Difference in i) temperature (°C), ii) humidity (percentage), iii) electrical conductivity (μS cm$^{−1}$) and iv) chloride concentration (ppm) measured in *P. halepensis* litters
+  2) C:N ratio (a) and Aromaticity ratio (b) calculated from litterbags after 2 (June), 5 (September), and 13 (May) months in litterbags
+  3) Temporal variations in microbial enzyme activities in Pinus halepensis litters measured after 2 (June), 5 (September), and 13 (May) months in litterbags.
+  4) Basal Respiration (a), Metabolic quotient qCO$_2$ (b) and AWCD calculated from Biolog after 45 h after 2 (June), 5 (September), and 13 (May) months.
+  5) PCA from Eco plate substrate utilization profile of litterbags after 2, 5 and 13 months. 
+  6) PCA on microbial markers measured in litterbags after 2, 5 and 13 months. 
 
-- Figure 
-  1)  Describe the data in the first figure
+## Fit for purpose: DeAD
 
-## Fit for purpose: ProjectName
+This data is identified as a data source for DeAD
+The Decomposition Across Drylands (DeAD) data collection is a new data effort targeting dryland decomposition studies.
+The purpose of this data collection is to develop better litter decay models for dryland ecosystems. 
 
-<!--- Write a brief discription of the project you are processing this data source for. This could be a copy-paste from other documentation. ---->
+### Main Variables of Interest
 
-This data is identified as a data source for PROJECT.
-The purpose of this PROJECT is...
+- Location: Study sites were from the French Mediterranean coast (Massif de Marseilleveyre, Marseille; 43° 12′ 34″ N, 5° 21′ 36″ E), 10 m and 300 m from the coast. This information is found with 2.1. Litter sampling.
+- Soil carbon stock: The C:N ratio and the aromaticity ratio is found within Figure 2. 
+- Duration: The litterbags were tested after 2 months (June 2009), 5 months (September 2009), and 13 (May 2010) months after being placed in situ
+- Mass loss: 2.1. Litter Sampling mentions that they measured the litter mass loss, but I cannot determine if or where it is recorded in the paper.
+- Solar exposure: Solar exposure was not measured in this paper.
 
-<!--- Include a list of the key variables identified for the project. This is used to identify the elements for the paper for the data rescue. An example is below for a basic geo-located soil carbon stock project. --->
+### Other Relevant Variables 
 
-  - Location: The geo-location is given in the site description section of the methods. Both latitude and longitude are given but not the datum/projection that was used.
-  - Soil carbon stock: Soil carbon stock was calculated from organic carbon fraction and bulk density and is reported in table 3 across two treatments and one control. Coarse fraction was not reported and does not appear to be included.
-  
+  - Litter species: *Pinus halepensis*
+  - Microsite data: Maximum and minimum of the environmental parameters that the litters were exposed to are found within Table 1, including temperature and EC. 
+  - Litter chemical composition: Figure 2 has the C:N and Aromaticity ratio calculated from the litterbags. Figure 4 may also have some litter chemical compositions needed.
+  - Extracellular enzyme: Figure 3 has data on the microbial enzyme activities of the litterbags.
+  - Microclimate relative humidity: Humidity percentage (max and min) were included in Table 1. 
+  - Litter bag materials and method: The litter was sieved through a >2 mm mesh size before being placed in litterbags, 40 g per bag. The litterbags were 20 $\times$ 25 cm, made of polypropylene with a 1 mm mesh size. 
+  - Treatments: No treatments were mentioned in the methods section
+
 ## Files
 
-<!--- Include a brief explaination to all the files in the folder--->
+These files are in the Qasemian2014 data rescue.
 
-These files are in the AuthorYYYY data rescue.
-
-- [Readme](README_AUTHORYYYY.qmd)
+- [Readme](README_Qasemian2014.qmd)
   + This is the primary file that documents the transcriptions and decision made during data rescue.
-- [AuthorYYYY.bib](AuthorYYYY.bib)
+- [Qasemian2014.bib](Qasemian2014.bib)
   + citation for article transcribed
-- [AuthorYYYY_Methods.bib](AuthorYYYY_Methods.bib)
+- [Qasemian2014_Methods.bib](Qasemian2014_Methods.bib)
   + citations for the methods section of the article
-- [AuthorYYYY_Methods.md](AuthorYYYY_Methods.md)
+- [Qasemian2014_Methods.md](Qasemian2014_Methods.md)
   + methods transcribed from primary article
-- [AuthorYYYY_TableN.csv](AuthorYYYY_TableN.csv)
-  + table N from primary article with ...
+- [Qasemian2014_Table1.csv](Qasemian2014_Table1.csv)
+  + table 1 from primary article with ...
+- [Qasemian2014_Figure2.csv](Qasemian2014_Figure2.csv)
+  + figure 2 from primary article with ...
+- [Qasemian2014_Figure3.csv](Qasemian2014_Figure3.csv)
+  + figure 3 from primary article with ...
+- [Qasemian2014_Figure4.csv](Qasemian2014_Figure4.csv)
+  + figure 4 from primary article with ...
 - [temp/](temp/)
     + scratch folder that will not be archived on GitHub, it should include local copies of the data resource (likely a PDF article) and any spreadsheets or other tools you used for the transcriptions.
 
@@ -173,8 +183,8 @@ These files are in the AuthorYYYY data rescue.
 
 + Lead
   - [ ] Read the article or data resource and the discription of the target project
-  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_AuthorYYYY'
-  - [ ] Create a copy of this template folder and rename it to AuthorYYYY
+  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_Qasemian2014'
+  - [ ] Create a copy of this template folder and rename it to Qasemian2014
   - [ ] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
   - [ ] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
   - [ ] Add the reviewer to the author list in the yml
@@ -201,8 +211,8 @@ These files are in the AuthorYYYY data rescue.
 Figure M was modified ....
 
 ```{r}
-#| label: figureMCheck
-
+#| label: figure2Check
+#| eval: false
 
 plot.df <- read_csv(file = figureM.file, #read in the specific file
          skip = 1, #skip the first line with the caption
@@ -231,13 +241,14 @@ ggplot(data = plot.df,
 And is crosschecked with the secondary transcription (expected to be empty)
 
 ```{bash}
-#| label: compareTableN
+#| label: compareFigure2
+#| eval: false
 
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
 #... Note that the template should not have a conflict here.
 
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_FigureM_AC.csv AuthorYYYY_FigureM.csv
+diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_FigureM_AC.csv Qasemian2014_FigureM.csv
 ```
 
 
@@ -249,6 +260,7 @@ Table N was modified by dropping the sub-table as a leading column into the tran
 
 ```{r}
 #| label: table1Check
+#| eval: false
 
 
 read_csv(file = tableN.file, #read in the specific file
@@ -268,13 +280,14 @@ read_csv(file = tableN.file, #read in the specific file
 And is crosschecked with the secondary transcription (expected to be empty)
 
 ```{bash}
-#| label: compareTableN
+#| label: compareTable1
+#| eval: false
 
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
 #... Note that the template has an example of an unresolved conflict.
 
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_TableN_AC.csv AuthorYYYY_TableN.csv
+diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_TableN_AC.csv Qasemian2014_TableN.csv
 ```
 
 ## Methods
@@ -288,7 +301,7 @@ Any different to the cross check for the methods section will be output after th
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
 #... Note the template example does NOT have a conflict.
 
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_Methods_AC.md AuthorYYYY_Methods.md
+diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_Methods_AC.md Qasemian2014_Methods.md
 ```
 
 ### Methods  - Text
@@ -327,6 +340,7 @@ This level 0 data read parses the transcribed files with minimal cleaning or tra
 
 ```{r}
 #| label: readLevel0
+#| eval: false
 #This chunk has two purposes. 
 #...1) Check the formatting by reading in everything 
 #...2) Create a list of everything to process later in level 1
@@ -498,6 +512,7 @@ data.lvl1.ls <- list(
 
 ```{r}
 #| label: check_of_variable
+#| eval: false
 
 #Read in the list of current 'of_variable' entries
 SoilDRaH_variable_list <- read_csv(file =of_variable.file,
@@ -525,6 +540,7 @@ if(length(new_variables) == 0){
 
 ```{r}
 #| label: check_is_type
+#| eval: false
 
 #read in the current types and what variable they are associated with
 SoilDRaH_type_list <- read_csv(file = is_type.file,

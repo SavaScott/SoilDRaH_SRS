@@ -1,6 +1,6 @@
-2. Materials and methods
+# 2. Materials and methods
 
-2.1. Litter sampling
+## 2.1. Litter sampling
 
 A composite sampling was performed in April 2009 from partially degraded litter (OL) of Aleppo pine (P. *halepensis* L.) in two areas (200 m$^2$ each) on the French Mediterranean coast (Massif de Marseilleveyre, Marseille) (43° 12′ 34″ N, 5° 21′ 36″ E).
 Two areas were located at 10 and 300 m from the coast, respectively name C10 and C300 and three sites, separated from each other by 1 km, were selected in each area.
@@ -11,7 +11,7 @@ Litters were then characterized microbiologically (basal respirometry, microbial
 A total of 18 litterbags were thus analyzed for each sampling time and for each area (9 controls and 9 exchanged litter bags).
 Litter mass loss was followed by weighing the litter bags at each sampling time.
 
-2.2. Environmental parameter measurement
+## 2.2. Environmental parameter measurement
 
 Temperature, humidity, pH, electrical conductivity (EC) and Cl$^−$ concentration in litters from both areas were monitored throughout the experiment at least every 2 months.
 Mean daily temperature was measured using a USB temperature logger (VOLTCRAFT, 100 T) placed at around 4 cm-depth at both the C10 and C300 areas.
@@ -20,7 +20,7 @@ After a 30 min equilibrium time, pH was measured with Metrohm 744, electrical co
 Litter moisture was determined after drying (90 °C) to a constant weight.
 For each environmental parameter, difference between C10 and C300 was calculated over a monitoring period from March 2009 to February 2011.
 
-2.3. Basal and substrate induced respiration
+## 2.3. Basal and substrate induced respiration
 
 Microbial Basal Respiration (BR) and Substrate Induced Respiration (SIR) were measured on a 2 g sub-sample (dw) from each litterbag both at the humidity of the sample and at standardized humidity at 60% as the highest humidity measurement in the field.
 For BR, litter was placed in glass jars (117 ml), flushed with fresh air and closed by rubber septum before incubation at 25 °C for 4 h.
@@ -31,7 +31,7 @@ SIR rates were converted into microbial biomass using equations given by @Beare1
 Microbial respiration was expressed as μg of C produced as CO$_2$ per gram of dry litter per hour.
 Metabolic Coefficient (qCO$_2$) was calculated as the ratio of basal respiration/microbial biomass according to @Anderson1985.
 
-2.4. Extracellular enzyme activities (EEA)
+## 2.4. Extracellular enzyme activities (EEA)
 
 Laccase (LAC), cellulase (CEL), β-1,4-glucosidase (βGLU), and acid phosphomonoesterases (PHA) activities were determined before introducing litters in the bags and after 2-, 5- and 13-month from a sub-sample of each litterbag.
 EEA were measured using a litter enzyme extract following a modified protocol from @Criquet1999.
@@ -49,7 +49,7 @@ Phosphomonoesterase was assayed using p-nitrophenyl phosphate monoester (0.2 mM)
 All analytical experiments were performed in triplicate for each litterbag.
 One unit (U) of enzyme activity is defined as one μmole of the reaction product formed per h and per g of litter dry weight (U gdw$^{−1}$).
 
-2.5. Community-level physiological profiles (CLPP)
+## 2.5. Community-level physiological profiles (CLPP)
 
 Catabolic profiles of microbial communities were assessed using Biolog EcoPlate™ (Biolog, California, USA).
 Briefly, 2 g of dry litter was added to 100 mL of 0.1% sodium pyrophosphate sterile buffer in a 250 mL flask and shaken for 1 h (500 rpm).
@@ -65,7 +65,7 @@ Overall rate of substrate utilization by microorganisms was measured by calculat
 Functional diversity assessed by Shannon's diversity index (H′) was calculated using the equation: H′ = −∑ pi log pi where *pi* is defined as OD of each well/sum of OD of all wells.
 Species evenness was calculated via Pielou's Index, J′ = H′/H′max and species richness, S, was calculated as the number of substrates used.
 
-2.6. Chemical characterization of litter by C/N and the cross-polarization magic angle spinning $^{13}$C nuclear magnetic resonance (CP/MAS $^{13}$C NMR)
+## 2.6. Chemical characterization of litter by C/N and the cross-polarization magic angle spinning $^{13}$C nuclear magnetic resonance (CP/MAS $^{13}$C NMR)
 
 Total organic carbon (TOC) and total nitrogen were measured as follows: dried sub-samples of initial litter and of each litterbag's litter were powdered in a ceramic mortar and analyzed by combustion in an Elemental Analyzer, FlashEA 1112, Thermofisher.
 
@@ -77,7 +77,7 @@ Seven common chemical shift regions were defined according to @Mathers2007: alky
 Aromaticity Ratio (AR) was calculated by dividing the sum of aromatic C and phenolic C by the sum of all regions except methoxyl C.
 Dmfit 2003 software was used to determine the intensity of each chemical-shift-region [@Massiot2002].
 
-2.7. Statistical analysis
+## 2.7. Statistical analysis
 
 A three-way ANOVA was performed taking into account litterbag location (C10 and C300), litter origin area (C10, C300) and time (June, September, May) as factors and using microbial respiration, enzyme activities, AWCD and H′ calculated from Biolog as dependent variables.
 Data were transformed as necessary to respect the normality and homogeneity of variance in parametric ANOVA.
