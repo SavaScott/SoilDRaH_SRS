@@ -124,7 +124,7 @@ These include:
 ISCN3.ls <- readISCN3(dataDir = '../../01_DataRescue/ISCN3_2015',
                       dataLevel = 'level1')
 
-#CPEAT throws a warning but is going to be hell to debug
+#CPEAT throws a warning but is going to be hell to debug, quite warnings instead
 CPEAT.ls <- readCPEAT2025(dataDir = '../../01_DataRescue/CPEAT2025',
                           dataLevel = 'level1')
 ```
@@ -328,7 +328,15 @@ ggplot(CPEAT_site.df) +
 
 
 ```{r}
-#| label: ISCN3_level2
+#Comment out for debugging
+ISCN3.ls <- readISCN3(dataDir = '../../01_DataRescue/ISCN3_2015',
+                      dataLevel = 'level1')
+
+
+```
+
+```{r}
+#| label: ISCN3_level2OLD
 
 ISCN3.ls <- readISCN3(dataDir = '../../01_DataRescue/ISCN3_2015',
                       dataLevel = 'level1')
