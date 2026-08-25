@@ -66,6 +66,13 @@ timelog:
       end: 2026-08-22
       start: 2026-8-21
       duration: PT1H
+  - activity: 
+      description: Coding of Figures and Methods CC
+      who: SavaScott #github username
+      #when you started and ended, can be just a year or down to the minute
+      end: 2026-08-24
+      start: 2026-8-24
+      duration: PT2H30M
 ---
 
 
@@ -182,20 +189,20 @@ These files are in the Qasemian2014 data rescue.
 ## Data Rescue Plan
 
 + Lead
-  - [ ] Read the article or data resource and the discription of the target project
-  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_Qasemian2014'
-  - [ ] Create a copy of this template folder and rename it to Qasemian2014
-  - [ ] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
-  - [ ] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
-  - [ ] Add the reviewer to the author list in the yml
+  - [x] Read the article or data resource and the discription of the target project
+  - [x] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_Qasemian2014'
+  - [x] Create a copy of this template folder and rename it to Qasemian2014
+  - [x] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
+  - [x] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
+  - [x] Add the reviewer to the author list in the yml
 + Do
-  - [ ] Create a spreadsheet with TableN and export it to csv
-  - [ ] Extract points from FigureM and export it to csv
-  - [ ] Transcribe or copy the method section
-  - [ ] Insert references to bib entries
-  - [ ] reformat equations and mathematical symbols as [LaTex](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
-  - [ ] reformat text using [Markdown](https://www.markdownguide.org/cheat-sheet/)
-  - [ ] Create a bib file with the citations from the methods section
+  - [x] Create a spreadsheet with Table1 and export it to csv
+  - [x] Extract points from Figure2-4 and export it to csv
+  - [x] Transcribe or copy the method section
+  - [x] Insert references to bib entries
+  - [x] reformat equations and mathematical symbols as [LaTex](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
+  - [x] reformat text using [Markdown](https://www.markdownguide.org/cheat-sheet/)
+  - [x] Create a bib file with the citations from the methods section
   - [ ] Push to your local fork and get a second transcription pushed to your local fork by someone else on the project
 + Measure
   - [ ] cross check with second transcriber for tables and methods, and resolve any differences
@@ -204,38 +211,83 @@ These files are in the Qasemian2014 data rescue.
   - [ ] address any revisions in your pull request review
   - [ ] celebrate!
 
-## Figure M
+## Figure 2
 
-<!--- Create a plot to make the figure easy to compare to the table. You don't have to be exactly the same but it should be obvious, at a glance, if the transcript matches.---->
-
-Figure M was modified ....
+Figure 2 was modified during transcription to include "Months surveyed" as a x-axis title.
 
 ```{r}
 #| label: figure2Check
-#| eval: false
+#| code-fold: true
 
-plot.df <- read_csv(file = figureM.file, #read in the specific file
-         skip = 1, #skip the first line with the caption
-         #read everything as a character, don't worry about formatting yet
-         col_types = cols(.default = col_character())) |>
-  mutate(across(c(`Depth [cm]`, `Soil organic carbon density [g cm$-1$]`),
-                as.numeric)) #make things numbers
-         
-ggplot(data = plot.df, 
-       mapping = aes(x = `Depth [cm]`, y = `Soil organic carbon density [g cm$-1$]`, color=Site)) +
-  geom_line() +
-  geom_point() +
-  #depth below surface is often plotted flipped and downward positive
-  scale_x_reverse() +
-  coord_flip() +
-  labs(caption = read_csv(file = tableN.file, #read in that file again but...
-                           n_max = 1, #only read the first line
-                           col_names = 'caption', #call it the caption
-                           #read everything as a character
-                           col_types = cols(.default = col_character()),
-                           show_col_types = FALSE #do not return messages
-                           )$caption #and take it out of the table
-  )
+fig2Caption <- read_csv(file = figure2.file, 
+                                 n_max = 1, col_names = 'caption', 
+                                 show_col_types = FALSE)$caption
+
+fig2Data <- read_csv(file = figure2.file,
+                   skip = 1,
+                   show_col_types = FALSE)
+
+fig2DataCN <- fig2Data %>% filter(`y label` == "C:N ratio")
+fig2DataAromaticity <- fig2Data %>% filter(`y label` == "Aromaticity Ratio")
+
+# C:N ratio column graph
+
+fig2DataCN$`x label` <- factor(fig2DataCN$`x label`,
+                                  level = c("June 2009", "September 2009", "May 2010"))
+fig2DataCN$`litterbag type` <- factor(fig2DataCN$`litterbag type`,
+                                  level = c("C10/C10", "C10/C300", "C300/C300", "C300/C10"))
+
+fig2DataCN$`y high SE value` <- as.numeric(fig2DataCN$`y high SE value`)
+fig2DataCN <- fig2DataCN %>%
+  mutate(error_var = `y high SE value` - `y value`,
+         ymin = `y value` - error_var,
+         ymax = `y value` + error_var)
+
+ggplot(fig2DataCN, aes(x = `x label`, y = `y value`, fill = `litterbag type`, group = `litterbag type`)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 0.9),
+    vjust = -1.95, size = 2, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.3) + labs(
+       x = "Month Surveyed",
+       y = "C:N ratio",
+       caption = fig2Caption)
+  
+# Aromaticity Ratio column graph
+
+fig2DataAromaticity$`x label` <- factor(fig2DataAromaticity$`x label`,
+                                  level = c("June 2009", "September 2009", "May 2010"))
+fig2DataAromaticity$`litterbag type` <- factor(fig2DataAromaticity$`litterbag type`,
+                                  level = c("C10/C10", "C10/C300", "C300/C300", "C300/C10"))
+
+fig2DataAromaticity$`y high SE value` <- as.numeric(fig2DataAromaticity$`y high SE value`)
+fig2DataAromaticity <- fig2DataAromaticity %>%
+  mutate(error_var = `y high SE value` - `y value`,
+         ymin = `y value` - error_var,
+         ymax = `y value` + error_var)
+
+ggplot(fig2DataAromaticity, aes(x = `x label`, y = `y value`, fill = `litterbag type`, group = `litterbag type`)) +
+  scale_y_continuous(breaks = c(0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22, 0.24, 0.26, 0.28, 0.30)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 1),
+    vjust = -1.75, size = 2.5, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.25) + labs(
+       x = "Month Surveyed",
+       y = "Aromaticity Ratio",
+       caption = fig2Caption)
+  
+
 ```
 
 And is crosschecked with the secondary transcription (expected to be empty)
@@ -252,28 +304,256 @@ diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_FigureM_AC
 ```
 
 
-## Table N
+## Figure 3
+
+Figure 3 was modified during transcription to include "Months surveyed" as a x-axis title.
+
+```{r}
+#| label: figure3Check
+#| code-fold: true
+
+fig3Caption <- read_csv(file = figure3.file, 
+                                 n_max = 1, col_names = 'caption', 
+                                 show_col_types = FALSE)$caption
+
+fig3Data <- read_csv(file = figure3.file,
+                   skip = 1,
+                   show_col_types = FALSE)
+
+fig3Data$`x label` <- factor(fig3Data$`x label`,
+                                  level = c("June 2009", "September 2009", "May 2010"))
+fig3Data$`litterbag type` <- factor(fig3Data$`litterbag type`,
+                                  level = c("C10/C10", "C10/C300", "C300/C300", "C300/C10"))
+
+fig3Data$`high SE y value` <- as.numeric(fig3Data$`high SE y value`)
+fig3Data <- fig3Data %>%
+  mutate(error_var = `high SE y value` - `U gdW$^{-1}$`,
+         ymin = `U gdW$^{-1}$` - error_var,
+         ymax = `U gdW$^{-1}$` + error_var)
+
+fig3DataLaccase <- fig3Data %>% filter(`graph label` == "a) Laccase")
+fig3DataCellulase <- fig3Data %>% filter(`graph label` == "b) Cellulase")
+fig3DataBgluc <- fig3Data %>% filter(`graph label` == "c) β-glucosidase")
+fig3DataPhos <- fig3Data %>% filter(`graph label` == "d) Phosphatase")
+
+# Figure a) Laccase
+
+ggplot(fig3DataLaccase, aes(x = `x label`, y = `U gdW$^{-1}$`, fill = `litterbag type`, group = `litterbag type`)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() + 
+  scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)) +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 0.70),
+    vjust = -1.4, size = 2, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.3) + labs(
+       x = "Month Surveyed",
+       y = "U gdW${-1}$",
+       caption = fig3Caption,
+       title = "a) Laccase")
+
+# Figure b) Cellulase 
+
+ggplot(fig3DataCellulase, aes(x = `x label`, y = `U gdW$^{-1}$`, fill = `litterbag type`, group = `litterbag type`)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() + 
+  scale_y_continuous(breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8)) +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 0.75),
+    vjust = -2.0, size = 2.2, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.3) + labs(
+       x = "Month Surveyed",
+       y = "U gdW${-1}$",
+       caption = fig3Caption,
+       title = "b) Cellulase")
+
+# Figure c) β-glucosidase
+
+ggplot(fig3DataBgluc, aes(x = `x label`, y = `U gdW$^{-1}$`, fill = `litterbag type`, group = `litterbag type`)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() + 
+  scale_y_continuous(breaks = c(0, 0.1,  0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)) +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 0.75),
+    vjust = -2.5, size = 2.4, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.3) + labs(
+       x = "Month Surveyed",
+       y = "U gdW${-1}$",
+       caption = fig3Caption,
+       title = "c) β-glucosidase")
+
+# Figure d) Phosphatase
+
+ggplot(fig3DataBgluc, aes(x = `x label`, y = `U gdW$^{-1}$`, fill = `litterbag type`, group = `litterbag type`)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() + 
+  scale_y_continuous(breaks = c(0, 0.5, 1, 1.5, 2, 2.5)) +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 0.75),
+    vjust = -2.5, size = 2.4, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.3) + labs(
+       x = "Month Surveyed",
+       y = "U gdW${-1}$",
+       caption = fig3Caption,
+       title = "d) Phosphatase")
+
+```
+
+And is crosschecked with the secondary transcription (expected to be empty)
+
+```{bash}
+#| label: compareFigure3
+#| eval: false
+
+# You will want to repeat the line below to cross check each csv and md file in the
+#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
+#... Note that the template should not have a conflict here.
+
+diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_FigureM_AC.csv Qasemian2014_FigureM.csv
+```
+
+
+## Figure 4
+
+Figure 4 was modified during transcription to include "Months surveyed" as a x-axis title.
+
+```{r}
+#| label: figure4Check
+#| code-fold: true
+
+#need to fix, y-axis labels are different for each graph
+
+fig4Caption <- read_csv(file = figure4.file, 
+                                 n_max = 1, col_names = 'caption', 
+                                 show_col_types = FALSE)$caption
+
+fig4Data <- read_csv(file = figure4.file,
+                   skip = 1,
+                   show_col_types = FALSE)
+
+fig4Data$`x label` <- factor(fig4Data$`x label`,
+                                  level = c("June 2009", "September 2009", "May 2010"))
+fig4Data$`litterbag type` <- factor(fig4Data$`litterbag type`,
+                                  level = c("C10/C10", "C10/C300", "C300/C300", "C300/C10"))
+
+fig4Data$`SE high y value` <- as.numeric(fig4Data$`SE high y value`)
+fig4Data <- fig4Data %>%
+  mutate(error_var = `SE high y value` - `y value`,
+         ymin = `y value` - error_var,
+         ymax = `y value` + error_var)
+
+fig4DataA <- fig4Data %>% filter(`graph label` == "a")
+fig4DataB <- fig4Data %>% filter(`graph label` == "b")
+fig4DataC <- fig4Data %>% filter(`graph label` == "c")
+
+# Figure a
+
+ggplot(fig4DataA, aes(x = `x label`, y = `y value`, fill = `litterbag type`, group = `litterbag type`)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() + 
+  scale_y_continuous(breaks = c(0, 20, 40, 60, 80, 100, 120)) +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 0.70),
+    vjust = -1.4, size = 2, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.3) + labs(
+       x = "Month Surveyed",
+       y = "μg CO2-C gdw$^{-1}$",
+       caption = fig3Caption,
+       title = "a")
+
+# Figure b
+
+ggplot(fig4DataB, aes(x = `x label`, y = `y value`, fill = `litterbag type`, group = `litterbag type`)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() + 
+  scale_y_continuous(breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8)) +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 0.70),
+    vjust = -1.9, size = 2, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.3) + labs(
+       x = "Month Surveyed",
+       y = "μg CO2-C gdw$^{-1}$",
+       caption = fig3Caption,
+       title = "b")
+
+# Figure c
+
+ggplot(fig4DataC, aes(x = `x label`, y = `y value`, fill = `litterbag type`, group = `litterbag type`)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) + 
+  theme_classic() + 
+  scale_y_continuous(breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2)) +
+  scale_fill_manual(values = c("bisque3", "azure2", "azure4", "bisque1")) +
+  geom_text(aes(label = footnotes),
+    position = position_dodge(width = 0.70),
+    vjust = -2.2, size = 2, color = "black") +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), 
+    position = position_dodge(width = 0.9), 
+    width = 0.3, color = "black", 
+    linewidth = 0.3) + labs(
+       x = "Month Surveyed",
+       y = "μg CO2-C gdw$^{-1}$",
+       caption = fig3Caption,
+       title = "c")
+
+```
+
+And is crosschecked with the secondary transcription (expected to be empty)
+
+```{bash}
+#| label: compareFigure4
+#| eval: false
+
+# You will want to repeat the line below to cross check each csv and md file in the
+#... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
+#... Note that the template should not have a conflict here.
+
+diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_FigureM_AC.csv Qasemian2014_FigureM.csv
+```
+
+
+## Table 1
 
 <!--- Common table modifications include: inserting an extra column to pivot sub-headers, filling in NA to identify blanks, and adding Latex or Markdown to denote formatting.---->
 
-Table N was modified by dropping the sub-table as a leading column into the transcribed table.
+Table 1 was modified by adding in dashes into empty columns and combining a subcolumn into the main column headers. 
 
 ```{r}
 #| label: table1Check
-#| eval: false
+#| code-fold: false
 
 
-read_csv(file = tableN.file, #read in the specific file
-         skip = 1, #skip the first line with the caption
-         #read everything as a character, don't worry about formatting yet
+read_csv(file = table1.file, 
+         skip = 1, 
          col_types = cols(.default = col_character())) |>
-  kable(caption = read_csv(file = tableN.file, #read in that file again but...
-                           n_max = 1, #only read the first line
-                           col_names = 'caption', #call it the caption
-                           #read everything as a character
+  kable(caption = read_csv(file = table1.file, 
+                           n_max = 1, 
+                           col_names = 'caption',
                            col_types = cols(.default = col_character()),
-                           show_col_types = FALSE #do not return messages
-                           )$caption #and take it out of the table
+                           show_col_types = FALSE
+                           )$caption
   )
 ```
 
@@ -287,7 +567,7 @@ And is crosschecked with the secondary transcription (expected to be empty)
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
 #... Note that the template has an example of an unresolved conflict.
 
-diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_TableN_AC.csv Qasemian2014_TableN.csv
+diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_Table1_SV.csv Qasemian2014_Table1.csv
 ```
 
 ## Methods
@@ -301,7 +581,7 @@ Any different to the cross check for the methods section will be output after th
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
 #... Note the template example does NOT have a conflict.
 
-diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_Methods_AC.md Qasemian2014_Methods.md
+diff --strip-trailing-cr --suppress-common-lines -y temp/Qasemian2014_Methods_SV.md Qasemian2014_Methods.md
 ```
 
 ### Methods  - Text
@@ -332,6 +612,27 @@ Think of this as a lab notebook documenting how you found each citation.
 - [ ] short citation
   + copy from bib
   + manually entered or direct export
+  
+- [x] Beare, M. H., Neely, C. L., Coleman, D. C., & Hargrove, W. L. (1990). A substrate-induced respiration (SIR) method for measurement of fungal and bacterial biomass on plant residues. Soil Biology and Biochemistry, 22(5), 585-594.
+  + copy from bib
+
+- [x] Anderson, T. H., & Domsch, K. H. (1985). Determination of ecophysiological maintenance carbon requirements of soil microorganisms in a dormant state. Biology and fertility of soils, 1(2), 81-89.
+  + copy from bib
+
+- [x] Criquet, S., Tagger, S., Vogt, G., Iacazio, G., & Le Petit, J. (1999). Laccase activity of forest litter. Soil Biology and Biochemistry, 31(9), 1239-1244.
+  + copy from bib
+
+- [x] Farnet, A. M., Qasemian, L., Guiral, D., & Ferré, E. (2010). A modified method based on arsenomolybdate complex to quantify cellulase activities: application to litters. Pedobiologia, 53(2), 159-160.
+  + copy from bib
+  
+- [x] Garland, J. L. (1997). Analysis and interpretation of community-level physiological profiles in microbial ecology. FEMS microbiology ecology, 24(4), 289-300.
+  + copy from bib
+  
+- [x] Mathers, N. J., Jalota, R. K., Dalal, R. C., & Boyd, S. E. (2007). 13C-NMR analysis of decomposing litter and fine roots in the semi-arid Mulga Lands of southern Queensland. Soil Biology and Biochemistry, 39(5), 993-1006.
+  + copy from bib
+  
+- [x] Massiot, D., Fayon, F., Capron, M., King, I., Le Calvé, S., Alonso, B., ... & Hoatson, G. (2002). Modelling one‐and two‐dimensional solid‐state NMR spectra. Magnetic resonance in chemistry, 40(1), 70-76.
+  + copy from bib
 ---->
 
 # Level 0 Data rescue
