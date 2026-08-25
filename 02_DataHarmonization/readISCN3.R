@@ -2,7 +2,7 @@
 #'
 #' Database citation: Nave, L., K. Johnson, C. van Ingen, D. Agarwal, M. Humphrey, and N. Beekwilder. 2022. International Soil Carbon Network version 3 Database (ISCN3) ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/cc751923c5576b95a6d6a227d5afe8ba (Accessed 2024-06-13).
 #'
-#' @param dataDir path to the folder SoilDRaH/01_DataRescue/ISCN3_2015.
+#' @param dataDir path to the folder SoilDRaH/01_DataRescue/ISCN3_2015. This should contain a folder called 'temp' which is where the downloads will live.
 #' @param dataLevel flag for level 0 or level 1 data return
 #' @param verbose boolean flag denoting whether or not to print status messages
 #' 
@@ -442,7 +442,12 @@ readISCN3 <- function(dataDir, dataLevel = c('level0', 'level1')[1],
                            as.numeric(`loi (percent)`))) |>
     mutate(of_variable = 'organic_fraction',
            unit = 'mass-percent',
-           method = 'loss on ignition from fine earth') |>
+           method = 'loss on ignition from fine earth',
+           column_id = 'loi (percent)') |>
+    select(dataset_name,
+           site_name, profile_name, layer_name,
+           layer_id, row_id, column_id, from_source,
+           of_variable, value, unit, method) |>
     pivot_longer(cols = c(value, unit, method),
                  names_to = 'is_type', values_to = 'with_entry',
                  values_drop_na = TRUE) #|>
@@ -545,6 +550,10 @@ readISCN3 <- function(dataDir, dataLevel = c('level0', 'level1')[1],
                             paste(str_remove(what, pattern = '\\w+:'),
                                   how,sep = '-'))) |> #51 059 obs
     mutate(unit = 'mass-percent') |>
+    select(dataset_name,
+           site_name, profile_name, layer_name,
+           layer_id, row_id, column_id, from_source,
+           of_variable, unit, value, method) |>
     pivot_longer(cols = c(unit, value, method),
                  names_to = 'is_type', values_to = 'with_entry',
                  values_drop_na = TRUE) #|>
@@ -635,10 +644,11 @@ readISCN3 <- function(dataDir, dataLevel = c('level0', 'level1')[1],
              wpg2_method == 'weight of >2mm fraction/weight of total sample' ~ NA,
              .default = '[bad coding STOP]'
            )) |> #16 509 obs
-    mutate(unit = 'mass-percent') |>
+    mutate(unit = 'mass-percent',
+           column_id = 'wpg2 (percent)') |>
     select(dataset_name, site_name, profile_name, layer_name, #provided ids
-           layer_id, row_id, #constructed ids
-           from_source, of_variable, value, unit, method) |>
+         layer_id, row_id, column_id,#constructed ids
+         from_source, of_variable, value, unit, method) |>
     pivot_longer(cols = c(unit, value, method),
                  names_to = 'is_type', values_to = 'with_entry',
                  values_drop_na = TRUE) #|>

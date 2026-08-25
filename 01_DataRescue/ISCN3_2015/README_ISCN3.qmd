@@ -49,7 +49,7 @@ affiliations:
 timelog:
   - activity: 
       description: Lead Transcription and ReadMe Update
-      who: Vaasuki Marupaka
+      who: vaasukimarupaka
       end: 2026-03-25
       start: 2026-02-06
       duration: PT30M
@@ -63,6 +63,11 @@ timelog:
       who: ktoddbrown
       start: 2026-08-13
       duration: PT3H
+  - activity:
+      description: final check for level 1
+      who: ktoddbrown
+      start: 2026-08-25
+      duration: PT30M
 ---
 
 ```{r}
@@ -70,7 +75,6 @@ timelog:
 #| include: true
 #| warning: false
 #| message: false
-#| echo: false
 #| eval: true
 
 
@@ -125,9 +129,6 @@ if(file.exists(readsource.file)){
 
 #semantic files for level 1
 proposedSemantics.filename <- '../../03_DataCuration/ISCN2025/proposedSemantics.csv'
-
-#of_variable.file <- '../../02_DataHarmonization/SoilDRaHVocabulary_of_variable.csv'
-#is_type.file <- '../../02_DataHarmonization/SoilDRaHVocabulary_is_type.csv'
 
 ```
 
@@ -224,6 +225,7 @@ The ISCN3 files are archived on EDI web portal and will be downloaded to the `te
   - `NASIS-2014` link doesn't work anymore.
   - `Worldwide soil carbon and nitrogen data` dataset has invalid doi.
 --->
+
 ## Download ISCN3
 
 The ISCN3 is downloaded from EDI (@ISCN3). 
@@ -426,19 +428,19 @@ This code takes a two step approach. First it isolates each of the variables of 
 #| label: level1_constants
 
 precisions.ls <- list(latLong_digits = 4, #assume lat/lon precision of 0.0001
-                      #cluster resolution in lat/lon degrees
-                      #geolocationCluster_resolution = 0.001, 
-                      #cluster resolution in years
-                      #observationYear_resolution = 2, 
                       #assume precision of 1cm
                       depth_digits = 0,
                       #assume precision of bulk density at 0.01 g cm-3
                       bulkDensity_digits = 2,
                       #assume precision of 0.1% for loss on ignition
                       organicFraction_digits = 1,
-                      #assume precision of 0.01% for carbon fraction that is often measured using an elemental analyizer, this could be method specific in the future.
+                      #assume precision of 0.01% for carbon fraction that is
+                      # often measured using an elemental analyzer, this could
+                      #  be method specific in the future.
                       carbonFraction_digits = 2,
-                      #since this is normalized to the layer thickness, use a very high precision here
+                      #since this is normalized to the layer thickness, use a
+                      # very high precision here. This ends up being not used
+                      #  because we filter out NCSS
                       carbonStock_digits = 10) 
 ```
 
@@ -587,6 +589,7 @@ Processing the layer table considerations
 Things to also note here:
   - Removing the NRCS layers reduced row counts from 445 829 to 72 503.
   - Location information is given in both the site and layer tables. We assume the site is correct and ignore the layer information.
+  - Zero reference for depth is drawn from the profile table
 
 ```{r}
 #| label: ISCN3preprocess_layer
@@ -701,7 +704,12 @@ organic_fraction.df <- layer.df  |>
                          as.numeric(`loi (percent)`))) |>
   mutate(of_variable = 'organic_fraction',
          unit = 'mass-percent',
-         method = 'loss on ignition from fine earth') |>
+         method = 'loss on ignition from fine earth',
+         column_id = 'loi (percent)') |>
+  select(dataset_name,
+         site_name, profile_name, layer_name,
+         layer_id, row_id, column_id, from_source,
+         of_variable, value, unit, method) |>
   pivot_longer(cols = c(value, unit, method),
                names_to = 'is_type', values_to = 'with_entry',
                values_drop_na = TRUE) #|>
@@ -822,6 +830,10 @@ carbon_fraction.df <- layer.df  |>
                           paste(str_remove(what, pattern = '\\w+:'),
                                 how,sep = '-'))) |> #51 059 obs
   mutate(unit = 'mass-percent') |>
+  select(dataset_name,
+         site_name, profile_name, layer_name,
+         layer_id, row_id, column_id, from_source,
+         of_variable, unit, value, method) |>
   pivot_longer(cols = c(unit, value, method),
                names_to = 'is_type', values_to = 'with_entry',
                values_drop_na = TRUE) #|>
@@ -940,9 +952,11 @@ coarse_fraction.df <- layer.df  |>
            wpg2_method == 'weight of >2mm fraction/weight of total sample' ~ NA,
            .default = '[bad coding STOP]'
          )) |> #16 509 obs
-  mutate(unit = 'mass-percent') |>
+  mutate(unit = 'mass-percent',
+         #put in the column id so that it will match the other variables
+         column_id = 'wpg2 (percent)') |>
   select(dataset_name, site_name, profile_name, layer_name, #provided ids
-         layer_id, row_id, #constructed ids
+         layer_id, row_id, column_id,#constructed ids
          from_source, of_variable, value, unit, method) |>
   pivot_longer(cols = c(unit, value, method),
                names_to = 'is_type', values_to = 'with_entry',
