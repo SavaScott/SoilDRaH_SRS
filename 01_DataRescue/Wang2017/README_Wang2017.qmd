@@ -3,7 +3,7 @@ title: "Data Rescue: Wang 2017"
 format:
   html:
     toc: true
-    eval: false #default to not evaluating the chunks, override this the template is completed
+    eval: true #default to not evaluating the chunks, override this the template is completed
 date: last-modified
 date-format: YYYY-MMMM
 bibliography:
@@ -66,7 +66,7 @@ timelog:
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
       duration: P60M
-- activity: 
+  - activity: 
       description: cross-checked figure 3
       who: JennavieveK 
       #when you started and ended, can be just a year or down to the minute
@@ -74,7 +74,7 @@ timelog:
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
       duration: P70M
-- activity: 
+  - activity: 
       description: cross-checked methods section
       who: JennavieveK 
       #when you started and ended, can be just a year or down to the minute
@@ -116,8 +116,8 @@ if(file.exists(readsource.file)){
 }
 
 #semantic files for level 1
-of_variable.file <- '../../semantics/SoilDRaHVocabulary_of_variable.csv'
-is_type.file <- '../../semantics/SoilDRaHVocabulary_is_type.csv'
+#of_variable.file <- '../../semantics/SoilDRaHVocabulary_of_variable.csv'
+#is_type.file <- '../../semantics/SoilDRaHVocabulary_is_type.csv'
 
 ```
 
@@ -392,15 +392,27 @@ data.lvl0.ls <- list(
   #Read in the results as tables or figure transcriptions. This includes
   #...the caption as well as the tables themselves
   data = list(
-    Table1 = list(
+    Figure2 = list(
       #Read the caption as a text string. Captions are the first cell on 
       #...the first row.
-      caption = read_csv(file = tableN.file,
+      caption = read_csv(file = figure2.file,
                          col_types = cols(.default = col_character()),
                          n_max = 1, col_names = FALSE)$X1[1],
       #Read in all the data, skipping the first row with the caption and read
       #...in the table as character. This element is a tibble (data.frame).
-      primary = read_csv(file = tableN.file,
+      primary = read_csv(file = figure2.file,
+                         col_types = cols(.default = col_character()),
+                         skip = 1)
+    ), #End 'Table1' element
+    Figure3 = list(
+      #Read the caption as a text string. Captions are the first cell on 
+      #...the first row.
+      caption = read_csv(file = figure3.file,
+                         col_types = cols(.default = col_character()),
+                         n_max = 1, col_names = FALSE)$X1[1],
+      #Read in all the data, skipping the first row with the caption and read
+      #...in the table as character. This element is a tibble (data.frame).
+      primary = read_csv(file = figure3.file,
                          col_types = cols(.default = col_character()),
                          skip = 1)
     ) #End 'Table1' element
@@ -534,6 +546,7 @@ data.lvl1.ls <- list(
 
 ```{r}
 #| label: check_of_variable
+#| eval: false
 
 #Read in the list of current 'of_variable' entries
 SoilDRaH_variable_list <- read_csv(file =of_variable.file,
@@ -561,6 +574,7 @@ if(length(new_variables) == 0){
 
 ```{r}
 #| label: check_is_type
+#| eval: false
 
 #read in the current types and what variable they are associated with
 SoilDRaH_type_list <- read_csv(file = is_type.file,
