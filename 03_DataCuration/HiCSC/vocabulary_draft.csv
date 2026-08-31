@@ -46,6 +46,8 @@ layer,value,Binkley1999
 soil_magensium,value,Binkley1999
 soil_nitrogen,value,Binkley1999
 soil_ph,value,Binkley1999
+current_land_use,description,Binkley1999
+site_history,description,Binkley1999
 citation,value,Elmore2006
 doi,value,Elmore2006
 region,island,Elmore2006
