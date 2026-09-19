@@ -1,5 +1,5 @@
 ---
-title: "Data Rescue: Author YYYY"
+title: "Data Rescue: Blanco 2011"
 format:
   html:
     toc: true
@@ -7,10 +7,10 @@ format:
 date: last-modified
 date-format: YYYY-MMMM
 bibliography:
-  - AuthorYYYY_Methods.bib #contains the citations in the methods section
-  - AuthorYYYY.bib #contains citation for the data source, generally a single citation of the primary paper
-authors: #author scheme from https://quarto.org/docs/journals/authors.html
-  - id: ktoddbrown #use the github name as an id
+  - Blanco2011_Methods.bib 
+  - Blanco2011.bib 
+authors:
+  - id: ktoddbrown 
     name:
       given: Katherine
       family: Todd-Brown
@@ -18,9 +18,9 @@ authors: #author scheme from https://quarto.org/docs/journals/authors.html
     affiliation:
       - ref: uf-ees
     role: #TODO define these roles and add reference
-      - transcription: lead #secondary, review
-      - standardization: lead #review
-      - curation: lead #review
+      - transcription: review #secondary, review
+   #   - standardization: lead #review
+    #  - curation: lead #review
 
 affiliations:
   - id: uf-ees
@@ -49,23 +49,6 @@ timelog:
       #start: YYYY-MM-DD THH:MM
       #alternatively duration can be combined with a being/end
       duration: P05M
-  - activity: 
-      description: revised execute with only provided files
-      who: ktoddbrown #github username
-      #when you started and ended, can be just a year or down to the minute
-      start: 2025-01-22 T1400
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: P45M
-  - activity: 
-      description: Revise based on feedback
-      who: ktoddbrown #github username
-      #when you started and ended, can be just a year or down to the minute
-      end: 2025-11-26
-      #start: YYYY-MM-DD THH:MM
-      #alternatively duration can be combined with a being/end
-      duration: P30M
-version: 'vs202512' #template version, remove before use
 ---
 
 
@@ -83,17 +66,19 @@ library(kableExtra) # pretty tables
 library(bibtex) # reading in BibTex files to R
 
 # data files for level 0
-methods.file <- "AuthorYYYY_Methods.md"
-tableN.file <- 'AuthorYYYY_TableN.csv'
-figureM.file <- 'AuthorYYYY_FigureM.csv'
+methods.file <- "Blanco2011_Methods.md"
+table1.file <- 'Blanco2011_Table1.csv'
+table2.file <- 'Blanco2011_Table2.csv'
+table3.file <- 'Blanco2011_Table3.csv'
+figure1.file <- 'Blanco2011_Figure1.csv'
 
 # Bibliography files
-primaryCitation.file <- 'AuthorYYYY.bib'
-methodsCitation.file <- 'AuthorYYYY_Methods.bib'
+primaryCitation.file <- 'Blanco2011.bib'
+methodsCitation.file <- 'Blanco2011_Methods.bib'
 
 # read function; you will need to create this function after you have your data
 #... rescue reviewed and before you finish your data harmonization.
-readsource.file <- '../../02_DataHarmonization/readAuthorYYYY.R'
+readsource.file <- '../../02_DataHarmonization/readBlanco2011.R'
 if(file.exists(readsource.file)){
   source(readsource.file)
 }
@@ -107,56 +92,76 @@ is_type.file <- '../../semantics/SoilDRaHVocabulary_is_type.csv'
 
 # Data Summary
 
-<!---- Fill in the full citation here, generally found on the journal page and link in the issue that you started on GitHub. Though this is at the top of the document, this should be one of the last things you do because a lot of this will be a direct copy-paste into the issue template. --->
+> Blanco, J.A., Imbert, J.B. & Castillo, F.J. Thinning affects Pinus sylvestris needle decomposition rates and chemistry differently depending on site conditions. Biogeochemistry 106, 397–414 (2011). https://doi.org/10.1007/s10533-010-9518-2
 
-> Full citation here, exact format does not matter but it should be complete enough to find the paper. Please include the doi
+For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/260.
 
-For the discussion of this data rescue see the Github issue: https://github.com/ktoddbrown/SoilDRaH/issues/#.
 
-<!--- After you read through the paper write a brief summary of what the study
-measured and what the data was used for in. This should be <250 words.--->
-
-AuthorYYYY primarily measures ... 
-They use this data to look at ...
+@Blanco2011 examines how three thinning intensities affect *Pinus sylvestris* needle mass loss and chemistry over 5 years in Mediterranean and Continental forests. The data shows that thinning slows decomposition and extends nutrient immobilization, with the Mediterranean forest having faster initial decay but the Continental forest reaching a higher final decomposition limit.
 
 ## Tables and figures
 
 <!--- Write a brief discription of all the tables and figures in this source. This should include full variable names when possible. It is perfectly fine to restate the captions here or copy other text that feels complete. Please keep this to a single sentence for each table/figure.--->
 
 - Table 
-  1) Describe the data in the first table.
 
-- Figure 
-  1)  Describe the data in the first figure
+  1) Table 1: Site characteristics (mean ± standard error)
+  2) Table 2: Soil chemical and physical properties in the study sites
+  3) Table 3: Regressions of changes in remaining organic mass versus changes in litter quality and climate variables
+  4) Table 4: Initial chemical composition of senescent needles. All values in mg g^-1 (mean ± SE, n = 3)
+  5) Table 5: Mean ± standard error of different variables at the time net release of N started
 
-## Fit for purpose: ProjectName
+- Figures:
 
-<!--- Write a brief discription of the project you are processing this data source for. This could be a copy-paste from other documentation. ---->
+  1) Figure 1: Mass loss in decomposing needles during 5 years of study (mean ± standard error, n = 9)
+  2) Figure 2: Nutrient content (N, P, K, Ca) in decomposing needles (mean ± standard error, n = 9).
+  3) Figure 3: Nutrient (Mg) and organic compounds content (C, cellulose, lignin) in decomposing needles (mean ± standard error, n = 9).
+  4) Figure 4: Conceptual model of N release in decomposing leaf litter emerging from our results.
 
-This data is identified as a data source for PROJECT.
-The purpose of this PROJECT is...
+## Fit for purpose: DeAD
 
-<!--- Include a list of the key variables identified for the project. This is used to identify the elements for the paper for the data rescue. An example is below for a basic geo-located soil carbon stock project. --->
+The Decomposition Across Drylands (DeAD) data collection is a new data effort targeting dryland decomposition studies. The purpose of this data collection is to develop better litter decay models for dryland ecosystems.
 
-  - Location: The geo-location is given in the site description section of the methods. Both latitude and longitude are given but not the datum/projection that was used.
-  - Soil carbon stock: Soil carbon stock was calculated from organic carbon fraction and bulk density and is reported in table 3 across two treatments and one control. Coarse fraction was not reported and does not appear to be included.
-  
+### Main Variables of Interest
+
+- Location: Evaluated across two environments in Navarre, northern Spain: Aspurz (Mediterranean forest: 42°48'50" N, 1°52'30" W) and Garde (Continental forest: 42°42'31" N, 1°8'40" W). This is found in Table 1.
+- Soil Carbon Stock: Organic Carbon (Horizon A) is 67.8 mg g⁻¹ in Aspurz and 57.3 mg g⁻¹ in Garde, from Blanco 2004. This is found in Table 2. 
+- Duration: The experiment spanned 5 years. Litter bags were deployed in November 2000, and final samples were retrieved in October 2005. This is found within the Materials and Methods section, subsection Preparation and placement of litter bags. 
+- Mass Loss: Found explicitly in Figure 1.
+- Solar Exposure: solar radiation measurements could not be found explicitly in this paper, but canopy opening effects through different thinning intensities (0%, 20%, 30%) are shown. These intensities are found in Figure 1.
+
+### Other Relevant Variables
+- Litter Species: *Pinus sylvestris* L. (Scots pine) needles.
+- Microsite Data: Can be found in section "Materials and methods", subsection "Study sites and experimental design".
+- Litter Chemical Composition: Initial concentrations of C, N, P, K, Ca, Mg, Cellulose, and Lignin across all thinning treatments are in Table 4. Also, in Figure 3.
+- Litter Bag Materials and Methods: The litter bags measured 15 cm × 20 cm, made from fiberglass coated with polyethylene with a mesh size of 1.5 mm. Each bag was filled with 10 ± 0.001 g of air-dried needles. This is found in Materials and Methods section, subsection Preparation and placement of litter bags.
+- Age of Ecosystem: 32 years old for Aspurz and 37 years old for Garde at the start of the study. Mentioned in Table 1.
+- Land Management: Publicly owned managed forest stands subjected to thinning treatments implemented in August and November 1999. Mentioned in subsection: Study sites and experimental design.
+
 ## Files
 
-<!--- Include a brief explaination to all the files in the folder--->
+These files are in the Blanco2011 data rescue.
 
-These files are in the AuthorYYYY data rescue.
-
-- [Readme](README_AUTHORYYYY.qmd)
+- [Readme](README_Blanco2011.qmd)
   + This is the primary file that documents the transcriptions and decision made during data rescue.
-- [AuthorYYYY.bib](AuthorYYYY.bib)
+- [Blanco2011.bib](Blanco2011.bib)
   + citation for article transcribed
-- [AuthorYYYY_Methods.bib](AuthorYYYY_Methods.bib)
+- [Blanco2011_Methods.bib](Blanco2011_Methods.bib)
   + citations for the methods section of the article
-- [AuthorYYYY_Methods.md](AuthorYYYY_Methods.md)
+- [Blanco2011_Methods.md](Blanco2011_Methods.md)
   + methods transcribed from primary article
-- [AuthorYYYY_TableN.csv](AuthorYYYY_TableN.csv)
-  + table N from primary article with ...
+- [Blanco2011_Table1.csv](Blanco2011_Table1.csv)
+  + table 1 from primary article with coordinates of site, mean temperature, climate type, tree stand data before thinning, etc.
+- [Blanco2011_Table2.csv](Blanco2011_Table2.csv)
+  + table 2 from primary article with soil chemical and physical properties in the study sites
+- [Blanco2011_Table4.csv](Blanco2011_Table4.csv)
+  + table 4 from primary article with initial chemical composition of senescent needles.
+- [Blanco2011_Table5.csv](Blanco2011_Table5.csv)
+  + table 5 from primary article with mean ± standard error of different variables at the time net release of N started
+- [Blanco2011_Figure1.csv](Blanco2011_Figure1.csv)
+  + figure 1 from primary article with mass loss in decomposing needles during 5 years of study
+- [Blanco2011_Figure3.csv](Blanco2011_Figure3.csv)
+  + figure 3 from primary article with nutrient (Mg) and organic compounds content
 - [temp/](temp/)
     + scratch folder that will not be archived on GitHub, it should include local copies of the data resource (likely a PDF article) and any spreadsheets or other tools you used for the transcriptions.
 
@@ -166,8 +171,8 @@ These files are in the AuthorYYYY data rescue.
 
 + Lead
   - [ ] Read the article or data resource and the discription of the target project
-  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_AuthorYYYY'
-  - [ ] Create a copy of this template folder and rename it to AuthorYYYY
+  - [ ] Create a fresh fork of the primary repository https://github.com/ktoddbrown/SoilDRaH/tree/main, it might be useful to rename it 'SoilDRaH_Blanco2011'
+  - [ ] Create a copy of this template folder and rename it to Blanco2011
   - [ ] Fill out Data summary section (except for the Files), the Data Rescue Plan (here!), and update the author section of the yml to reflect who is working on the rescue
   - [ ] Create a GitHub issue from the Data Rescue template and get feedback from a reviewer on the project (Dr Todd-Brown or a grad student typically).
   - [ ] Add the reviewer to the author list in the yml
@@ -221,7 +226,7 @@ And is crosschecked with the secondary transcription
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
 
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_TableN_ABC.md AuthorYYYY_TableN.md
+diff --strip-trailing-cr --suppress-common-lines -y temp/Blanco2011_TableN_ABC.md Blanco2011_TableN.md
 ```
 
 ## Methods
@@ -233,7 +238,7 @@ Any different to the cross check for the methods section will be output after th
 #| eval: false
 # You will want to repeat the line below to cross check each csv and md file in the
 #... data rescue. Having no lines flagged by this command will ensure that each character matches exactly.
-diff --strip-trailing-cr --suppress-common-lines -y temp/AuthorYYYY_Methods_ABC.md AuthorYYYY_Methods.md
+diff --strip-trailing-cr --suppress-common-lines -y temp/Blanco2011_Methods_ABC.md Blanco2011_Methods.md
 ```
 
 ### Methods  - Text
@@ -315,7 +320,7 @@ Below verifies that the data from the function matches what is coded above.
 #| label: checkReadFunction_lvl0
 
 if(file.exists(readsource.file)){
-  datafunction.lvl0.ls <- readAuthorYYYY(dataDir = '.',
+  datafunction.lvl0.ls <- readBlanco2011(dataDir = '.',
                                          dataLevel = 'level0')
   
   if(isTRUE(all.equal(datafunction.lvl0.ls, data.lvl0.ls))){
@@ -507,7 +512,7 @@ Check for an exact match with the read function.
 #| label: checkReadFunction_lvl1
 
 if(file.exists(readsource.file)){
-  datafunction.lvl1.ls <- readAuthorYYYY(dataDir = '.',
+  datafunction.lvl1.ls <- readBlanco2011(dataDir = '.',
                                          dataLevel = 'level1')
   
   if(isTRUE(all.equal(datafunction.lvl0.ls, data.lvl0.ls))){
