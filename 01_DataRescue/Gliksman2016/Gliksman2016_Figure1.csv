@@ -1,0 +1,44 @@
+﻿"Fig. 1 The effect of microclimate manipulation treatments on
+litter moisture-content, microbial activity, and litter decay during the dry season. (a) Nighttime litter moisture (dry-mass
+basis), (b) nighttime litter CO$_2$ flux, (c) substrate-induced respiration (SIR), (d) litter mass loss at the end of the dry season
+(n = 5). For (a–c), data were averaged over four sampling days
+(3 days for Calicotome) in the dry season 2012 (n = 19, except
+Calicotome where n = 14). Different letters indicate statistically
+significant differences within a litter type (P ≤ 0.05, Tukey–Kramer HSD test). Mean ± SE.",,,,,
+y value,SE bar value,y axis label,Litter type,footnotes,treatment type
+31.57,35.00,Moisture content (%),Avena,a,No-screen
+12.22,12.87,Moisture content (%),Avena,b,Transparent
+13.70,14.63,Moisture content (%),Avena,b,Radiation block
+33.80,36.94,Moisture content (%),Calicotome,a,No-screen
+16.11,16.85,Moisture content (%),Calicotome,b,Transparent
+16.57,17.13,Moisture content (%),Calicotome,b,Radiation block
+22.50,24.17,Moisture content (%),Scabiosa,a,No-screen
+10.93,11.67,Moisture content (%),Scabiosa,b,Transparent
+11.76,12.13,Moisture content (%),Scabiosa,b,Radiation block
+24.51,29.27,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Avena,a,No-screen
+4.78,5.59,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Avena,b,Transparent
+2.99,3.67,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Avena,b,Radiation block
+23.39,28.96,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Calicotome,a,No-screen
+5.22,6.45,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Calicotome,b,Transparent
+2.31,3.48,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Calicotome,b,Radiation block
+15.42,18.20,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Scabiosa,a,No-screen
+4.84,5.40,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Scabiosa,b,Transparent
+3.98,4.84,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Scabiosa,b,Radiation block
+99.4,106.0,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Avena,a,No-screen
+49.9,53.2,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Avena,b,Transparent
+37,39.1,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Avena,b,Radiation block
+183.8,196.7,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Calicotome,a,No-screen
+113.1,122.3,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Calicotome,b,Transparent
+94.81,97.72,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Calicotome,b,Radiation block
+59.47,65.29,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Scabiosa,a,No-screen
+35.35,37.43,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Scabiosa,b,Transparent
+35.35,36.18,SIR (μg C - CO$_2$ g$^{-1}$ h$^{-1}$,Scabiosa,b,Radiation block
+8.07,9.05,Mass loss (%),Avena,a,No-screen
+3.51,3.82,Mass loss (%),Avena,b,Transparent
+3.63,5.11,Mass loss (%),Avena,b,Radiation block
+22.2,22.8,Mass loss (%),Calicotome,a,No-screen
+12.9,14.8,Mass loss (%),Calicotome,b,Transparent
+11.1,12.8,Mass loss (%),Calicotome,b,Radiation block
+3.45,4.13,Mass loss (%),Scabiosa,a,No-screen
+1.17,1.66,Mass loss (%),Scabiosa,b,Transparent
+0.062,-0.80,Mass loss (%),Scabiosa,b,Radiation block

@@ -1,0 +1,40 @@
+﻿"Fig. 4 Daytime litter CO2 flux and microclimatic conditions
+during the dry season. (a) Mean rates of dry season litter CO2
+flux (n = 16, except Calicotome where n = 11), (b) UV irradiance
+(n = 12, except Calicotome where n = 8), and (c) chamber temperature during midday measurements in three litter types as affected by solar radiation manipulation in Israel (n = 16, except Calicotome where n = 11). Different letters indicate statistically significant differences within litter type (P ≤ 0.05, Tukey–Kramer HSD test). Mean ± SE, n = 11–20 litterbags.",,,,,
+y value,SE bar value,y label,x label,UV treatment,footnotes
+22.32,23.60,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Avena,No-screen,a
+18.06,19.27,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Avena,Transparent,b
+5.05,5.76,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Avena,Rad. Block,c
+22.61,25.31,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Calicotome,No-screen,a
+22.39,25.45,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Calicotome,Transparent,a
+6.11,7.68,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Calicotome,Rad. Block,b
+13.01,14.15,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Scabiosa,No-screen,a
+10.02,10.59,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Scabiosa,Transparent,b
+2.49,3.06,CO$_2$ flux (μg C g$^{-1}$ h$^{-1}$),Scabiosa,Rad. Block,c
+43.65,45.76,UV (W m$^{-2}$),Avena,No-screen,a
+41.98,44.19,UV (W m$^{-2}$),Avena,Transparent,a
+1.57,1.90,UV (W m$^{-2}$),Avena,Rad. Block,b
+41.33,44.3,UV (W m$^{-2}$),Calicotome,No-screen,a
+42.03,44.19,UV (W m$^{-2}$),Calicotome,Transparent,a
+1.47,1.57,UV (W m$^{-2}$),Calicotome,Rad. Block,b
+40.74,43.49,UV (W m$^{-2}$),Scabiosa,No-screen,a
+42.30,44.57,UV (W m$^{-2}$),Scabiosa,Transparent,a
+1.47,1.63,UV (W m$^{-2}$),Scabiosa,Rad. Block,b
+45.52,46.03,Temperature (°C),Avena,No-screen,a
+45.32,46.09,Temperature (°C),Avena,Transparent,a
+44.69,45.08,Temperature (°C),Avena,Rad. Block,a
+46.20,46.83,Temperature (°C),Calicotome,No-screen,a
+46.37,47.18,Temperature (°C),Calicotome,Transparent,a
+45.64,46.27,Temperature (°C),Calicotome,Rad. Block,a
+46.23,46.79,Temperature (°C),Scabiosa,No-screen,a
+46.30,46.76,Temperature (°C),Scabiosa,Transparent,a
+45.60,46.16,Temperature (°C),Scabiosa,Rad. Block,a
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
