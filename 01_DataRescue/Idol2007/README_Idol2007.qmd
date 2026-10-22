@@ -481,35 +481,31 @@ The `of_variable` being used here are:
 #### Method-section only data ####
 
 studyMeta <- tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
-                   'citation', 'value', format(data.lvl0.ls$citation$primary), 'journal citation',
-                   'doi', 'value', data.lvl0.ls$citation$primary$doi, 'journal citation',
+                     'citation', 'value', format(data.lvl0.ls$citation$primary), 'journal citation',
+                     'doi', 'value', data.lvl0.ls$citation$primary$doi, 'journal citation',
                      'region', 'site', 'slopes of the Mauna Loa Volcano', paste('Method ln9:', paste(data.lvl0.ls$method[9], collapse = ' ')),
-                   'region', 'state', 'HI',  paste('Method ln5:', paste(data.lvl0.ls$method[5], collapse = ' ')),
-                   'land_use', 'value', 'stands that had regenerated into almost pure A. *koa* forests after livestock exclusion and ungulate removal', paste('Method ln8:', paste(data.lvl0.ls$method[8], collapse = ' ')),
-                   'soil_class', 'value','Andisols or as Histosols with andic properties reflective of the volcanic parent material',  paste('Method ln28:', paste(data.lvl0.ls$method[28], collapse = ' ')),                                                                'elevation', 'maximum', '1650', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')), 
-                   'elevation', 'minimum', '1600', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')),
-                    'elevation', 'unit', 'm asl', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')),
-                   'stand_type', 'value', 'Acacia koa', paste('Method ln24:', paste(data.lvl0.ls$method[24], collapse = ' ')),
-                   'stand_age', 'minimum', '25', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' ')),
-                   'stand_age', 'minimum', '30', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' ')),
-                   'stand_age', 'unit', 'years', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' '))
+                     'region', 'state', 'HI',  paste('Method ln5:', paste(data.lvl0.ls$method[5], collapse = ' ')),
+                     'land_use', 'value', 'stands that had regenerated into almost pure A. *koa* forests after livestock exclusion and ungulate removal', paste('Method ln8:', paste(data.lvl0.ls$method[8], collapse = ' ')),
+                     'soil_class', 'value','Andisols or as Histosols with andic properties reflective of the volcanic parent material',  paste('Method ln28:', paste(data.lvl0.ls$method[28], collapse = ' ')),                                                                'elevation', 'maximum', '1650', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')), 
+                     'elevation', 'minimum', '1600', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')),
+                     'elevation', 'unit', 'm asl', paste('Method ln19:', paste(data.lvl0.ls$method[19], collapse = ' ')),
+                     'stand_type', 'value', 'Acacia koa', paste('Method ln24:', paste(data.lvl0.ls$method[24], collapse = ' ')),
+                     'stand_age', 'minimum', '25', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' ')),
+                     'stand_age', 'minimum', '30', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' ')),
+                     'stand_age', 'unit', 'years', paste('Method ln22:', paste(data.lvl0.ls$method[22], collapse = ' '))
 )
-                   
-  
+
 siteMeta <- tribble(~of_site, ~of_variable, ~is_type, ~with_entry, ~from_source,
                     'HONO', 'precipitation', 'value', '1000', paste('Method ln10:', paste(data.lvl0.ls$method[10], collapse = ' ')),
                     'HONO', 'precipitation', 'unit', 'mm per year', paste('Method ln10:', paste(data.lvl0.ls$method[10], collapse = ' ')),
                     'HAVO', 'precipitation', 'value', '1500', paste('Method ln12:',  paste(data.lvl0.ls$method[12], collapse = ' ')),
                     'HAVO', 'precipitation', 'unit', 'mm per year', paste('Method ln12:', paste(data.lvl0.ls$method[12], collapse = ' ')),
                     'HAVO', 'elevation', 'minimum', '1200', paste('Method ln20:', paste(data.lvl0.ls$method[20], collapse = ' ')),
-                    'HAVO', 'elevation', 'minimum', '2050', paste('Method ln20:', paste(data.lvl0.ls$method[20], collapse = ' ')),
+                    'HAVO', 'elevation', 'maximum', '2050', paste('Method ln20:', paste(data.lvl0.ls$method[20], collapse = ' ')),
                     'HAVO', 'elevation', 'unit', 'm asl', paste('Method ln20:', paste(data.lvl0.ls$method[20], collapse = ' ')),
-                     'KR', 'precipitation', 'value', '2000', paste('Method ln14:',  paste(data.lvl0.ls$method[14], collapse = ' ')),
-                     'KR', 'precipitation', 'unit', 'mm per year', paste('Method ln14:', paste(data.lvl0.ls$method[14], collapse = ' '))
+                    'KR', 'precipitation', 'value', '2000', paste('Method ln14:',  paste(data.lvl0.ls$method[14], collapse = ' ')),
+                    'KR', 'precipitation', 'unit', 'mm per year', paste('Method ln14:', paste(data.lvl0.ls$method[14], collapse = ' '))
 )
-                                      
-                  
-
 
 #### Table 1 ####
 
@@ -521,8 +517,8 @@ Table1Primary <- data.lvl0.ls$data$Table1$primary |>
   mutate(of_variable = case_when(
            column_name == 'Site' ~ 'site_name',
            column_name == 'Elevation (m)' ~ 'elevation',
-           column_name == 'MAP(mm)' ~ 'precipiation',
-           column_name == 'MAT(°C)' ~ 'temperature',
+           column_name == 'MAP(mm)' ~ 'mean_annual_precipitation',
+           column_name == 'MAT(°C)' ~ 'mean_annual_temperature',
            column_name == 'Stand age (y)' ~ 'stand_age',
            column_name == 'Soil age (y)' ~ 'soil_age',
            column_name == 'Density (stems ha<sup>-1</sup>)' ~ 'stem_density'
@@ -531,55 +527,82 @@ Table1Primary <- data.lvl0.ls$data$Table1$primary |>
 
 Table1Meta <- Table1Primary |>
   select(column_name, of_variable) |>
- unique() |>
+  unique() |>
   mutate(unit = str_extract(column_name, pattern = '(?<=\\().*(?=\\))'),
          species = case_when(str_detect(column_name, 'A. koa') ~ 'Acacia koa',
                              .default = NA_character_),
          from_source = 'Table 1 column names.') |>
   filter(!is.na(unit) | !is.na(species)) |>
-  
   bind_rows(
     tribble(~of_variable, ~method, ~from_source,
             'site_name', paste0(data.lvl0.ls$method[c(10,12,14)], collapse = ' '), 'Methods ln10,12,14',
             'elevation', paste0(data.lvl0.ls$method[19:21], collapse = ' '), 'Methods ln19-21',
-            'mean_annual_precipiation', paste0(data.lvl0.ls$method[c(9,30,32)], collapse = ' '), 'Methods ln9,30,32',
+            'mean_annual_precipitation', paste0(data.lvl0.ls$method[c(9,30,32)], collapse = ' '), 'Methods ln9,30,32',
             'mean_annual_temperature', paste0(data.lvl0.ls$method[c(19:20,30,35:26)], collapse = ' '), 'Methods ln19-20,30,35-36',
             'stand_age', paste0(data.lvl0.ls$method[22], collapse = ' '), 'Methods ln22',
             'soil_age', paste0(data.lvl0.ls$method[26:27], collapse = ' '), 'Methods ln26-27',
-            'stem_density', paste0(data.lvl0.ls$method[23:24], collapse = ' '), 'Methods ln23-24'
-            ) ) |>
-  
-  
- bind_rows(
+            'stem_density', paste0(data.lvl0.ls$method[23:24], collapse = ' '), 'Methods ln23-24')) |>
+  bind_rows(
     tribble(~of_variable, ~control_vocabulary, ~from_source,
-          'soil_class', 'Andisols: USDA classification for soil developing in volcanic ejecta| Histosols: USDA taxonomic class of  soils forming in organic soil materials', 'USDA',
-          'stand_type', '*A. koa*: pure stands of *Acacia koa* Gray', 'Introduction ln6',) |>
-left_join(Table1Primary |>
-                  select(column_name, of_variable) |>
-                  unique(),
-                by = join_by(of_variable)))|>
+            'soil_class', 'Andisols: USDA classification for soil developing in volcanic ejecta| Histosols: USDA taxonomic class of  soils forming in organic soil materials', 'USDA',
+            'stand_type', '*A. koa*: pure stands of *Acacia koa* Gray', 'Introduction ln6')) |>
+   mutate(column_name = case_when(
+    is.na(column_name) & of_variable == "site_name" & is.na(unit) ~ "Site",
+    is.na(column_name) & of_variable == "elevation" & is.na(unit) ~ "Elevation (m)",
+    is.na(column_name) & of_variable == "mean_annual_precipitation" & is.na(unit) ~ "MAP(mm)",
+    is.na(column_name) & of_variable == "mean_annual_temperature" & is.na(unit) ~ "MAT(°C)",
+    is.na(column_name) & of_variable == "stand_age" & is.na(unit) ~ "Stand age (y)",
+    is.na(column_name) & of_variable == "soil_age" & is.na(unit) ~ "Soil age (y)",
+    is.na(column_name) & of_variable == "stem_density" & is.na(unit) ~ "Density (stems ha<sup>-1</sup>)",
+        TRUE ~ column_name)) |> 
   pivot_longer(cols = c(unit, species, method, control_vocabulary),
                names_to = 'is_type',
                values_drop_na = TRUE,
-               values_to = 'with_entry')
+                values_to = 'with_entry') |> 
+  filter_out(is.na(column_name)) |> 
+  arrange(column_name)
+ 
 
 #### Table 2 - HOLD - May Need to Manipulate the Transcription - Code is currently the same as Table 1####
 
-Table2Primary <- data.lvl0.ls$data$Table2$primary |>
-  mutate(row_id = paste0('R', 1:n())) |>
-  pivot_longer(cols = -row_id,
-               names_to = 'column_name', values_to = 'with_entry',
+# Table2Primary <- data.lvl0.ls$data$Table2$primary |>
+#   mutate(row_id = paste0('R', 1:n())) |>
+#   pivot_longer(cols = -row_id,
+#                names_to = 'column_name', values_to = 'with_entry',
+#                values_drop_na = TRUE) |> 
+#   mutate(of_variable = case_when(
+#            column_name == 'Site' ~ 'site_name',
+#            column_name == 'Elevation (m)' ~ 'elevation',
+#            column_name == 'MAP(mm)' ~ 'mean_annual_precipiation',
+#            column_name == 'MAT(°C)' ~ 'mean_annual_temperature',
+#            column_name == 'Stand age (y)' ~ 'stand_age',
+#            column_name == 'Soil age (y)' ~ 'soil_age',
+#            column_name == 'Density (stems ha<sup>-1</sup>)' ~ 'stem_density'
+#          )) |>
+#   mutate(from_source = 'Table 2')
+
+## for the above table 2, i think it would be ideal to have a separate column for site; HAVO, HONO, KR
+
+Table2Primary <- data.lvl0.ls$data$Table2$primary |> 
+  pivot_longer(cols = c(HONO, HAVO, KR),
+               names_to = 'site', values_to = 'with_entry',
                values_drop_na = TRUE) |> 
+  rename(column_name = observation) |> 
+  mutate(unit = str_extract(column_name, pattern = '(?<=\\()[^)]*'),
+         from_source = 'Table 1 column names.') |> 
   mutate(of_variable = case_when(
-           column_name == 'Site' ~ 'site_name',
-           column_name == 'Elevation (m)' ~ 'elevation',
-           column_name == 'MAP(mm)' ~ 'mean_annual_precipiation',
-           column_name == 'MAT(°C)' ~ 'mean_annual_temperature',
-           column_name == 'Stand age (y)' ~ 'stand_age',
-           column_name == 'Soil age (y)' ~ 'soil_age',
-           column_name == 'Density (stems ha<sup>-1</sup>)' ~ 'stem_density'
-         )) |>
-  mutate(from_source = 'Table 1')
+           column_name == 'MAP (mm)' ~ 'mean_annual_precipiation',
+           column_name == 'Basal area (m$^2$ ha$^{-1}$)' ~ 'basal_area',
+           column_name == 'LMA (g m$^{-2}$)' ~ 'leaf_mass_area',
+           column_name == 'Leaf N (%)' ~ 'leaf_N_mass',
+           column_name == 'Leaf N (g m-2)' ~ 'leaf_N_area',
+           column_name == 'Leaf P (%)' ~ 'leaf_P_mass',
+           column_name == 'Leaf P (g m$^{-2}$)' ~ 'leaf_P_area'
+         ))
+
+####TODO: We need to re-transcribe the table2 csv; edit the column names. for example, the current column 
+##...Leaf P Soil N (μg cm$^{-2}$) is just Soil N (μg cm$^{-2}$). I understand where the confusion came from in the paper.
+##...the indentation in the table is misleading if you don't know the context!
 
 Table2Meta <- Table2Primary |>
   select(column_name, of_variable) |>
