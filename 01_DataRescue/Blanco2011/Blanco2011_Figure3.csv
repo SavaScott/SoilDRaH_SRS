@@ -107,3 +107,136 @@ Incubation days,y value ,SE difference,year,y value label,symbol,graph type,subg
 1785,0.690,0.236,2005,Lignin content (g bag$^{-1}$),-,Mediterranean forest (MF),Lignin,0%
 1785,0.615,-,2005,Lignin content (g bag$^{-1}$),-,Mediterranean forest (MF),Lignin,20%
 1785,0.628,0.280,2005,Lignin content (g bag$^{-1}$),-,Mediterranean forest (MF),Lignin,30%
+0.541,3.124,0.0408,2000,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+0.541,3.119,0.0414,2000,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+0.541,3.045,0.064,2000,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+28.98,2.907,0.043,2000,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+28.98,3.140,0.052,2000,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+28.98,3.049,-,2000,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+57.86,2.976,0.040,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+57.86,3.107,0.053,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+57.86,2.993,0.115,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+84.51,2.910,0.048,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+84.51,3.110,0.087,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+84.51,2.992,0.085,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+143.1,2.878,-,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+143.1,2.992,-,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+143.1,2.904,-,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+204.2,2.634,0.096,2001,Cellulose content (g bag$^{-1}$,"square, star",GARDE Continental forest (CF),Cellulose,0%
+204.2,2.816,0.055,2001,Cellulose content (g bag$^{-1}$,"square, star",GARDE Continental forest (CF),Cellulose,20%
+204.2,2.927,0.022,2001,Cellulose content (g bag$^{-1}$,"square, star",GARDE Continental forest (CF),Cellulose,30%
+262.0,2.603,-,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+262.0,2.859,0.069,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+262.0,2.843,0.049,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+323.8,2.588,0.069,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+323.8,2.681,0.120,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+323.8,2.717,0.025,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+385.3,2.469,0.052,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+385.3,2.519,0.079,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+385.3,2.531,0.109,2001,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+474.9,2.264,-,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+474.9,2.407,0.079,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+474.9,2.395,0.068,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+519.0,2.044,0.126,2002,Cellulose content (g bag$^{-1}$,square,GARDE Continental forest (CF),Cellulose,0%
+519.0,2.202,0.045,2002,Cellulose content (g bag$^{-1}$,sqaure,GARDE Continental forest (CF),Cellulose,20%
+519.0,2.247,0.070,2002,Cellulose content (g bag$^{-1}$,sqaure,GARDE Continental forest (CF),Cellulose,30%
+572.3,2.101,0.052,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+572.3,2.130,-,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+572.3,2.214,0.147,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+629.8,2.057,0.053,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+629.8,1.989,0.162,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+629.8,2.003,0.081,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+687.6,1.962,0.095,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+687.6,1.920,0.106,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+687.6,2.179,0.032,2002,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+1052,1.879,0.072,2003,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+1052,1.817,0.069,2003,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+1052,1.690,0.027,2003,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+1421,1.699,0.154,2004,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+1421,1.444,0.058,2004,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+1421,1.577,0.047,2004,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+1785,1.362,0.066,2005,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,0%
+1785,1.352,0.073,2005,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,20%
+1785,1.556,0.218,2005,Cellulose content (g bag$^{-1}$,-,GARDE Continental forest (CF),Cellulose,30%
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
