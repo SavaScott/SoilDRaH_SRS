@@ -375,42 +375,42 @@ citationMeta <- tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
 
 land_use.df <- tribble(~region_id, ~site_id, ~of_variable, ~is_type, ~with_entry, ~from_source,
    #Hawaii's Kalopa Site
-    'Hawaii', 'Kalopa_Sugarcane', 'land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13]),
+    'Hawaii', 'Kalopa_Sugarcane', 'land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13], collapse = '... '),
     'Hawaii', 'Kalopa_Sugarcane', 'land_use', 'duration', 'P50Y/1997', paste('Method ln13;17:', data.lvl0.df$method[c(13,17)], collapse = '... '), #there is no past land use mentioned for this site, could assume it is forest
       'Hawaii', 'Kalopa_Forest', 'land_use', 'description', 'forest', paste('Method ln15;17:', data.lvl0.df$method[c(15,17)], collapse = '... '),
-      'Hawaii', 'Kalopa_Pasture', 'land_use', 'description', 'pasture', paste('Method ln11;18:19:', data.lvl0.df$method[c(11,18:19)]),
+      'Hawaii', 'Kalopa_Pasture', 'land_use', 'description', 'pasture', paste('Method ln11;18:19:', data.lvl0.df$method[c(11,18:19)], collapse = '... '),
     'Hawaii', 'Kalopa_Pasture', 'land_use', 'duration', 'P90Y/1997', paste('Method ln12;17:', data.lvl0.df$method[c(12,17)], collapse = '... '),
 
    #Hawaii's Humuula site
-    'Hawaii', 'Humnula_Sugarcane','land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13]),
+    'Hawaii', 'Humnula_Sugarcane','land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13], collapse = '... '),
     'Hawaii', 'Humnula_Sugarcane', 'land_use', 'duration', 'P90Y/1997', paste('Method ln13;17:', data.lvl0.df$method[c(13,17)], collapse = '... '), #there is no past land use mentioned for this site, could assume it is forest
    'Hawaii', 'Humnula_Forest', 'land_use', 'description', 'forest', paste('Method ln15;17:', data.lvl0.df$method[c(15,17)], collapse = '... '),
 
    #Brazil's Forest site
-   'Brazil', 'Forest', 'land_use', 'description', 'forest', paste('Method ln23:', data.lvl0.df$method[23]),
+   'Brazil', 'Forest', 'land_use', 'description', 'forest', paste('Method ln23:', data.lvl0.df$method[23], collapse = '... '),
    
    #Brazil's Sugarcane P27Y
-   'Brazil', 'Sugarcane_27Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23]),
-   'Brazil', 'Sugarcane_27Y', 'past_land_use', 'description', 'fields coverted to sugarcane', paste(paste('Method ln28:', data.lvl0.df$method[28])),
-   'Brazil', 'Sugarcane_27Y', 'past_land_use', 'duration', '/1971', paste(paste('Method ln28:', data.lvl0.df$method[28])),
-   'Brazil', 'Sugarcane_27Y', 'land_use', 'duration', 'P27Y/1998', paste('Method ln28:', data.lvl0.df$method[28]),
+   'Brazil', 'Sugarcane_27Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23], collapse = '... '),
+   'Brazil', 'Sugarcane_27Y', 'past_land_use', 'description', 'fields coverted to sugarcane', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+   'Brazil', 'Sugarcane_27Y', 'past_land_use', 'duration', '/1971', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+   'Brazil', 'Sugarcane_27Y', 'land_use', 'duration', 'P27Y/1998', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
    
    #LU5 is Brazil's Sugarcane P65Y
-   'Brazil', 'Sugarcane_65Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23]),
-   'Brazil', 'Sugarcane_65Y', 'past_land_use', 'description', 'fields coverted to sugarcane', paste(paste('Method ln28:', data.lvl0.df$method[28])),
-   'Brazil', 'Sugarcane_65Y', 'past_land_use', 'duration', '/1933', paste(paste('Method ln28:', data.lvl0.df$method[28])),
-   'Brazil', 'Sugarcane_65Y', 'land_use', 'duration', 'P65Y/1998', paste('Method ln28:', data.lvl0.df$method[28]),
+   'Brazil', 'Sugarcane_65Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23], collapse = '... '),
+   'Brazil', 'Sugarcane_65Y', 'past_land_use', 'description', 'fields coverted to sugarcane', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+   'Brazil', 'Sugarcane_65Y', 'past_land_use', 'duration', '/1933', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+   'Brazil', 'Sugarcane_65Y', 'land_use', 'duration', 'P65Y/1998', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
    
    #LU6 is Ecuador's Forest Site
-   'Ecuador', 'Forest', 'land_use', 'description', 'a closed canopy and a healthy, solid understory of ferns and forbs', paste('Method ln45:', data.lvl0.df$method[45]),
+   'Ecuador', 'Forest', 'land_use', 'description', 'a closed canopy and a healthy, solid understory of ferns and forbs', paste('Method ln45:', data.lvl0.df$method[45], collapse = '... '),
    'Ecuador', 'Forest', 'land_use', 'duration', 'P25Y/1998', paste('Method ln41;45:', data.lvl0.df$method[c(41,45)], collapse = '... '),
    
    #LU7 is Ecuador's Pasture Site - does not say past_land_use, could be assumed to be forest
-  'Ecuador', 'Pasture','land_use', 'description', 'African bristlegrass [*Setaria sphacelata* (Schumacher) Moss] pasture sites', paste('Method ln41:', data.lvl0.df$method[41]),
+  'Ecuador', 'Pasture','land_use', 'description', 'African bristlegrass [*Setaria sphacelata* (Schumacher) Moss] pasture sites', paste('Method ln41:', data.lvl0.df$method[41], collapse = '... '),
    'Ecuador', 'Pasture', 'land_use', 'duration', 'P25Y/1998', paste('Method ln41;43:', data.lvl0.df$method[c(41,43)], collapse = '... '),
   
   #LU8 is Ecuador's Sugarcane Site - does not say past_land_use, could be assumed to be forest
-  'Ecuador', 'Sugarcane', 'land_use', 'description', 'sugarcane', paste('Method ln42:', data.lvl0.df$method[42]),
+  'Ecuador', 'Sugarcane', 'land_use', 'description', 'sugarcane', paste('Method ln42:', data.lvl0.df$method[42], collapse = '... '),
    'Ecuador', 'Sugarcane', 'land_use', 'duration', 'P25Y/1998', paste('Method ln41;43:', data.lvl0.df$method[c(41,43)], collapse = '... ')
    )
 
@@ -517,7 +517,7 @@ data.lvl1.ls <- list(
   study =  bind_rows(studyMeta, citationMeta, land_use.df),
   primary_meta = bind_rows(Table1Meta),
   primary = bind_rows(Table1Primary) |>
-    mutate(location_id = with_entry[of_variable == 'site_id'],
+    mutate(location_id = with_entry[of_variable == 'region_id'],
            is_type = 'value',
            .by = row_id) |>
     arrange(row_id, location_id, column_name,

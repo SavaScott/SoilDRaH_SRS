@@ -77,100 +77,125 @@ data.lvl0.df <- list(
  
 #### Methods section only ####
 
-studyMeta <- tribble(~region_id, ~site_id, ~of_variable, ~is_type, ~with_entry, ~from_source,
+studyMeta <- tibble::tribble(~region_id, ~of_variable, ~is_type, ~with_entry, ~from_source,
                      # Hawaii
-                     'Hawaii', 'all Hawaii sites','region', 'site', 'Hamakua Coast, Hawaii, northeast flank of Mauna Kea', paste('Method ln7:', data.lvl0.df$method[7]),
-                     'Hawaii','all Hawaii sites','region', 'state', 'HI', paste('Method ln7:', data.lvl0.df$method[7]),
-                     'Hawaii','all Hawaii sites', 'elevation', 'value', '700', paste('Method ln7:', data.lvl0.df$method[7]),
-                     'Hawaii','all Hawaii sites', 'elevation', 'unit', 'm', paste('Method ln7:', data.lvl0.df$method[7]),
-                     'Hawaii','all Hawaii sites','soil_class', 'value', 'Typic Distrandepts', paste('Method ln8:', data.lvl0.df$method[8]),
-                     'Hawaii','all Hawaii sites','soil_age', 'maximum', '15000', paste('Method ln8:', data.lvl0.df$method[8]),
-                     'Hawaii', 'all Hawaii sites','soil_age', 'minimum', '20000', paste('Method ln8:', data.lvl0.df$method[8]),
-                     'Hawaii', 'all Hawaii sites','soil_age', 'unit', 'yr', paste('Method ln8:', data.lvl0.df$method[8]),
-                     'Hawaii', 'all Hawaii sites','rainfall', 'maximum', '2500', paste('Method ln9:', data.lvl0.df$method[9]),
-                     'Hawaii','all Hawaii sites', 'rainfall', 'minimum', '4000', paste('Method ln9:', data.lvl0.df$method[9]),
-                     'Hawaii', 'all Hawaii sites','rainfall', 'unit', 'mm', paste('Method ln9:', data.lvl0.df$method[9]),
-                     'Hawaii', 'all Hawaii sites','air_temperature', 'value', '22', paste('Method ln10:', data.lvl0.df$method[10]),
-                     'Hawaii', 'all Hawaii sites','air_temperature', 'unit', '°C', paste('Method ln10:', data.lvl0.df$method[10]),
-                     'Hawaii','all Hawaii sites', 'stand_age', 'value', '90', paste('Method ln12:', data.lvl0.df$method[12]),
-                     'Hawaii', 'all Hawaii sites','stand_age', 'unit', 'yr', paste('Method ln12:', data.lvl0.df$method[12]),
-                     'Hawaii', 'all Hawaii sites','observation_time', 'value', '1997', paste('Method ln17:', data.lvl0.df$method[17]),
+                     'Hawaii','region', 'site', 'Hamakua Coast, Hawaii, northeast flank of Mauna Kea', paste('Method ln7:', data.lvl0.df$method[7]),
+                     'Hawaii','region', 'state', 'HI', paste('Method ln7:', data.lvl0.df$method[7]),
+                     'Hawaii', 'elevation', 'value', '700', paste('Method ln7:', data.lvl0.df$method[7]),
+                     'Hawaii', 'elevation', 'unit', 'm', paste('Method ln7:', data.lvl0.df$method[7]),
+                     'Hawaii','soil_class', 'value', 'Typic Distrandepts', paste('Method ln8:', data.lvl0.df$method[8]),
+                     'Hawaii','soil_age', 'maximum', '15000', paste('Method ln8:', data.lvl0.df$method[8]),
+                     'Hawaii','soil_age', 'minimum', '20000', paste('Method ln8:', data.lvl0.df$method[8]),
+                     'Hawaii','soil_age', 'unit', 'yr', paste('Method ln8:', data.lvl0.df$method[8]),
+                     'Hawaii','rainfall', 'maximum', '2500', paste('Method ln9:', data.lvl0.df$method[9]),
+                     'Hawaii', 'rainfall', 'minimum', '4000', paste('Method ln9:', data.lvl0.df$method[9]),
+                     'Hawaii','rainfall', 'unit', 'mm', paste('Method ln9:', data.lvl0.df$method[9]),
+                     'Hawaii','air_temperature', 'value', '22', paste('Method ln10:', data.lvl0.df$method[10]),
+                     'Hawaii','air_temperature', 'unit', '°C', paste('Method ln10:', data.lvl0.df$method[10]),
+                     'Hawaii', 'stand_age', 'value', '90', paste('Method ln12:', data.lvl0.df$method[12]),
+                     'Hawaii','stand_age', 'unit', 'yr', paste('Method ln12:', data.lvl0.df$method[12]),
+                     'Hawaii','observation_time', 'value', '1997', paste('Method ln17:', data.lvl0.df$method[17]),
                      
                      # Brazil
-                     'Brazil', 'all Brazil sites','region', 'municiplaity', 'Piracicaba', paste('Method ln23:', data.lvl0.df$method[23]),
-                     'Brazil', 'all Brazil sites','region', 'city', 'São Paulo', paste('Method ln23:', data.lvl0.df$method[23]),
-                     'Brazil','all Brazil sites', 'region', 'country', 'Brazil', paste('Method ln23:', data.lvl0.df$method[23]),
-                     'Brazil', 'all Brazil sites','elevation', 'value', '575', paste('Method ln23:', data.lvl0.df$method[23]),
-                     'Brazil', 'all Brazil sites','elevation', 'unit', 'm', paste('Method ln23:', data.lvl0.df$method[23]),
-                     'Brazil','all Brazil sites', 'rainfall', 'value', '1400', paste('Method ln24:', data.lvl0.df$method[24]),
-                     'Brazil','all Brazil sites', 'rainfall', 'unit', 'mm', paste('Method ln24:', data.lvl0.df$method[24]),
-                     'Brazil', 'all Brazil sites','air_temperature', 'value', '20', paste('Method ln24:', data.lvl0.df$method[24]),
-                     'Brazil','all Brazil sites', 'air_temperature', 'unit', '°C', paste('Method ln24:', data.lvl0.df$method[24]),
-                     'Brazil', 'all Brazil sites','soil_class', 'value', 'isothermic Typic Haplorthox', paste('Method ln25:', data.lvl0.df$method[25]),
-                     'Brazil', 'all Brazil sites','stand_age', 'value', '27', paste('Method ln28:', data.lvl0.df$method[28]),
-                     'Brazil', 'all Brazil sites','stand_age', 'value', '65', paste('Method ln28:', data.lvl0.df$method[28]),
-                     'Brazil', 'all Brazil sites','stand_age', 'unit', 'yr', paste('Method ln28:', data.lvl0.df$method[28]),
-                     'Brazil','all Brazil sites', 'observation_time', 'value', '1998', paste('Method ln28:', data.lvl0.df$method[28]),
-                     'Brazil', 'all Brazil sites','mineralogy', 'value', 'clayey, kalonitic', paste('Method ln25:', data.lvl0.df$method[25]),
+                     'Brazil', 'region', 'municiplaity', 'Piracicaba', paste('Method ln23:', data.lvl0.df$method[23]),
+                     'Brazil', 'region', 'city', 'São Paulo', paste('Method ln23:', data.lvl0.df$method[23]),
+                     'Brazil', 'region', 'country', 'Brazil', paste('Method ln23:', data.lvl0.df$method[23]),
+                     'Brazil', 'elevation', 'value', '575', paste('Method ln23:', data.lvl0.df$method[23]),
+                     'Brazil', 'elevation', 'unit', 'm', paste('Method ln23:', data.lvl0.df$method[23]),
+                     'Brazil', 'rainfall', 'value', '1400', paste('Method ln24:', data.lvl0.df$method[24]),
+                     'Brazil', 'rainfall', 'unit', 'mm', paste('Method ln24:', data.lvl0.df$method[24]),
+                     'Brazil', 'air_temperature', 'value', '20', paste('Method ln24:', data.lvl0.df$method[24]),
+                     'Brazil', 'air_temperature', 'unit', '°C', paste('Method ln24:', data.lvl0.df$method[24]),
+                     'Brazil', 'soil_class', 'value', 'isothermic Typic Haplorthox', paste('Method ln25:', data.lvl0.df$method[25]),
+                     'Brazil', 'observation_time', 'value', '1998', paste('Method ln28:', data.lvl0.df$method[28]),
+                     'Brazil', 'mineralogy', 'value', 'clayey, kalonitic', paste('Method ln25:', data.lvl0.df$method[25]),
                      
                      # Ecuador
-                     'Ecuador', 'all Ecuador sites','region', 'value', 'Western slope of Ecuadorian Andes', paste('Method ln38:', data.lvl0.df$method[38]),
-                     'Ecuador', 'all Ecuador sites','elevation', 'value', '1400', paste('Method ln38:', data.lvl0.df$method[38]),
-                     'Ecuador', 'all Ecuador sites','elevation', 'unit', 'm', paste('Method ln38:', data.lvl0.df$method[38]),
-                     'Ecuador','all Ecuador sites', 'rainfall', 'value', '3200', paste('Method ln39:', data.lvl0.df$method[39]),
-                     'Ecuador', 'all Ecuador sites','rainfall', 'unit', 'mm', paste('Method ln39:', data.lvl0.df$method[39]),
-                     'Ecuador', 'all Ecuador sites','air_temperature', 'minimum', '17', paste('Method ln39:', data.lvl0.df$method[39]),
-                     'Ecuador','all Ecuador sites', 'air_temperature', 'maximum', '26', paste('Method ln39:', data.lvl0.df$method[39]),
-                     'Ecuador', 'all Ecuador sites','air_temperature', 'unit', '°C', paste('Method ln39:', data.lvl0.df$method[39]),
-                     'Ecuador', 'all Ecuador sites','soil_class', 'value', 'Andic Humitropepts', paste('Method ln40:', data.lvl0.df$method[40]),
-                     'Ecuador','all Ecuador sites', 'soil_age', 'value', '2500', paste('Method ln40:', data.lvl0.df$method[40]),
-                     'Ecuador', 'all Ecuador sites','soil_age', 'unit', 'yr', paste('Method ln40:', data.lvl0.df$method[40]),
-                     'Ecuador', 'all Ecuador sites','stand_age', 'value', '25', paste('Method ln43:', data.lvl0.df$method[43]),
-                     'Ecuador', 'all Ecuador sites','stand_age', 'unit', 'yr', paste('Method ln43:', data.lvl0.df$method[43]),
-                     'Ecuador', 'all Ecuador sites','mineralogy', 'value', 'andesitic volcanic ash', paste('Method ln40:', data.lvl0.df$method[40]),
-                     'Ecuador', 'all Ecuador sites','observation_time', 'value', '1998', paste('Method ln41:', data.lvl0.df$method[41])
+                     'Ecuador', 'region', 'value', 'Western slope of Ecuadorian Andes', paste('Method ln38:', data.lvl0.df$method[38]),
+                     'Ecuador', 'elevation', 'value', '1400', paste('Method ln38:', data.lvl0.df$method[38]),
+                     'Ecuador', 'elevation', 'unit', 'm', paste('Method ln38:', data.lvl0.df$method[38]),
+                     'Ecuador', 'rainfall', 'value', '3200', paste('Method ln39:', data.lvl0.df$method[39]),
+                     'Ecuador', 'rainfall', 'unit', 'mm', paste('Method ln39:', data.lvl0.df$method[39]),
+                     'Ecuador', 'air_temperature', 'minimum', '17', paste('Method ln39:', data.lvl0.df$method[39]),
+                     'Ecuador', 'air_temperature', 'maximum', '26', paste('Method ln39:', data.lvl0.df$method[39]),
+                     'Ecuador', 'air_temperature', 'unit', '°C', paste('Method ln39:', data.lvl0.df$method[39]),
+                     'Ecuador', 'soil_class', 'value', 'Andic Humitropepts', paste('Method ln40:', data.lvl0.df$method[40]),
+                     'Ecuador', 'soil_age', 'value', '2500', paste('Method ln40:', data.lvl0.df$method[40]),
+                     'Ecuador', 'soil_age', 'unit', 'yr', paste('Method ln40:', data.lvl0.df$method[40]),
+                     'Ecuador', 'stand_age', 'value', '25', paste('Method ln43:', data.lvl0.df$method[43]),
+                     'Ecuador', 'stand_age', 'unit', 'yr', paste('Method ln43:', data.lvl0.df$method[43]),
+                     'Ecuador', 'mineralogy', 'value', 'andesitic volcanic ash', paste('Method ln40:', data.lvl0.df$method[40]),
+                     'Ecuador', 'observation_time', 'value', '1998', paste('Method ln41:', data.lvl0.df$method[41])
 )
 
-citationMeta <- tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
+citationMeta <- tibble::tribble(~of_variable, ~is_type, ~with_entry, ~from_source,
                         'citation', 'value', format(data.lvl0.df$citation$primary), 
                         'journal_citation', 'doi', 'value', data.lvl0.df$citation$primary$doi, 'journal citation')            
 
-land_use.df <- tribble(~land_use_id, ~region_id, ~site_id, ~of_variable, ~is_type, ~with_entry, ~from_source,
-                       # LU1 is Hawaii's Kalopa Site
-                       'LU1', 'Hawaii', 'Kalopa', 'land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13]),
-                       'LU1', 'Hawaii', 'Kalopa', 'land_use', 'duration', 'P50Y', paste('Method ln13:', data.lvl0.df$method[13]),
+land_use.df <- tibble::tribble(~region_id, ~site_id, ~of_variable, ~is_type, ~with_entry, ~from_source,
+                       #Hawaii's Kalopa Site
+                       'Hawaii', 'Kalopa_Sugarcane', 'land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13], collapse = '... '),
+                       'Hawaii', 'Kalopa_Sugarcane', 'land_use', 'duration', 'P50Y/1997', paste('Method ln13;17:', data.lvl0.df$method[c(13,17)], collapse = '... '), #there is no past land use mentioned for this site, could assume it is forest
+                       'Hawaii', 'Kalopa_Forest', 'land_use', 'description', 'forest', paste('Method ln15;17:', data.lvl0.df$method[c(15,17)], collapse = '... '),
+                       'Hawaii', 'Kalopa_Pasture', 'land_use', 'description', 'pasture', paste('Method ln11;18:19:', data.lvl0.df$method[c(11,18:19)], collapse = '... '),
+                       'Hawaii', 'Kalopa_Pasture', 'land_use', 'duration', 'P90Y/1997', paste('Method ln12;17:', data.lvl0.df$method[c(12,17)], collapse = '... '),
                        
-                       # LU2 is Hawaii's Humuula site
-                       'LU2', 'Hawaii', 'Humnula','land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13]),
-                       'LU2', 'Hawaii', 'Humnula', 'land_use', 'duration', 'P90Y', paste('Method ln13:', data.lvl0.df$method[13]),
+                       #Hawaii's Humuula site
+                       'Hawaii', 'Humnula_Sugarcane','land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13], collapse = '... '),
+                       'Hawaii', 'Humnula_Sugarcane', 'land_use', 'duration', 'P90Y/1997', paste('Method ln13;17:', data.lvl0.df$method[c(13,17)], collapse = '... '), #there is no past land use mentioned for this site, could assume it is forest
+                       'Hawaii', 'Humnula_Forest', 'land_use', 'description', 'forest', paste('Method ln15;17:', data.lvl0.df$method[c(15,17)], collapse = '... '),
                        
-                       # LU3 is Brazil's Forest site
-                       'LU3', 'Brazil', 'Forest', 'land_use', 'description', 'Forest', paste('Method ln23:', data.lvl0.df$method[23]),
+                       #Brazil's Forest site
+                       'Brazil', 'Forest', 'land_use', 'description', 'forest', paste('Method ln23:', data.lvl0.df$method[23], collapse = '... '),
                        
-                       #LU4 is Brazil's Sugarcane P27Y
-                       'LU4', 'Brazil', 'Sugarcane_27Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23]),
-                       'LU4', 'Brazil', 'Sugarcane_27Y', 'land_use', 'duration', 'P27Y', paste('Method ln28:', data.lvl0.df$method[28]),
+                       #Brazil's Sugarcane P27Y
+                       'Brazil', 'Sugarcane_27Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23], collapse = '... '),
+                       'Brazil', 'Sugarcane_27Y', 'past_land_use', 'description', 'fields coverted to sugarcane', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+                       'Brazil', 'Sugarcane_27Y', 'past_land_use', 'duration', '/1971', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+                       'Brazil', 'Sugarcane_27Y', 'land_use', 'duration', 'P27Y/1998', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
                        
                        #LU5 is Brazil's Sugarcane P65Y
-                       'LU5', 'Brazil', 'Sugarcane_65Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23]),
-                       'LU5', 'Brazil', 'Sugarcane_65Y', 'land_use', 'duration', 'P65Y', paste('Method ln28:', data.lvl0.df$method[28]),
+                       'Brazil', 'Sugarcane_65Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23], collapse = '... '),
+                       'Brazil', 'Sugarcane_65Y', 'past_land_use', 'description', 'fields coverted to sugarcane', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+                       'Brazil', 'Sugarcane_65Y', 'past_land_use', 'duration', '/1933', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+                       'Brazil', 'Sugarcane_65Y', 'land_use', 'duration', 'P65Y/1998', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
                        
                        #LU6 is Ecuador's Forest Site
-                       'LU6', 'Ecuador', 'Forest', 'land_use', 'description', 'a closed canopy and a healthy, solid understory of ferns and forbs', paste('Method ln45:', data.lvl0.df$method[45]),
-                       'LU6', 'Ecuador', 'Forest', 'land_use', 'duration', 'P25Y', paste('Method ln45:', data.lvl0.df$method[45]),
+                       'Ecuador', 'Forest', 'land_use', 'description', 'a closed canopy and a healthy, solid understory of ferns and forbs', paste('Method ln45:', data.lvl0.df$method[45], collapse = '... '),
+                       'Ecuador', 'Forest', 'land_use', 'duration', 'P25Y/1998', paste('Method ln41;45:', data.lvl0.df$method[c(41,45)], collapse = '... '),
                        
-                       #LU7 is Ecuador's Pasture Site
-                       'LU7', 'Ecuador', 'Pasture','land_use', 'description', 'African bristlegrass [*Setaria sphacelata* (Schumacher) Moss] pasture sites', paste('Method ln41:', data.lvl0.df$method[41]),
-                       'LU7', 'Ecuador', 'Pasture', 'land_use', 'duration', 'P25Y', paste('Method ln43:', data.lvl0.df$method[43]),
+                       #LU7 is Ecuador's Pasture Site - does not say past_land_use, could be assumed to be forest
+                       'Ecuador', 'Pasture','land_use', 'description', 'African bristlegrass [*Setaria sphacelata* (Schumacher) Moss] pasture sites', paste('Method ln41:', data.lvl0.df$method[41], collapse = '... '),
+                       'Ecuador', 'Pasture', 'land_use', 'duration', 'P25Y/1998', paste('Method ln41;43:', data.lvl0.df$method[c(41,43)], collapse = '... '),
                        
-                       #LU8 is Ecuador's Sugarcane Site
-                       'LU8', 'Ecuador', 'Sugarcane', 'land_use', 'description', 'Sugarcane', paste('Method ln42:', data.lvl0.df$method[42]),
-                       'LU8', 'Ecuador', 'Sugarcane', 'land_use', 'duration', 'P25Y', paste('Method ln43:', data.lvl0.df$method[43])
+                       #LU8 is Ecuador's Sugarcane Site - does not say past_land_use, could be assumed to be forest
+                       'Ecuador', 'Sugarcane', 'land_use', 'description', 'sugarcane', paste('Method ln42:', data.lvl0.df$method[42], collapse = '... '),
+                       'Ecuador', 'Sugarcane', 'land_use', 'duration', 'P25Y/1998', paste('Method ln41;43:', data.lvl0.df$method[c(41,43)], collapse = '... ')
 )
 
 #### Table 1 ####
-
 Table1Primary <- data.lvl0.df$data$Table1$primary |>
+  #renaming to match notation in the land_use.df
+  dplyr::mutate(
+    `Location` = dplyr::case_when(
+      `Location` == "Hawaii (Humuula)" ~ "Hawaii",
+      `Location` == "Hawaii (Kalopa)" ~ "Hawaii",
+      TRUE ~ `Location`
+    ),
+    `Land use` = dplyr::case_when(
+      `Location` == "Hawaii" &
+        `Land use` == "90-yr sugarcane" ~ "Humnula_Sugarcane",
+      `Land use` == "50-yr sugarcane" ~ "Kalopa_Sugarcane",
+      `Land use` == "90-yr pasture" ~ "Kalopa_Pasture",
+      `Location` == "Brazil" &
+        `Land use` == "27-yr sugarcane" ~ "Sugarcane_27Y",
+      `Land use` == "65-yr sugarcane" ~ "Sugarcane_65Y",
+      `Location` == "Ecuador" &
+        `Land use` == "25-yr pasture" ~ "Pasture",
+      `Land use` == "25-yr sugarcane" ~ "Sugarcane"
+    )
+  ) |>
+  
   dplyr::mutate(row_id = paste0('R', 1:dplyr::n())) |>
   tidyr::pivot_longer(cols = -c(row_id),
                names_to = 'column_name', values_to = 'with_entry',
@@ -184,7 +209,6 @@ Table1Primary <- data.lvl0.df$data$Table1$primary |>
     column_name == 'δ13C-SOM (per mil)' ~ 'delta_13_carbon',
     .default = 'Bad Match'
   )) |>
-  
   
   dplyr::mutate(
     value = case_when(

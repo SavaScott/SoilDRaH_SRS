@@ -62,6 +62,8 @@ citation,value,Burke2003
 doi,value,Burke2003
 land_use,description,Burke2003
 land_use,duration,Burke2003
+past_land_use,description,Burke2003
+past_land_use,duration,Burke2003
 layer,unit,Burke2003
 phospholipid_acid_content,unit,Burke2003
 organic_carbon,unit,Burke2003
@@ -72,9 +74,9 @@ layer,method,Burke2003
 phospholipid_acid_content,method,Burke2003
 delta_13_carbon,method,Burke2003
 stand_type,control_vocabulary,Burke2003
-site_id,value,Burke2003
 region_id,value,Burke2003
 organic_carbon,value,Burke2003
 phospholipid_acid_content,value,Burke2003
 layer,value,Burke2003
 delta_13_carbon,value,Burke2003
+site_id,value,Burke2003
