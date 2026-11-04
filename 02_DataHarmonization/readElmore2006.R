@@ -95,10 +95,12 @@ readElmore2006 <- function(dataDir,
                        'land_use', 'interval_format', 'YYYY', NA,
                        'transect', 'value', '1000',   paste('Method ln57:', paste(data.lvl0.ls$method[57], collapse = ' ')),
                        'transect', 'unit', 'm',   paste('Method ln57:', paste(data.lvl0.ls$method[57], collapse = ' ')),
-                       'soil_sampling', 'value', 'soil cores were collected at 25 m intervals close to the grazing center, and spaced to 50 and 100 m further from the center',  paste('Method ln74:', paste(data.lvl0.ls$method[74], collapse = ' ')) )
+                       'soil_sampling', 'value', 'soil cores were collected at 25 m intervals close to the grazing center, and spaced to 50 and 100 m further from the center',  paste('Method ln74:', paste(data.lvl0.ls$method[74], collapse = ' ')),
+                       'grazing_interval_id', 'value', 'G', paste('Method ln57-58:', paste(data.lvl0.ls$method[57:58], collapse = ' ')),
+                       'elevation_interval_id', 'value', 'E', paste('Method ln57;60:', paste(data.lvl0.ls$method[c(57,60)], collapse = ' '))
+  )
   
   #### Table 1 ####
-  
   Table1Primary <- data.lvl0.ls$data$Table1$primary |>
     dplyr::mutate(row_id = paste0('R', 1:n())) |>
     tidyr::pivot_longer(cols = -row_id,
@@ -126,12 +128,14 @@ readElmore2006 <- function(dataDir,
       tibble::tribble(~of_variable, ~method, ~from_source,
               'delta_13_carbon', paste0(data.lvl0.ls$method[c(99,103:106)], collapse = ' '), 'Methods ln99;103-106',
               'dry_bulk_density', paste0(data.lvl0.ls$method[96], collapse = ' '), 'Methods ln96',
-              'soil_organic_carbon',  paste0(data.lvl0.ls$method[c(94, 96, 98)], collapse = ' '), 'Methods ln94;96;98') |>
+              'soil_organic_carbon',  paste0(data.lvl0.ls$method[c(94, 96, 98)], collapse = ' '), 'Methods ln94;96;98',
+              'sample_id', paste0(data.lvl0.ls$method[c(74:76)], collapse = ' '), 'Methods ln74-76') |> #G stands for changes in grazing interval and the E standing for changes in elevation
         
         dplyr::left_join(Table1Primary |>
-                    dplyr::select(column_name, of_variable) |>
+                           dplyr::select(column_name, of_variable) |>
                     unique(),
                   by = dplyr::join_by(of_variable))) |>
+    
     tidyr::pivot_longer(cols = c(unit, method),
                  names_to = 'is_type',
                  values_drop_na = TRUE,
