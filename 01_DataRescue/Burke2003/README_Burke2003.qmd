@@ -378,6 +378,8 @@ land_use.df <- tribble(~region_id, ~site_id, ~of_variable, ~is_type, ~with_entry
     'Hawaii', 'Kalopa_Sugarcane', 'land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13]),
     'Hawaii', 'Kalopa_Sugarcane', 'land_use', 'duration', 'P50Y/1997', paste('Method ln13;17:', data.lvl0.df$method[c(13,17)], collapse = '... '), #there is no past land use mentioned for this site, could assume it is forest
       'Hawaii', 'Kalopa_Forest', 'land_use', 'description', 'forest', paste('Method ln15;17:', data.lvl0.df$method[c(15,17)], collapse = '... '),
+      'Hawaii', 'Kalopa_Pasture', 'land_use', 'description', 'pasture', paste('Method ln11;18:19:', data.lvl0.df$method[c(11,18:19)]),
+    'Hawaii', 'Kalopa_Pasture', 'land_use', 'duration', 'P90Y/1997', paste('Method ln12;17:', data.lvl0.df$method[c(12,17)], collapse = '... '),
 
    #Hawaii's Humuula site
     'Hawaii', 'Humnula_Sugarcane','land_use', 'description', 'sugarcane', paste('Method ln13:', data.lvl0.df$method[13]),
@@ -413,14 +415,34 @@ land_use.df <- tribble(~region_id, ~site_id, ~of_variable, ~is_type, ~with_entry
    )
 
 #### Table 1 ####
-
 Table1Primary <- data.lvl0.df$data$Table1$primary |>
+#renaming to match notation in the land_use.df
+mutate(
+  `Location` = case_when(
+    `Location` == "Hawaii (Humuula)" ~ "Hawaii",
+    `Location` == "Hawaii (Kalopa)" ~ "Hawaii",
+    TRUE ~ `Location`
+  ),
+  `Land use` = case_when(
+    `Location` == "Hawaii" &
+      `Land use` == "90-yr sugarcane" ~ "Humnula_Sugarcane",
+      `Land use` == "50-yr sugarcane" ~ "Kalopa_Sugarcane",
+      `Land use` == "90-yr pasture" ~ "Kalopa_Pasture",
+    `Location` == "Brazil" &
+      `Land use` == "27-yr sugarcane" ~ "Sugarcane_27Y",
+      `Land use` == "65-yr sugarcane" ~ "Sugarcane_65Y",
+    `Location` == "Ecuador" &
+      `Land use` == "25-yr pasture" ~ "Pasture",
+      `Land use` == "25-yr sugarcane" ~ "Sugarcane"
+    )
+) |>
+ 
  mutate(row_id = paste0('R', 1:n())) |>
    pivot_longer(cols = -c(row_id),
                names_to = 'column_name', values_to = 'with_entry',
                values_drop_na = TRUE) |>
     mutate(of_variable = case_when(
-      column_name == 'Location' ~ 'location',
+      column_name == 'Location' ~ 'region_id',
       column_name == 'Land use' ~ 'site_id',
       column_name == 'Soil depth (cm)' ~ 'layer',
       column_name == 'PFLA (mg kg-1)' ~ 'phospholipid_acid_content',
@@ -429,7 +451,6 @@ Table1Primary <- data.lvl0.df$data$Table1$primary |>
       .default = 'Bad Match'
     )) |>
     
-
 mutate(
   value = case_when(
     column_name == "Location" ~ with_entry,
