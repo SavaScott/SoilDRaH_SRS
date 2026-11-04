@@ -69,7 +69,7 @@ timelog:
       description: Lev1
       who: SavaScott
       start: 2026-06-23
-      duration: PT5H30M
+      duration: PT6H10M
 ---
 
 ```{r}
