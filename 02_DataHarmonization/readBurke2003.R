@@ -150,14 +150,14 @@ land_use.df <- tibble::tribble(~region_id, ~site_id, ~of_variable, ~is_type, ~wi
                        
                        #Brazil's Sugarcane P27Y
                        'Brazil', 'Sugarcane_27Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23], collapse = '... '),
-                       'Brazil', 'Sugarcane_27Y', 'past_land_use', 'description', 'fields coverted to sugarcane', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
-                       'Brazil', 'Sugarcane_27Y', 'past_land_use', 'duration', '/1971', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+                       'Brazil', 'Sugarcane_27Y', 'land_use', 'description', 'fields coverted to sugarcane', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+                       'Brazil', 'Sugarcane_27Y', 'land_use', 'duration', '/1971', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
                        'Brazil', 'Sugarcane_27Y', 'land_use', 'duration', 'P27Y/1998', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
                        
                        #LU5 is Brazil's Sugarcane P65Y
                        'Brazil', 'Sugarcane_65Y', 'land_use', 'description', 'extensive sugarcane cultivation', paste('Method ln23:', data.lvl0.df$method[23], collapse = '... '),
-                       'Brazil', 'Sugarcane_65Y', 'past_land_use', 'description', 'fields coverted to sugarcane', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
-                       'Brazil', 'Sugarcane_65Y', 'past_land_use', 'duration', '/1933', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+                       'Brazil', 'Sugarcane_65Y', 'land_use', 'description', 'fields coverted to sugarcane', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
+                       'Brazil', 'Sugarcane_65Y', 'land_use', 'duration', '/1933', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
                        'Brazil', 'Sugarcane_65Y', 'land_use', 'duration', 'P65Y/1998', paste('Method ln28:', data.lvl0.df$method[28], collapse = '... '),
                        
                        #LU6 is Ecuador's Forest Site
