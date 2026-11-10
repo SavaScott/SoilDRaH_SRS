@@ -1,30 +1,56 @@
 "Fig. S7 Changes in litter quality during the dry season 2012. The left, middle and right column of panels present the results for *Avena*, *Calicotome* and *Scabiosa* litter, respectively. Litter nitrogen (N) and lignin concentrations were presented on an ash-free, dry-mass basis. * significant difference among means at the end of the dry season within a litter type at P ≤ 0.05 (Tukey–Kramer HSD test). “No-sc.”, “Tr.” and “R.bl.” are used to indicate significant differences between the no-screen, transparent and radiation-block treatments, respectively. Mean ± SE. Note the different scales on the y-axis for N concentration and C:N ratio of the three species.*n* = 5. ",,,,,
 date,y value,y value SE difference,y value label,species,treatment type
-2012-07-01,0.37,-,N (%),Avena,No-screen
-2012-07-02,0.37,-,N (%),Avena,Transparent
-2012-07-03,0.37,-,N (%),Avena,Radiation block
-2012-08-01,0.355,0.019,N (%),Avena,No-screen
-2012-08-01,0.412,0.014,N (%),Avena,Transparent
-2012-08-02,0.390,0.028,N (%),Avena,Radiation block
-2012-09-01,0.377,-,N (%),Avena,No-screen
-2012-09-01,0.362,0.02,N (%),Avena,Transparent
-2012-09-01,0.358,-,N (%),Avena,Radiation block
-2012-07-01,2.501,-,N (%),Calicotome,No-screen
-2012-07-02,2.501,-,N (%),Calicotome,Transparent
-2012-07-03,2.501,-,N (%),Calicotome,Radiation block
-2012-08-01,2.339,0.019,N (%),Calicotome,No-screen
-2012-08-01,2.315,-,N (%),Calicotome,Transparent
-2012-08-02,2.295,-,N (%),Calicotome,Radiation block
-2012-09-01,2.248,2.085,N (%),Calicotome,No-screen
-2012-09-01,2.303,0.027,N (%),Calicotome,Transparent
-2012-09-01,2.326,0.027,N (%),Calicotome,Radiation block
-2012-07-01,0.252,-,N (%),Scabiosa,No-screen
-2012-07-02,0.252,-,N (%),Scabiosa,Transparent
-2012-07-03,0.252,-,N (%),Scabiosa,Radiation block
-2012-08-01,0.340,0.035,N (%),Scabiosa,No-screen
-2012-08-01,0.280,0.021,N (%),Scabiosa,Transparent
-2012-08-02,0.315,0.013,N (%),Scabiosa,Radiation block
-2012-09-01,0.284,-,N (%),Scabiosa,No-screen
-2012-09-01,0.275,0.019,N (%),Scabiosa,Transparent
-2012-09-01,0.272,0.024,N (%),Scabiosa,Radiation block
-,,,,,
+7/1/2012,0.37,-,N (%),Avena,No-screen
+7/1/2012,0.37,-,N (%),Avena,Transparent
+7/1/2012,0.37,-,N (%),Avena,Radiation block
+8/1/2012,0.355,0.019,N (%),Avena,No-screen
+8/1/2012,0.412,0.014,N (%),Avena,Transparent
+8/1/2012,0.39,0.028,N (%),Avena,Radiation block
+9/1/2012,0.377,-,N (%),Avena,No-screen
+9/1/2012,0.362,0.02,N (%),Avena,Transparent
+9/1/2012,0.358,-,N (%),Avena,Radiation block
+7/1/2012,2.501,-,N (%),Calicotome,No-screen
+7/1/2012,2.501,-,N (%),Calicotome,Transparent
+7/1/2012,2.501,-,N (%),Calicotome,Radiation block
+8/1/2012,2.339,0.019,N (%),Calicotome,No-screen
+8/1/2012,2.315,-,N (%),Calicotome,Transparent
+8/1/2012,2.295,-,N (%),Calicotome,Radiation block
+9/1/2012,2.248,2.085,N (%),Calicotome,No-screen
+9/1/2012,2.303,0.027,N (%),Calicotome,Transparent
+9/1/2012,2.326,0.027,N (%),Calicotome,Radiation block
+7/1/2012,0.252,-,N (%),Scabiosa,No-screen
+7/1/2012,0.252,-,N (%),Scabiosa,Transparent
+7/1/2012,0.252,-,N (%),Scabiosa,Radiation block
+8/1/2012,0.34,0.035,N (%),Scabiosa,No-screen
+8/1/2012,0.28,0.021,N (%),Scabiosa,Transparent
+8/1/2012,0.315,0.013,N (%),Scabiosa,Radiation block
+9/1/2012,0.284,-,N (%),Scabiosa,No-screen
+9/1/2012,0.275,0.019,N (%),Scabiosa,Transparent
+9/1/2012,0.272,0.024,N (%),Scabiosa,Radiation block
+7/1/2012,119.4,-,C:N ratio,Avena,No-screen
+7/1/2012,119.4,-,C:N ratio,Avena,Transparent
+7/1/2012,119.4,-,C:N ratio,Avena,Radiation block
+8/1/2012,114.0,8.41,C:N ratio,Avena,No-screen
+8/1/2012,103.4,-,C:N ratio,Avena,Transparent
+8/1/2012,106.9,-,C:N ratio,Avena,Radiation block
+9/1/2012,109.9,-,C:N ratio,Avena,No-screen
+9/1/2012,115.9,6.52,C:N ratio,Avena,Transparent
+9/1/2012,113.8,-,C:N ratio,Avena,Radiation block
+7/1/2012,20.88,-,C:N ratio,Calicotome,No-screen
+7/1/2012,20.88,-,C:N ratio,Calicotome,Transparent
+7/1/2012,20.88,-,C:N ratio,Calicotome,Radiation block
+8/1/2012,19.86,19.69,C:N ratio,Calicotome,No-screen
+8/1/2012,19.90,-,C:N ratio,Calicotome,Transparent
+8/1/2012,20.14,0.17,C:N ratio,Calicotome,Radiation block
+9/1/2012,18.67,0.55,C:N ratio,Calicotome,No-screen
+9/1/2012,19.63,0.20,C:N ratio,Calicotome,Transparent
+9/1/2012,19.73,0.24,C:N ratio,Calicotome,Radiation block
+7/1/2012,148.3,-,C:N ratio,Scabiosa,No-screen
+7/1/2012,148.3,-,C:N ratio,Scabiosa,Transparent
+7/1/2012,148.3,-,C:N ratio,Scabiosa,Radiation block
+8/1/2012,132.4,10.9,C:N ratio,Scabiosa,No-screen
+8/1/2012,161.1,13.2,C:N ratio,Scabiosa,Transparent
+8/1/2012,137.2,8.5,C:N ratio,Scabiosa,Radiation block
+9/1/2012,152.9,8.4,C:N ratio,Scabiosa,No-screen
+9/1/2012,161.7,11.4,C:N ratio,Scabiosa,Transparent
+9/1/2012,148.1,7.5,C:N ratio,Scabiosa,Radiation block
