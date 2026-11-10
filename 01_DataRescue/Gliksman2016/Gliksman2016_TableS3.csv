@@ -1,0 +1,5 @@
+﻿"Table S3 Daytime microclimatic conditions as affected by microclimatic manipulation in Israel during the dry season. Temperature and relative humidity (RH) were continously recorded 0.2 m above ground (air) and at the interface between the litterbag and soil (soil surface). Rad. block = radiation block. Mean ± SE, *n* = 104 days for temperature and relative humidity, 8 measurements of ultraviolet irradiance for seasonal mean",,,,,
+Treatment,Irradiance (fraction of ambient),Maximum Air Temperature (°C),Maximum Soil Surface Temperature (°C),Minimum RH (%): Air,Minimum RH (%): Soil Surface
+No-screen,1,37.4 ± 0.3 b,55.8 ± 0.5 a,42.9 ± 0.6 a,16.2 ± 0.3 b
+Transparent,0.87 ± 0.02,38.7 ± 0.2 a,56.9 ± 0.3 a,39.1 ± 0.4 b,13.7 ± 0.2 c
+Rad. Block,0.15 ± 0.03,36.9 ± 0.3 b,50.0 ± 0.3 b,43.3 ± 0.8 a,20.6 ± 0.3 a
